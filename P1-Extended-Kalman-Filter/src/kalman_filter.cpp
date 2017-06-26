@@ -34,6 +34,8 @@ void KalmanFilter::Update(const VectorXd &z) {
     * update the state by using Kalman Filter equations for lidar,
     * use linear, basic Kalman filter equations:
   */
+
+  /*
   VectorXd z_pred = H_ * x_;
   VectorXd y = z - z_pred;
   MatrixXd Ht = H_.transpose();
@@ -47,7 +49,7 @@ void KalmanFilter::Update(const VectorXd &z) {
   long x_size = x_.size();
   MatrixXd I = MatrixXd::Identity(x_size, x_size);
   P_ = (I - K * H_) * P_;
-
+  */
 
 
 
