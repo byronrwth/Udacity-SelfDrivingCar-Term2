@@ -36,8 +36,6 @@ FusionEKF::FusionEKF() {
     * Finish initializing the FusionEKF.
     * Set the process and measurement noises
   */
-
-
   //keep px and py only for liday
    H_laser_ << 1, 0, 0, 0,
                0, 1, 0, 0;
@@ -101,7 +99,6 @@ void FusionEKF::ProcessMeasurement(const MeasurementPackage &measurement_pack) {
       double phi = measurement_pack.raw_measurements_[1];
       ekf_.x_ << ro*std::cos(phi), ro*std::sin(phi), 0, 0;
 
-
     }
     else if (measurement_pack.sensor_type_ == MeasurementPackage::LASER) {
       /**
@@ -112,8 +109,6 @@ void FusionEKF::ProcessMeasurement(const MeasurementPackage &measurement_pack) {
 
 
       ekf_.x_ << measurement_pack.raw_measurements_[0], measurement_pack.raw_measurements_[1], 0, 0;
-
-
 
     }
 
@@ -150,8 +145,6 @@ void FusionEKF::ProcessMeasurement(const MeasurementPackage &measurement_pack) {
              dt_3 / 2 * noise_ax_, 0, dt_2 * noise_ax_, 0,
              0, dt_3 /2 * noise_ay_, 0, dt_2 * noise_ay_;
 
-
-
   ekf_.Predict();
 
   /*****************************************************************************
@@ -165,21 +158,15 @@ void FusionEKF::ProcessMeasurement(const MeasurementPackage &measurement_pack) {
    */
 
   if (measurement_pack.sensor_type_ == MeasurementPackage::RADAR) {
-
     // Radar updates
+
     // calc jacobian to map to linear
     ekf_.H_ = tools.CalculateJacobian(ekf_.x_);
     ekf_.R_ = R_radar_;
     ekf_.UpdateEKF(measurement_pack.raw_measurements_);
 
-
   } else {
     // Laser updates
-    x =
-    y =
-    measurement_timestamp = measurement_pack.timestamp_ ;
-
-    // laser updates
     ekf_.H_ = H_laser_;
     ekf_.R_ = R_laser_;
     ekf_.Update(measurement_pack.raw_measurements_);
