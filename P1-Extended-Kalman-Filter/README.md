@@ -1,7 +1,30 @@
-# Extended Kalman Filter Project Starter Code
-Self-Driving Car Engineer Nanodegree Program
+## Extended Kalman Filter
+[![Udacity - Self-Driving Car NanoDegree](https://s3.amazonaws.com/udacity-sdc/github/shield-carnd.svg)](http://www.udacity.com/drive)
 
 In this project you will utilize a kalman filter to estimate the state of a moving object of interest with noisy lidar and radar measurements. Passing the project requires obtaining RMSE values that are lower that the tolerance outlined in the project rubric. 
+
+---
+
+**1. Project files**
+
+
+* `data/obj_pose-laser-radar-synthetic-input.txt`: this is the input data to udacity term2 simulator, can be created yourself with matlab tools
+
+* `ide_profiles/Eclipse/`: instruction how to build project for eclipse
+
+* `README.md`: This doc!
+
+* `result/`: stores out_put images of different test results
+
+* `src/`: Contains images to be tested
+
+* `CMakeLists.txt` : called by cmake to build for project
+
+* `install-ubuntu.sh` : this is the script help to build up this project
+
+
+
+**2. Project setup**
 
 This project involves the Term 2 Simulator which can be downloaded [here](https://github.com/udacity/self-driving-car-sim/releases)
 
@@ -116,3 +139,39 @@ and how to install it.
 
 Regardless of the IDE used, every submitted project must
 still be compilable with cmake and make.
+
+---
+
+## Discussion
+
+#### 1. Test with both lidar and radar, lidar, radar with different R
+
+1, with only lidar or radar, I increase R whic is measurement error, as R increase to 10 times and 100 times, each technology will suffer from higher RMSE for all Px, Py, Vx, Vy
+
+
+![](result/lidar(R=[0.0225]) only.png)
+
+
+![](result/lidar(R=[0.225]) only.png)
+
+
+
+![](result/Radar(R=[0.09,0.0009,0.09]) only.png)
+
+
+![](result/Radar(R=[0.9, 0.009, 0.9]) only.png)
+
+
+2, compared with only use lidar and radar, lidar can have less RMSE on Px, Py i.e. more accurate for positions;  while radar is more accurate for Vx,Vy with less RMSE
+
+3, if merged both lidar and radar, then this fusion can beat single lidar or radar, i.e. there is benefits for fusion !
+
+![](result/lidar(R=[0.0225]) + Radar(R=[0.09,0.0009,0.09]).png)
+
+
+4, as discussed, in EKF, for both lidar and radar prediction, we used both linear model   
+	x_ = F_ * x_;
+
+	P_ = F_ * P_ * F_.transpose() + Q_; 
+
+	here F_ consists of only 1s,0s an dt, becuase we assume there is no velocity acceleration, so we don"t calculate Jacobian of F_ but only use F_ .
