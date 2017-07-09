@@ -148,9 +148,11 @@ still be compilable with cmake and make.
 
 1, with only lidar or radar, I increase R whic is measurement error, as R increase to 10 times and 100 times, each technology will suffer from higher RMSE for all Px, Py, Vx, Vy
 
+[image1]: ./result/lidar_Rx1.png
 
 ![](result/lidar_Rx1.png)
 
+[image1]
 
 ![](result/lidar_Rx10.png)
 
