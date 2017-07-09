@@ -26,10 +26,29 @@ FusionEKF::FusionEKF() {
   R_laser_ << 0.0225, 0,
         0, 0.0225;
 
+  // 10 times
+  //R_laser_ << 0.225, 0,
+  //      0, 0.225;
+
+  // test with 100 times error
+  //R_laser_ << 2.25, 0,
+  //      0, 2.25;
+
+
   //measurement covariance matrix - radar
   R_radar_ << 0.09, 0, 0,
         0, 0.0009, 0,
         0, 0, 0.09;
+
+  // 10 times
+  //R_radar_ << 0.9, 0, 0,
+  //      0, 0.009, 0,
+  //      0, 0, 0.9;
+
+  // test with 100 times error
+  //R_radar_ << 9, 0, 0,
+  //      0, 0.09, 0,
+  //      0, 0, 9;
 
   /**
   TODO:
@@ -87,16 +106,22 @@ void FusionEKF::ProcessMeasurement(const MeasurementPackage &measurement_pack) {
     ekf_.x_ = VectorXd(4);
     ekf_.x_ << 1, 1, 1, 1;
 
+    //debug
+    cout << "FusionEKF: timestamp=" << measurement_pack.timestamp_ << endl;
+
     previous_timestamp_ = measurement_pack.timestamp_;
 
-
+    
     if (measurement_pack.sensor_type_ == MeasurementPackage::RADAR) {
-      /**
-      Convert radar from polar to cartesian coordinates and initialize state.
-      */
+      
+      //Convert radar from polar to cartesian coordinates and initialize state.
+      
 
-      double ro = measurement_pack.raw_measurements_[0];
-      double phi = measurement_pack.raw_measurements_[1];
+      //meas_package.raw_measurements_ << ro,theta, ro_dot;
+      double ro = measurement_pack.raw_measurements_[0];  // distance to pedestrian
+      double phi = measurement_pack.raw_measurements_[1];  // bearing angle
+
+      // init at: ekf_.x_ = [ x, y, vx =0, vy = 0] 4 *1
       ekf_.x_ << ro*std::cos(phi), ro*std::sin(phi), 0, 0;
 
     }
@@ -105,12 +130,15 @@ void FusionEKF::ProcessMeasurement(const MeasurementPackage &measurement_pack) {
       Initialize state.
       */
 
-      previous_timestamp_ = measurement_pack.timestamp_ ;
 
-
+      // init at:  x, y, vx =0, vy = 0
       ekf_.x_ << measurement_pack.raw_measurements_[0], measurement_pack.raw_measurements_[1], 0, 0;
 
     }
+
+
+    //debug
+    cout << "FusionEKF: init with ekf_.x_=" << ekf_.x_ << endl;
 
     // done initializing, no need to predict or update
     is_initialized_ = true;
@@ -129,23 +157,42 @@ void FusionEKF::ProcessMeasurement(const MeasurementPackage &measurement_pack) {
      * Use noise_ax = 9 and noise_ay = 9 for your Q matrix.
    */
   //use time difference to calculate F state transtion and Q error from acceleration
+  
+  // only calc dt for lidar
+  //if (measurement_pack.sensor_type_ == MeasurementPackage::LASER) {
+  //if (measurement_pack.sensor_type_ == MeasurementPackage::RADAR) {
   long long incoming = measurement_pack.timestamp_;
   float dt = (incoming - previous_timestamp_) / 1000000.0;
+
+  //debug
+  cout << "FusionEKF: dt=" << dt << endl;
+
   previous_timestamp_ = incoming;
 
   ekf_.F_(0, 2) = dt;
-  ekf_.F_(1, 3) = dt;
 
+  ekf_.F_(1, 3) = dt;
+  /*
+     F_ <<  1, 0, dt, 0,
+            0, 1, 0, dt,
+            0, 0, 1, 0,
+            0, 0, 0, 1;
+  */
   double dt_2 = dt * dt;
   double dt_3 = dt_2 * dt;
   double dt_4 = dt_3 * dt;
 
-  ekf_.Q_ << dt_4 / 4 * noise_ax_, 0, dt_3 / 2 * noise_ax_, 0,
-             0, dt_4 / 4 * noise_ay_, 0, dt_3 / 2 * noise_ay_,
-             dt_3 / 2 * noise_ax_, 0, dt_2 * noise_ax_, 0,
-             0, dt_3 /2 * noise_ay_, 0, dt_2 * noise_ay_;
+  ekf_.Q_ <<  dt_4 / 4 * noise_ax_,                       0,  dt_3 / 2 * noise_ax_,                     0,
+                                  0,   dt_4 / 4 * noise_ay_,                      0, dt_3 / 2 * noise_ay_,
+              dt_3 / 2 * noise_ax_,                       0,      dt_2 * noise_ax_,                     0,
+                                  0,    dt_3 /2 * noise_ay_,                      0,      dt_2 * noise_ay_;
+  
 
-  ekf_.Predict();
+    //cout << "FusionEKF: now only predict for radar " << endl;
+    //cout << "FusionEKF: now only predict for laser " << endl;
+    ekf_.Predict();
+  //}
+  
 
   /*****************************************************************************
    *  Update
@@ -157,20 +204,29 @@ void FusionEKF::ProcessMeasurement(const MeasurementPackage &measurement_pack) {
      * Update the state and covariance matrices.
    */
 
+  
   if (measurement_pack.sensor_type_ == MeasurementPackage::RADAR) {
     // Radar updates
 
     // calc jacobian to map to linear
     ekf_.H_ = tools.CalculateJacobian(ekf_.x_);
     ekf_.R_ = R_radar_;
-    ekf_.UpdateEKF(measurement_pack.raw_measurements_);
 
-  } else {
+    cout << "FusionEKF: UpdateEKF( Radar ) with raw_measurements_: " << measurement_pack.raw_measurements_ << endl;
+
+    ekf_.UpdateEKF(measurement_pack.raw_measurements_); //ro, theta, ro_dot;
+
+  } 
+  else if (measurement_pack.sensor_type_ == MeasurementPackage::LASER)
+  {
     // Laser updates
     ekf_.H_ = H_laser_;
     ekf_.R_ = R_laser_;
-    ekf_.Update(measurement_pack.raw_measurements_);
-  }
+
+    cout << "FusionEKF: Update( Laser ) with raw_measurements_: " << measurement_pack.raw_measurements_ << endl;
+
+    ekf_.Update(measurement_pack.raw_measurements_);  // px, py
+  } 
 
   // print the output
   cout << "x_ = " << ekf_.x_ << endl;

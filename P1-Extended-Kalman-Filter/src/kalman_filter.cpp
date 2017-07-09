@@ -1,5 +1,7 @@
 #include "kalman_filter.h"
+#include <iostream>
 
+using namespace std;
 using Eigen::MatrixXd;
 using Eigen::VectorXd;
 
@@ -22,8 +24,21 @@ void KalmanFilter::Predict() {
   TODO:
     * predict the state
   */
+
+  // for both Lidar and Radar, use same prediction()
+
+  //debug
+  cout << "KalmanFilter, Predict(): old x_" << x_ << endl;
+
+  // x:  [px, py, vx, vy]
   x_ = F_ * x_;
+
+  cout << "KalmanFilter, Predict(): new x_" << x_ << endl;
+
+  cout << "KalmanFilter, Predict(): old P_" << P_ << endl;
   P_ = F_ * P_ * F_.transpose() + Q_;
+
+  cout << "KalmanFilter, Predict(): new P_" << P_ << endl;
 }
 
 void KalmanFilter::Update(const VectorXd &z) {
@@ -31,7 +46,13 @@ void KalmanFilter::Update(const VectorXd &z) {
   TODO:
     * update the state by using Kalman Filter equations
   */
+
+  // for Lidar, y=[ d(px), d(py)]
   VectorXd y = VectorXd(2);
+
+  cout << "KalmanFilter, Update( Laser): z" << z << endl;
+  cout << "KalmanFilter, Update( Laser): x_" << x_ << endl;
+  cout << "KalmanFilter, Update( Laser): H_" << H_ << endl;
   y = z - H_ * x_;
 
   MatrixXd PHt = P_ * H_.transpose();
@@ -42,11 +63,17 @@ void KalmanFilter::Update(const VectorXd &z) {
   MatrixXd K = MatrixXd(2, 2);
   K = PHt * S.inverse();
 
+  cout << "KalmanFilter, update(Laser): old x_" << x_ << endl;
   x_ = x_ + K * y;
+
+  cout << "KalmanFilter, update(Laser): new x_" << x_ << endl;
 
   long x_size = x_.size();
   MatrixXd I = MatrixXd::Identity(x_size, x_size);
+
+  cout << "KalmanFilter, update(Laser): old P_" << P_ << endl;
   P_ = (I - K*H_) * P_;
+  cout << "KalmanFilter, update(Laser): new P_" << P_ << endl;
 
 }
 
@@ -55,6 +82,8 @@ void KalmanFilter::UpdateEKF(const VectorXd &z) {
   TODO:
     * update the state by using Extended Kalman Filter equations
   */
+
+  // x: [px, py, vx, vy]
   float sqrt_sq = std::sqrt(x_(0) * x_(0) + x_(1) * x_(1));
   // prevent 0 vals as atan2(0,0) undefined
   if (fabs(x_(0)) < 1e-6)
@@ -66,14 +95,25 @@ void KalmanFilter::UpdateEKF(const VectorXd &z) {
   // use atan2 to keep between -pi and pi
   h << sqrt_sq, atan2(x_(1), x_(0)), (x_(0)*x_(2) + x_(1)*x_(3))/sqrt_sq;
 
+  /*
+  h= [  sqrt( px * px, py * py),
+        arctan ( py / px),
+        (px*vx + py*vy) /  sqrt( px * px, py * py)
+  ]
+
+  h = to_polar(x)
+  */
+
+
+  // notice ! not y = z - h * x_;
   VectorXd y = z - h;
 
   // normalize to keep between -pi and pi
   while (y(1) > 3.1415) {
-    y(1) -= 6.2830;
+    y(1) -= 6.2830;  // move [ pi, 2pi] into [-pi, pi]
   }
   while (y(1) < -3.1415) {
-    y(1) += 6.2830;
+    y(1) += 6.2830; //move [ -pi, -2pi] into [-pi, pi]
   }
 
   MatrixXd PHt = P_ * H_.transpose();

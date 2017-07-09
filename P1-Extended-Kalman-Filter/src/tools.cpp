@@ -15,13 +15,20 @@ VectorXd Tools::CalculateRMSE(const vector<VectorXd> &estimations,
   TODO:
     * Calculate the RMSE here.
   */
+
+  cout << "tools: CalculateRMSE: estimations size =" << estimations.size() << endl;
+  cout << "tools: CalculateRMSE: ground truth size =" << ground_truth.size() << endl;
+  
   VectorXd rmse(4);
   rmse << 0,0,0,0;
 
   int est_size = estimations.size();
 
-  if (est_size == 0 || est_size != ground_truth.size())
-      return rmse;
+  if (est_size == 0 || est_size != ground_truth.size()) {
+    cout << "tools: CalculateRMSE: either empty estimate or not equal, retun rmse =" << rmse << endl;
+    return rmse;
+  }
+      
 
   //accumulate squared residuals
   for(int i=0; i < est_size; ++i){
@@ -32,6 +39,8 @@ VectorXd Tools::CalculateRMSE(const vector<VectorXd> &estimations,
 
   rmse = rmse/est_size;
   rmse = rmse.array().sqrt();
+
+  cout << "tools: CalculateRMSE: after scan, retun rmse =" << rmse << endl;
   return rmse;
 }
 
@@ -49,18 +58,22 @@ MatrixXd Tools::CalculateJacobian(const VectorXd& x_state) {
 
   //if divide by 0, print erro message
   float combo = px*px + py*py;
+  float root_combo = std::sqrt(combo);
+  float combo_15 = std::pow(combo, 1.5);
+
   if (fabs(combo) < .0001) {
     std::cout << "tried to divide by 0" << std::endl;
-    Hj << 0, 0, 0, 0,
-          0, 0, 0, 0,
-          0, 0, 0, 0;
-  } else {
-    float root_combo = std::sqrt(combo);
-    float combo_15 = std::pow(combo, 1.5);
 
-    Hj << px/root_combo, py/root_combo, 0, 0,
-          -py/combo, px/combo, 0, 0,
+    //Hj << 0, 0, 0, 0,
+    //      0, 0, 0, 0,
+    //      0, 0, 0, 0;
+    return Hj;
+  } 
+
+
+    Hj <<                 px/root_combo,                py/root_combo,              0,            0,
+                              -py/combo,                      px/combo,             0,            0,
           py*(vx*py - vy*px) / combo_15, px*(vy*px - vx*py) / combo_15, px/root_combo, py/root_combo;
-  }
+  
   return Hj;
 }
