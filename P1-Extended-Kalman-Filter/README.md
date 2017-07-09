@@ -148,27 +148,27 @@ still be compilable with cmake and make.
 
 1, with only lidar or radar, I increase R whic is measurement error, as R increase to 10 times and 100 times, each technology will suffer from higher RMSE for all Px, Py, Vx, Vy
 
-[image1]: ./result/lidar_Rx1.png
+[image1]: ./result/lidar_Rx1.PNG
 
-![](result/lidar_Rx1.png)
+![](result/lidar_Rx1.PNG)
 
 [image1]
 
-![](result/lidar_Rx10.png)
+![](result/lidar_Rx10.PNG)
 
 
 
-![](result/Radar_Rx1.png)
+![](result/Radar_Rx1.PNG)
 
 
-![](result/Radar_Rx10.png)
+![](result/Radar_Rx10.PNG)
 
 
 2, compared with only use lidar and radar, lidar can have less RMSE on Px, Py i.e. more accurate for positions;  while radar is more accurate for Vx,Vy with less RMSE
 
 3, if merged both lidar and radar, then this fusion can beat single lidar or radar, i.e. there is benefits for fusion !
 
-![](result/lidar_Rx1_Radar_Rx1.png)
+![](result/lidar_Rx1_Radar_Rx1.PNG)
 
 
 4, as discussed, in EKF, for both lidar and radar prediction, we used both linear model   
