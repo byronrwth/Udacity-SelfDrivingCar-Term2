@@ -149,29 +149,30 @@ still be compilable with cmake and make.
 1, with only lidar or radar, I increase R whic is measurement error, as R increase to 10 times and 100 times, each technology will suffer from higher RMSE for all Px, Py, Vx, Vy
 
 
-![](result/lidar(R=[0.0225]) only.png)
+![](result/lidar_Rx1.png)
 
 
-![](result/lidar(R=[0.225]) only.png)
+![](result/lidar_Rx10.png)
 
 
 
-![](result/Radar(R=[0.09,0.0009,0.09]) only.png)
+![](result/Radar_Rx1.png)
 
 
-![](result/Radar(R=[0.9, 0.009, 0.9]) only.png)
+![](result/Radar_Rx10.png)
 
 
 2, compared with only use lidar and radar, lidar can have less RMSE on Px, Py i.e. more accurate for positions;  while radar is more accurate for Vx,Vy with less RMSE
 
 3, if merged both lidar and radar, then this fusion can beat single lidar or radar, i.e. there is benefits for fusion !
 
-![](result/lidar(R=[0.0225]) + Radar(R=[0.09,0.0009,0.09]).png)
+![](result/lidar_Rx1_Radar_Rx1.png)
 
 
 4, as discussed, in EKF, for both lidar and radar prediction, we used both linear model   
-	x_ = F_ * x_;
 
-	P_ = F_ * P_ * F_.transpose() + Q_; 
+x_ = F_ * x_;
 
-	here F_ consists of only 1s,0s an dt, becuase we assume there is no velocity acceleration, so we don"t calculate Jacobian of F_ but only use F_ .
+P_ = F_ * P_ * F_.transpose() + Q_; 
+
+here F_ consists of only 1s,0s an dt, becuase we assume there is no velocity acceleration, so we don"t calculate Jacobian of F_ but only use F_ .
