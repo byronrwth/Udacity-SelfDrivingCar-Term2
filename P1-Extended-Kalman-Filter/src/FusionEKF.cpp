@@ -31,24 +31,28 @@ FusionEKF::FusionEKF() {
   //      0, 0.225;
 
   // test with 100 times error
-  //R_laser_ << 2.25, 0,
-  //      0, 2.25;
+  
+  /*
+  R_laser_ << 2.25, 0,
+        0, 2.25; */
 
 
   //measurement covariance matrix - radar
   R_radar_ << 0.09, 0, 0,
         0, 0.0009, 0,
         0, 0, 0.09;
-
+  
   // 10 times
-  //R_radar_ << 0.9, 0, 0,
-  //      0, 0.009, 0,
-  //      0, 0, 0.9;
+  /*
+  R_radar_ << 0.9, 0, 0,
+        0, 0.009, 0,
+        0, 0, 0.9; */
 
   // test with 100 times error
-  //R_radar_ << 9, 0, 0,
-  //      0, 0.09, 0,
-  //      0, 0, 9;
+  /*
+  R_radar_ << 9, 0, 0,
+      0, 0.09, 0,
+        0, 0, 9; */
 
   /**
   TODO:
@@ -121,14 +125,15 @@ void FusionEKF::ProcessMeasurement(const MeasurementPackage &measurement_pack) {
       double ro = measurement_pack.raw_measurements_[0];  // distance to pedestrian
       double phi = measurement_pack.raw_measurements_[1];  // bearing angle
 
-      // init at: ekf_.x_ = [ x, y, vx =0, vy = 0] 4 *1
-      ekf_.x_ << ro*std::cos(phi), ro*std::sin(phi), 0, 0;
+      double rho_dot = measurement_pack.raw_measurements_[2]; // range rate
 
-    }
-    else if (measurement_pack.sensor_type_ == MeasurementPackage::LASER) {
-      /**
-      Initialize state.
-      */
+      // init at: ekf_.x_ = [ x, y, vx =0, vy = 0] 4 *1
+      ekf_.x_ << ro*std::cos(phi), ro*std::sin(phi), rho_dot * cos(phi), rho_dot * sin(phi);
+
+    } else if (measurement_pack.sensor_type_ == MeasurementPackage::LASER) {
+      
+      //Initialize state.
+      
 
 
       // init at:  x, y, vx =0, vy = 0
@@ -216,8 +221,7 @@ void FusionEKF::ProcessMeasurement(const MeasurementPackage &measurement_pack) {
 
     ekf_.UpdateEKF(measurement_pack.raw_measurements_); //ro, theta, ro_dot;
 
-  } 
-  else if (measurement_pack.sensor_type_ == MeasurementPackage::LASER)
+  }else if (measurement_pack.sensor_type_ == MeasurementPackage::LASER)
   {
     // Laser updates
     ekf_.H_ = H_laser_;
