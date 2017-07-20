@@ -134,7 +134,7 @@ void UKF::UpdateState(VectorXd* x_out, MatrixXd* P_out) {
 
   //update state mean and covariance matrix
   x = x + K * z_diff;
-  P = P - K*S*K.transpose();
+  P = P - K * S * K.transpose();
 
 
 /*******************************************************************************
