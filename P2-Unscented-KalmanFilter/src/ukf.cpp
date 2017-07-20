@@ -23,12 +23,14 @@ UKF::UKF() {
   // initial covariance matrix
   P_ = MatrixXd(5, 5);
 
+  /* These will need to be adjusted in order to get your Kalman filter working */
   // Process noise standard deviation longitudinal acceleration in m/s^2
   std_a_ = 30;
 
   // Process noise standard deviation yaw acceleration in rad/s^2
   std_yawdd_ = 30;
 
+  /* The measurement noise values should not be changed; these are provided by the sensor manufacturer. */
   // Laser measurement noise standard deviation position1 in m
   std_laspx_ = 0.15;
 
@@ -66,6 +68,29 @@ void UKF::ProcessMeasurement(MeasurementPackage meas_package) {
   Complete this function! Make sure you switch between lidar and radar
   measurements.
   */
+  if (!is_initialized_) { // init
+
+  }
+
+  long long incoming = measurement_pack.timestamp_;
+  float dt = (incoming - previous_timestamp_) / 1000000.0;
+
+  // ekf_.F ?
+
+  // ekf_.Q ?
+
+
+  // predict 
+  ukf.Prediction(dt);  
+
+  // update
+  if (  ) { //lidar
+    ukf.UpdateLidar(meas_package);
+  }
+
+  if (  ) { // radar
+    ukf.UpdateRadar(meas_package);
+  }
 }
 
 /**
@@ -80,6 +105,27 @@ void UKF::Prediction(double delta_t) {
   Complete this function! Estimate the object's location. Modify the state
   vector, x_. Predict sigma points, the state, and the state covariance matrix.
   */
+
+   if () {  // lidar
+
+     //write predicted sigma point into right column
+     Xsig_pred(0,i) = px_p;
+     Xsig_pred(1,i) = py_p;
+     Xsig_pred(2,i) = v_p;
+     Xsig_pred(3,i) = yaw_p;
+     Xsig_pred(4,i) = yawd_p;
+
+   }
+
+   if () {  // radar
+
+
+     // measurement model
+     Zsig(0,i) = sqrt(p_x*p_x + p_y*p_y);                        //r
+     Zsig(1,i) = atan2(p_y,p_x);                                 //phi
+     Zsig(2,i) = (p_x*v1 + p_y*v2 ) / sqrt(p_x*p_x + p_y*p_y);   //r_dot
+
+   }
 }
 
 /**
