@@ -118,8 +118,9 @@ void UKF::PredictRadarMeasurement(VectorXd* z_out, MatrixXd* S_out) {
    }
 
    //add measurement noise covariance matrix
-   MatrixXd R = MatrixXd(n_z,n_z);
-   R <<    std_radr*std_radr, 0, 0,
+  MatrixXd R = MatrixXd(n_z,n_z);
+  R <<    
+           std_radr*std_radr, 0, 0,
            0, std_radphi*std_radphi, 0,
            0, 0,std_radrd*std_radrd;
            
