@@ -30,6 +30,11 @@ UKF::UKF() {
 
   // initial covariance matrix
   P_ = MatrixXd(5, 5); // (x'-x)(x'-x).transpose()
+  P_ << 1, 0, 0, 0, 0,
+        0, 1, 0, 0, 0,
+        0, 0, 1, 0, 0,
+        0, 0, 0, 1, 0,
+        0, 0, 0, 0, 1;
 
   /* These will need to be adjusted in order to get your Kalman filter working */
   // Process noise standard deviation longitudinal acceleration in m/s^2
@@ -61,22 +66,36 @@ UKF::UKF() {
 
   Hint: one or more values initialized above might be wildly off...
   */
-  // initialize variables in Kalman Filter
+  // initialize variables defined in ukf.h
   is_initialized_ = false ;
 
-  Xsig_pred_ = MatrixXd(5, 15);
+  n_x_ = 5;
+
+  n_aug_ = 7;
+  n_sig_ = 2 * n_aug_ + 1 ; 
+
+
+
+  //create sigma point matrix, when t = k
+  MatrixXd Xsig_ = MatrixXd(n_x_, 2 * n_x_ + 1);  // 5 * 11
+
+
+  //create augmented sigma point matrix, when t = k, adding noise into consideration
+  MatrixXd Xsig_aug_ = MatrixXd(n_aug_, 2 * n_aug_ + 1); // 7 * 15
+
+
+  // 7.20 Predicted sigma points as columns, when t = k+1
+  Xsig_pred_ = MatrixXd(n_x_,  2 * n_aug_ + 1); // notice! 5 * 15
+
 
   time_us_ = 0.0;
   weights_ = VectorXd(5);
 
-  n_x_ = 5;
-  n_aug_ = 7;
 
-  lambda_ = 1.0;
+
+  lambda_ = 3 - n_aug_;
 
   tools = Tools();
-
-  
 }
 
 UKF::~UKF() {}
@@ -115,8 +134,36 @@ void UKF::ProcessMeasurement(MeasurementPackage meas_package) {
     previous_timestamp_ = measurement_pack.timestamp_;
 
 
+    if (meas_package.sensor_type_ == MeasurementPackage::RADAR) {
+      
+      //Convert radar from polar to cartesian coordinates and initialize state.
+      
+
+      //meas_package.raw_measurements_ << ro,theta, ro_dot;
+      double ro = measurement_pack.raw_measurements_[0];  // distance to pedestrian
+      double phi = measurement_pack.raw_measurements_[1];  // bearing angle
+
+      double rho_dot = measurement_pack.raw_measurements_[2]; // range rate
+
+      // init at: ekf_.x_ = [ x, y, vx =0, vy = 0] 4 *1
+      x_ << ro*std::cos(phi), ro*std::sin(phi), rho_dot * cos(phi), rho_dot * sin(phi);
+
+    } else if (meas_package.sensor_type_ == MeasurementPackage::LASER) {
+      
+      //Initialize state.
+      
 
 
+      // init at:  x, y, vx =0, vy = 0
+      ekf_.x_ << measurement_pack.raw_measurements_[0], measurement_pack.raw_measurements_[1], 0, 0;
+
+    }
+
+
+
+    // done initializing, no need to predict or update
+    is_initialized_ = true;
+    return;
 
   }
 
@@ -129,7 +176,7 @@ void UKF::ProcessMeasurement(MeasurementPackage meas_package) {
 
 
   // SigmaPointPrediction
-  Prediction(dt);
+  ukf.Prediction(dt);
 
   // update
   if (  ) { //lidar
@@ -168,12 +215,12 @@ void UKF::Prediction(double delta_t) {
     for (int i = 0; i < 2 * n_aug + 1; i++)
     {
       //extract values for better readability
-      double p_x = Xsig_aug(0, i);
-      double p_y = Xsig_aug(1, i);
-      double v = Xsig_aug(2, i);
-      double yaw = Xsig_aug(3, i); // polar angle
-      double yawd = Xsig_aug(4, i); // polar angle rate
-      double nu_a = Xsig_aug(5, i); // v acceleration noise
+      double p_x      = Xsig_aug(0, i);
+      double p_y      = Xsig_aug(1, i);
+      double v        = Xsig_aug(2, i);
+      double yaw      = Xsig_aug(3, i); // polar angle
+      double yawd     = Xsig_aug(4, i); // polar angle rate
+      double nu_a     = Xsig_aug(5, i); // v acceleration noise
       double nu_yawdd = Xsig_aug(6, i); // angle rate acceleration noise
 
       //predicted state values
@@ -268,11 +315,11 @@ void UKF::Prediction(double delta_t) {
       // extract values for better readibility
       double p_x = Xsig_pred(0, i);
       double p_y = Xsig_pred(1, i);
-      double v   = Xsig_pred(2, i);
+      double v  = Xsig_pred(2, i);
       double yaw = Xsig_pred(3, i);
-      
-      double v1  = cos(yaw) * v;
-      double v2  = sin(yaw) * v;
+
+      double v1 = cos(yaw) * v;
+      double v2 = sin(yaw) * v;
 
       // measurement model
       Zsig(0, i) = sqrt(p_x * p_x + p_y * p_y);                   //r
@@ -308,7 +355,7 @@ void UKF::Prediction(double delta_t) {
       VectorXd z_diff = Zsig.col(i) - z_pred;
 
       //angle normalization
-      while (z_diff(1) > M_PI) z_diff(1)  -= 2.*M_PI;
+      while (z_diff(1) > M_PI) z_diff(1) -= 2.*M_PI;
       while (z_diff(1) < -M_PI) z_diff(1) += 2.*M_PI;
 
       S = S + weights(i) * z_diff * z_diff.transpose(); // 3 * 3
@@ -454,3 +501,7 @@ void UKF::UpdateRadar(MeasurementPackage meas_package) {
 
 
 }
+
+
+
+

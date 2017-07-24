@@ -77,7 +77,7 @@ void UKF::AugmentedSigmaPoints(MatrixXd* Xsig_out) {
   P_aug(6,6) = std_yawdd*std_yawdd;
 
   //create square root matrix
-  MatrixXd L = P_aug.llt().matrixL();
+  MatrixXd L = P_aug.llt().matrixL();  // 5 * 5
 
   //create augmented sigma points
   Xsig_aug.col(0)  = x_aug;
