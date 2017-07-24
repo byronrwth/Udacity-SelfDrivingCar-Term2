@@ -39,7 +39,7 @@ void UKF::SigmaPointPrediction(MatrixXd* Xsig_out) {
          0,        0,        0,        0,        0,        0,        0,  0.34641,         0,        0,        0,        0,        0,        0, -0.34641;
 
   //create matrix with predicted sigma points as columns
-  MatrixXd Xsig_pred = MatrixXd(n_x, 2 * n_aug + 1);
+  MatrixXd Xsig_pred = MatrixXd(n_x, 2 * n_aug + 1);   // careful !! 5 * 15
 
   double delta_t = 0.1; //time diff in sec
 /*******************************************************************************
