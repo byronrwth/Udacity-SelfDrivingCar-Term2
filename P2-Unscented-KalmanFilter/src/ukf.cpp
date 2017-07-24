@@ -19,9 +19,17 @@ UKF::UKF() {
 
   // initial state vector
   x_ = VectorXd(5);
+  /*
+  [ pos1 
+    pos2 
+    vel_abs 
+    yaw_angle 
+    yaw_rate
+    ]
+  */
 
   // initial covariance matrix
-  P_ = MatrixXd(5, 5);
+  P_ = MatrixXd(5, 5); // (x'-x)(x'-x).transpose()
 
   /* These will need to be adjusted in order to get your Kalman filter working */
   // Process noise standard deviation longitudinal acceleration in m/s^2
@@ -53,6 +61,22 @@ UKF::UKF() {
 
   Hint: one or more values initialized above might be wildly off...
   */
+  // initialize variables in Kalman Filter
+  is_initialized_ = false ;
+
+  Xsig_pred_ = MatrixXd(5, 15);
+
+  time_us_ = 0.0;
+  weights_ = VectorXd(5);
+
+  n_x_ = 5;
+  n_aug_ = 7;
+
+  lambda_ = 1.0;
+
+  tools = Tools();
+
+  
 }
 
 UKF::~UKF() {}
@@ -105,7 +129,7 @@ void UKF::ProcessMeasurement(MeasurementPackage meas_package) {
 
 
   // SigmaPointPrediction
-  ukf.Prediction(dt);
+  Prediction(dt);
 
   // update
   if (  ) { //lidar
@@ -244,11 +268,11 @@ void UKF::Prediction(double delta_t) {
       // extract values for better readibility
       double p_x = Xsig_pred(0, i);
       double p_y = Xsig_pred(1, i);
-      double v  = Xsig_pred(2, i);
+      double v   = Xsig_pred(2, i);
       double yaw = Xsig_pred(3, i);
-
-      double v1 = cos(yaw) * v;
-      double v2 = sin(yaw) * v;
+      
+      double v1  = cos(yaw) * v;
+      double v2  = sin(yaw) * v;
 
       // measurement model
       Zsig(0, i) = sqrt(p_x * p_x + p_y * p_y);                   //r
@@ -284,7 +308,7 @@ void UKF::Prediction(double delta_t) {
       VectorXd z_diff = Zsig.col(i) - z_pred;
 
       //angle normalization
-      while (z_diff(1) > M_PI) z_diff(1) -= 2.*M_PI;
+      while (z_diff(1) > M_PI) z_diff(1)  -= 2.*M_PI;
       while (z_diff(1) < -M_PI) z_diff(1) += 2.*M_PI;
 
       S = S + weights(i) * z_diff * z_diff.transpose(); // 3 * 3
@@ -292,9 +316,10 @@ void UKF::Prediction(double delta_t) {
 
     //add measurement noise covariance matrix
     MatrixXd R = MatrixXd(n_z, n_z);
-    R <<    std_radr*std_radr, 0, 0,
-    0, std_radphi*std_radphi, 0,
-    0, 0, std_radrd*std_radrd;
+    R <<    
+    std_radr * std_radr,                        0,                    0,
+                      0,  std_radphi * std_radphi,                    0,
+                      0,                        0,  std_radrd*std_radrd;
 
     S = S + R;
     /*
