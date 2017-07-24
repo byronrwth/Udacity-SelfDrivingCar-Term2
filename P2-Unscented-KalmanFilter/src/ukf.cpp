@@ -19,9 +19,22 @@ UKF::UKF() {
 
   // initial state vector
   x_ = VectorXd(5);
+  /*
+  [ pos1 
+    pos2 
+    vel_abs 
+    yaw_angle 
+    yaw_rate
+    ]
+  */
 
   // initial covariance matrix
-  P_ = MatrixXd(5, 5);
+  P_ = MatrixXd(5, 5); // (x'-x)(x'-x).transpose()
+  P_ << 1, 0, 0, 0, 0,
+        0, 1, 0, 0, 0,
+        0, 0, 1, 0, 0,
+        0, 0, 0, 1, 0,
+        0, 0, 0, 0, 1;
 
   /* These will need to be adjusted in order to get your Kalman filter working */
   // Process noise standard deviation longitudinal acceleration in m/s^2
@@ -53,6 +66,36 @@ UKF::UKF() {
 
   Hint: one or more values initialized above might be wildly off...
   */
+  // initialize variables defined in ukf.h
+  is_initialized_ = false ;
+
+  n_x_ = 5;
+
+  n_aug_ = 7;
+  n_sig_ = 2 * n_aug_ + 1 ; 
+
+  // Predicted sigma points as columns
+  Xsig_pred_ = MatrixXd(n_x_,  2 * n_x_ + 1); // from (2 * n_x_ + 1)* x sigma points to predict (n_x_)* x' points
+
+  //create sigma point matrix
+  MatrixXd Xsig_ = MatrixXd(n_x_, 2 * n_x_ + 1);
+
+
+  //create augmented sigma point matrix
+  MatrixXd Xsig_aug_ = MatrixXd(n_aug_, 2 * n_aug_ + 1);
+
+
+
+
+
+  time_us_ = 0.0;
+  weights_ = VectorXd(5);
+
+
+
+  lambda_ = 3 - n_aug_;
+
+  tools = Tools();
 }
 
 UKF::~UKF() {}
@@ -91,8 +134,36 @@ void UKF::ProcessMeasurement(MeasurementPackage meas_package) {
     previous_timestamp_ = measurement_pack.timestamp_;
 
 
+    if (meas_package.sensor_type_ == MeasurementPackage::RADAR) {
+      
+      //Convert radar from polar to cartesian coordinates and initialize state.
+      
+
+      //meas_package.raw_measurements_ << ro,theta, ro_dot;
+      double ro = measurement_pack.raw_measurements_[0];  // distance to pedestrian
+      double phi = measurement_pack.raw_measurements_[1];  // bearing angle
+
+      double rho_dot = measurement_pack.raw_measurements_[2]; // range rate
+
+      // init at: ekf_.x_ = [ x, y, vx =0, vy = 0] 4 *1
+      x_ << ro*std::cos(phi), ro*std::sin(phi), rho_dot * cos(phi), rho_dot * sin(phi);
+
+    } else if (meas_package.sensor_type_ == MeasurementPackage::LASER) {
+      
+      //Initialize state.
+      
 
 
+      // init at:  x, y, vx =0, vy = 0
+      ekf_.x_ << measurement_pack.raw_measurements_[0], measurement_pack.raw_measurements_[1], 0, 0;
+
+    }
+
+
+
+    // done initializing, no need to predict or update
+    is_initialized_ = true;
+    return;
 
   }
 
