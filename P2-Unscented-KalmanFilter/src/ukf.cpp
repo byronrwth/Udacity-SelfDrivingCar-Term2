@@ -89,11 +89,34 @@ UKF::UKF() {
 
 
   time_us_ = 0.0;
-  weights_ = VectorXd(5);
 
 
 
   lambda_ = 3 - n_aug_;
+
+ //set vector for weights
+ VectorXd weights = VectorXd(2 * n_aug_+1);
+
+ double weight_0 = lambda_ /(lambda_ + n_aug_);
+
+ weights(0) = weight_0;
+
+ for (int i=1; i< 2 * n_aug_ +1; i++) {  
+   double weight = 0.5/(n_aug_ + lambda_ );
+   weights(i) = weight;
+ }
+
+
+  R_laser_ <<
+  std_a_ * std_a_ ,                         0,
+                  0, std_yawdd_ * std_yawdd_;
+
+
+  R_radar_ <<    
+           std_radr_ * std_radr_,                           0,                        0,
+                                0,  std_radphi_ * std_radphi_,                        0,
+                                0,                          0,  std_radrd_ * std_radrd_;
+
 
   tools = Tools();
 }
@@ -125,6 +148,11 @@ void UKF::ProcessMeasurement(MeasurementPackage meas_package) {
       ]
     */
 
+     double px;
+     double py; 
+     double vx; 
+     double vy;
+
     // state covariance matrix P_ = MatrixXd(5, 5);
 
 
@@ -146,7 +174,10 @@ void UKF::ProcessMeasurement(MeasurementPackage meas_package) {
       double rho_dot = measurement_pack.raw_measurements_[2]; // range rate
 
       // init at: ekf_.x_ = [ x, y, vx =0, vy = 0] 4 *1
-      x_ << ro*std::cos(phi), ro*std::sin(phi), rho_dot * cos(phi), rho_dot * sin(phi);
+     px =  ro * std::cos(phi);
+     py =  ro * std::sin(phi);
+     vx = rho_dot * cos(phi);
+     vy =  rho_dot * sin(phi);
 
     } else if (meas_package.sensor_type_ == MeasurementPackage::LASER) {
       
@@ -155,7 +186,10 @@ void UKF::ProcessMeasurement(MeasurementPackage meas_package) {
 
 
       // init at:  x, y, vx =0, vy = 0
-      ekf_.x_ << measurement_pack.raw_measurements_[0], measurement_pack.raw_measurements_[1], 0, 0;
+      px = measurement_pack.raw_measurements_[0];
+      py = measurement_pack.raw_measurements_[1];
+      vx = 0;
+      vy = 0;
 
     }
 
