@@ -59,6 +59,21 @@ UKF::UKF() {
   // Radar measurement noise standard deviation radius change in m/s
   std_radrd_ = 0.3;
 
+  // R matrices for measurement noise !!
+  R_radar_ = MatrixXd(3,3);
+  R_radar_ <<
+    std_radr_*std_radr_,                       0,                     0,
+                      0, std_radphi_*std_radphi_,                     0,
+                      0,                       0, std_radrd_*std_radrd_;
+  
+  // laser measurement has only position info !!
+  R_laser_ = MatrixXd(2,2);
+  R_laser_ <<
+  std_laspx_*std_laspx_,                     0,
+                      0, std_laspy_*std_laspy_;
+  
+
+
   /**
   TODO:
 
@@ -71,7 +86,8 @@ UKF::UKF() {
 
   n_x_ = 5;
 
-  n_aug_ = 7;
+  n_aug_ = 7;  // added process noise / motion acceleration noise
+
   n_sig_ = 2 * n_aug_ + 1 ; 
 
 
@@ -89,11 +105,23 @@ UKF::UKF() {
 
 
   time_us_ = 0.0;
-  weights_ = VectorXd(5);
 
 
 
   lambda_ = 3 - n_aug_;
+
+
+  weights_ = VectorXd(n_sig_);
+
+  double weight_0 = lambda_ /(lambda_ + n_aug_ );
+  weights_(0) = weight_0;
+  for (int i=1; i < n_sig_ ; i++) {  
+    double weight = 0.5 /(n_aug_ + lambda_ );
+    weights_(i) = weight;
+  }
+
+
+
 
   tools = Tools();
 }
@@ -111,6 +139,9 @@ void UKF::ProcessMeasurement(MeasurementPackage meas_package) {
   Complete this function! Make sure you switch between lidar and radar
   measurements.
   */
+
+  double Px, Py, Vx, Vy;
+
   if (!is_initialized_) { // init
 
     // use first measurement either from Lidar or Radar to initialize
@@ -129,7 +160,7 @@ void UKF::ProcessMeasurement(MeasurementPackage meas_package) {
 
 
     //debug
-    cout << "FusionEKF: timestamp=" << measurement_pack.timestamp_ << endl;
+    cout << "UKF init: timestamp=" << measurement_pack.timestamp_ << endl;
 
     previous_timestamp_ = measurement_pack.timestamp_;
 
@@ -145,19 +176,35 @@ void UKF::ProcessMeasurement(MeasurementPackage meas_package) {
 
       double rho_dot = measurement_pack.raw_measurements_[2]; // range rate
 
-      // init at: ekf_.x_ = [ x, y, vx =0, vy = 0] 4 *1
-      x_ << ro*std::cos(phi), ro*std::sin(phi), rho_dot * cos(phi), rho_dot * sin(phi);
+      // init at: ekf_.x_ = [ x, y, vx != 0 , vy != 0] 4 *1
+      Px = ro*std::cos(phi);
+      Py = ro*std::sin(phi);
+      Vx = rho_dot * cos(phi);
+      Vy = rho_dot * sin(phi);
+
+
 
     } else if (meas_package.sensor_type_ == MeasurementPackage::LASER) {
       
       //Initialize state.
-      
-
 
       // init at:  x, y, vx =0, vy = 0
-      ekf_.x_ << measurement_pack.raw_measurements_[0], measurement_pack.raw_measurements_[1], 0, 0;
+      Px = measurement_pack.raw_measurements_[0]; 
+      Py = measurement_pack.raw_measurements_[1];
+      Vx = 0;
+      Vy = 0;
 
     }
+
+    // Handle small px, py  ??
+
+
+
+    // transfer above linear EKF state vector to nonlinear UKF vector:
+    x_ << Px, Py, sqrt(pow(Vx, 2) + pow(Vy, 2)), 0, 0;
+    // set init yaw = 0, yawrate = 0 ?
+
+    cout << "init x_: " << x_ << endl;
 
 
 
@@ -170,13 +217,11 @@ void UKF::ProcessMeasurement(MeasurementPackage meas_package) {
   long long incoming = measurement_pack.timestamp_;
   float dt = (incoming - previous_timestamp_) / 1000000.0;
 
-  // ekf_.F ?
-
-  // ekf_.Q ?
 
 
   // SigmaPointPrediction
   ukf.Prediction(dt);
+  // generate X(k+1) of 7 * 15 sigma points
 
   // update
   if (  ) { //lidar
@@ -307,7 +352,7 @@ void UKF::Prediction(double delta_t) {
   }
 
   if () {  // radar
-
+    // generate augmented sigma points at time t = k+1:
 
     //transform sigma points into measurement space
     for (int i = 0; i < 2 * n_aug + 1; i++) {  //2n+1 simga points
