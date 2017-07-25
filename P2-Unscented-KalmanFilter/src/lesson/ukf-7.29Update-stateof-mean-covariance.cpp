@@ -51,8 +51,8 @@ void UKF::UpdateState(VectorXd* x_out, MatrixXd* P_out) {
           0.352, 0.29997, 0.46212, 0.37633,  0.4841, 0.41872,   0.352, 0.38744, 0.40562, 0.24347, 0.32926,  0.2214, 0.28687,   0.352, 0.318159;
 
   //create example vector for predicted state mean
-  VectorXd x = VectorXd(n_x);
-  x <<
+  VectorXd x_predmean = VectorXd(n_x);
+  x_predmean <<
      5.93637,
      1.49035,
      2.20528,
@@ -76,8 +76,8 @@ void UKF::UpdateState(VectorXd* x_out, MatrixXd* P_out) {
       2.1104,  2.2188,  2.0639,   2.187,  2.0341,  2.1061,  2.1450,  2.1092,  2.0016,   2.129,  2.0346,  2.1651,  2.1145,  2.0786,  2.11295;
 
   //create example vector for mean predicted measurement
-  VectorXd z_pred = VectorXd(n_z);
-  z_pred <<
+  VectorXd z_predmean = VectorXd(n_z);
+  z_predmean <<
       6.12155,
      0.245993,
       2.10313;
@@ -90,8 +90,8 @@ void UKF::UpdateState(VectorXd* x_out, MatrixXd* P_out) {
      0.00407016, -0.000770652,    0.0180917;
 
   //create example vector for incoming radar measurement
-  VectorXd z = VectorXd(n_z);
-  z <<
+  VectorXd z_meas = VectorXd(n_z);
+  z_meas <<
       5.9214,   //rho in m
       0.2187,   //phi in rad
       2.0062;   //rho_dot in m/s
@@ -108,32 +108,32 @@ void UKF::UpdateState(VectorXd* x_out, MatrixXd* P_out) {
   for (int i = 0; i < 2 * n_aug + 1; i++) {  //2n+1 simga points
 
     //residual
-    VectorXd z_diff = Zsig.col(i) - z_pred;
+    VectorXd x_predmean = Zsig.col(i) - z_predmean;
     //angle normalization
-    while (z_diff(1)> M_PI) z_diff(1)-=2.*M_PI;
-    while (z_diff(1)<-M_PI) z_diff(1)+=2.*M_PI;
+    while (z_preddiff(1)> M_PI) z_preddiff(1)-=2.*M_PI;
+    while (z_preddiff(1)<-M_PI) z_preddiff(1)+=2.*M_PI;
 
     // state difference
-    VectorXd x_diff = Xsig_pred.col(i) - x;
+    VectorXd x_diff = Xsig_pred.col(i) - x_predmean;
     //angle normalization
     while (x_diff(3)> M_PI) x_diff(3)-=2.*M_PI;
     while (x_diff(3)<-M_PI) x_diff(3)+=2.*M_PI;
 
-    Tc = Tc + weights(i) * x_diff * z_diff.transpose();
+    Tc = Tc + weights(i) * x_diff * z_preddiff.transpose();
   }
 
   //Kalman gain K;
   MatrixXd K = Tc * S.inverse();
 
   //residual
-  VectorXd z_diff = z - z_pred;
+  VectorXd z_measdiff = z_meas - z_predmean;
 
   //angle normalization
-  while (z_diff(1)> M_PI) z_diff(1)-=2.*M_PI;
-  while (z_diff(1)<-M_PI) z_diff(1)+=2.*M_PI;
+  while (z_measdiff(1)> M_PI) z_measdiff(1)-=2.*M_PI;
+  while (z_measdiff(1)<-M_PI) z_measdiff(1)+=2.*M_PI;
 
   //update state mean and covariance matrix
-  x = x + K * z_diff;
+  x_predmean = x_predmean + K * z_measdiff;
   P = P - K * S * K.transpose();
 
 
@@ -142,8 +142,38 @@ void UKF::UpdateState(VectorXd* x_out, MatrixXd* P_out) {
  ******************************************************************************/
 
   //print result
-  std::cout << "Updated state x: " << std::endl << x << std::endl;
+  std::cout << "Updated state x: " << std::endl << x_predmean << std::endl;
   std::cout << "Updated state covariance P: " << std::endl << P << std::endl;
+
+/*
+Tc: 
+  0.00468603 -0.000596985   0.00509758
+ 0.000295054   0.00181452  -0.00356734
+  0.00367483  0.000100885   0.00512793
+-0.000997283   0.00169207  -0.00571966
+-0.000983935   0.00137287  -0.00547673
+
+K: 
+ 0.0380071  -0.651821   0.245447
+ 0.0106846    2.84272 -0.0784932
+ 0.0267093   0.544556   0.300628
+ 0.0021926      2.477  -0.211129
+0.00194305    1.94881  -0.220144
+
+Updated state x: 
+ 5.92276
+ 1.41823
+ 2.15593
+0.489274
+0.321338
+
+Updated state covariance P: 
+  0.00361579 -0.000357881   0.00208316 -0.000937196  -0.00071727
+-0.000357881   0.00539867   0.00156846   0.00455342   0.00358885
+  0.00208316   0.00156846   0.00410651   0.00160333   0.00171811
+-0.000937196   0.00455342   0.00160333   0.00652634   0.00669436
+ -0.00071719   0.00358884   0.00171811   0.00669426   0.00881797
+*/
 
   //write result
   *x_out = x;

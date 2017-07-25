@@ -129,7 +129,7 @@ void FusionEKF::ProcessMeasurement(const MeasurementPackage &measurement_pack) {
 
       double rho_dot = measurement_pack.raw_measurements_[2]; // range rate
 
-      // init at: ekf_.x_ = [ x, y, vx =0, vy = 0] 4 *1
+      // init at: ekf_.x_ = [ x, y, vx , vy ] 4 *1
       ekf_.x_ << ro*std::cos(phi), ro*std::sin(phi), rho_dot * cos(phi), rho_dot * sin(phi);
 
     } else if (measurement_pack.sensor_type_ == MeasurementPackage::LASER) {
