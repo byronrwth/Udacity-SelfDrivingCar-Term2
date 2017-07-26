@@ -298,7 +298,11 @@ void UKF::Prediction(double delta_t) {
     ********************************/
     MatrixXd A = P_.llt().matrixL();
     //set first column of sigma point matrix
-    Xsig_.col(0)  = x_; //x_ << Px, Py, sqrt(pow(Vx, 2) + pow(Vy, 2)), yaw, yawrate;
+
+    /*
+      here x_ and P_  come either from init value, or from last timeframe update ( either lidar or radar) output !!
+    */
+    Xsig_.col(0)  = x_ ; //x_ << Px, Py, sqrt(pow(Vx, 2) + pow(Vy, 2)), yaw, yawrate;
 
 
     //set remaining sigma points
@@ -444,10 +448,10 @@ Xsig_pred_ <<
      7.23 calc mean of signma prediction and covariance P  at t=k+1
     ********************************/
 
-  //predicted state mean
-    x_predmean.fill(0.0);
+  //predicted state mean to be used global
+    x_.fill(0.0);
     for (int i = 0; i < 2 * n_aug_ + 1; i++) {  //iterate over sigma points
-      x_predmean = x_predmean + weights(i) * Xsig_pred_.col(i);
+      x_ = x_ + weights(i) * Xsig_pred_.col(i);
     }
 
 /* e.g.
@@ -459,12 +463,12 @@ x_predmean <<
 0.353577 ;
 */
 
-  //predicted state covariance matrix
-    P_pred.fill(0.0);
+  //predicted state covariance matrix to be used global
+    P_.fill(0.0);
     for (int i = 0; i < 2 * n_aug + 1; i++) {  //iterate over sigma points
 
       // state difference
-      VectorXd x_diff = Xsig_pred_.col(i) - x_predmean;  // 5 * 1
+      VectorXd x_diff = Xsig_pred_.col(i) - x_ ;  // 5 * 1
 
       //angle normalization
       while (x_diff(3)> M_PI) {
@@ -478,7 +482,7 @@ x_predmean <<
 
       std::cout << "tmp" << tmp << std::endl;
 
-      P_pred = P_pred + tmp ; // 5 * 5
+      P_ = P_ + tmp ; // 5 * 5
     }
 /*
 e.g.
@@ -495,6 +499,8 @@ P_pred <<
 */
 
   }// radar or lidar
+
+  // now output x_, P_ to next timeframe for update either lidar or radar !!
 }//prediction
 
 /**
@@ -515,7 +521,7 @@ void UKF::UpdateLidar(MeasurementPackage meas_package) {
   n_z_lidar = 2;
 
   //create matrix for sigma points in measurement space
-  MatrixXd Zsig_ = MatrixXd(n_z_lidar, 2 * n_aug_ + 1);
+  MatrixXd Zsig_ = MatrixXd(n_z_lidar, 2 * n_aug_ + 1); // 2 * 15
 
   //mean predicted measurement
   VectorXd z_pred = VectorXd(n_z_lidar);
@@ -538,7 +544,7 @@ void UKF::UpdateLidar(MeasurementPackage meas_package) {
 
      // measurement model
      Zsig_(0,i) = p_x;                        //px
-     Zsig_(1,i) = p_y;                                 //py
+     Zsig_(1,i) = p_y;                        //py
      
    }
 
@@ -561,7 +567,7 @@ void UKF::UpdateLidar(MeasurementPackage meas_package) {
      while (z_diff(1)> M_PI) z_diff(1)-=2.*M_PI;
      while (z_diff(1)<-M_PI) z_diff(1)+=2.*M_PI;
 
-     S = S + weights(i) * z_diff * z_diff.transpose(); // 3 * 3
+     S = S + weights(i) * z_diff * z_diff.transpose(); // 2*2
    }
 
    //add measurement noise covariance matrix
@@ -578,7 +584,7 @@ void UKF::UpdateLidar(MeasurementPackage meas_package) {
    for (int i = 0; i < 2 * n_aug_ + 1; i++) {  //2n+1 simga points
 
      //residual
-     VectorXd z_diff = Zsig_.col(i) - z_pred_;
+     VectorXd z_diff = Zsig_.col(i) - z_pred;
 
 
      //angle normalization
@@ -586,7 +592,7 @@ void UKF::UpdateLidar(MeasurementPackage meas_package) {
      while (z_diff(1) < -M_PI) z_diff(1) += 2.*M_PI;
 
      // state difference
-     VectorXd x_diff = Xsig_pred_.col(i) - x;
+     VectorXd x_diff = Xsig_pred_.col(i) - x_ ; // x_ is global state vector from last time frame
 
      //angle normalization
      while (x_diff(3) > M_PI) x_diff(3) -= 2.*M_PI;
@@ -606,9 +612,9 @@ void UKF::UpdateLidar(MeasurementPackage meas_package) {
    while (z_measdiff(1)<-M_PI) z_measdiff(1)+=2.*M_PI;
 
    //update state mean and covariance matrix
-   x_predmean = x_predmean + K * z_measdiff;
+   x_ = x_ + K * z_measdiff;
 
-   P = P - K * S * K.transpose();
+   P_ = P_ - K * S * K.transpose();
 
 }
 
@@ -761,9 +767,9 @@ S:
   while (z_measdiff(1)<-M_PI) z_measdiff(1)+=2.*M_PI;
 
   //update state mean and covariance matrix
-  x_predmean = x_predmean + K * z_measdiff; //get x_predmean, store it and use it for next timeframe
-  P = P - K * S * K.transpose();
-  
+  x_ = x_ + K * z_measdiff; //get x_predmean, store it and use it for next timeframe
+  P_ = P_ - K * S * K.transpose();
+
 /* output here x, P shall be used for next timeframe input !!
 Updated state x: 
  5.92276
