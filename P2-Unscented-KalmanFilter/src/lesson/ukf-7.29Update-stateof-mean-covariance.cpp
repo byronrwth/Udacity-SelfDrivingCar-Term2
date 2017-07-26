@@ -108,7 +108,7 @@ void UKF::UpdateState(VectorXd* x_out, MatrixXd* P_out) {
   for (int i = 0; i < 2 * n_aug + 1; i++) {  //2n+1 simga points
 
     //residual
-    VectorXd x_predmean = Zsig.col(i) - z_predmean;
+    VectorXd z_preddiff = Zsig.col(i) - z_predmean;
     //angle normalization
     while (z_preddiff(1)> M_PI) z_preddiff(1)-=2.*M_PI;
     while (z_preddiff(1)<-M_PI) z_preddiff(1)+=2.*M_PI;
@@ -119,7 +119,7 @@ void UKF::UpdateState(VectorXd* x_out, MatrixXd* P_out) {
     while (x_diff(3)> M_PI) x_diff(3)-=2.*M_PI;
     while (x_diff(3)<-M_PI) x_diff(3)+=2.*M_PI;
 
-    Tc = Tc + weights(i) * x_diff * z_preddiff.transpose();
+    Tc = Tc + weights(i) * x_diff * z_preddiff.transpose(); // 5 * 3
   }
 
   //Kalman gain K;
