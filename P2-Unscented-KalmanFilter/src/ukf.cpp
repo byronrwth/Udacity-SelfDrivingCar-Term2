@@ -227,31 +227,46 @@ void UKF::ProcessMeasurement(MeasurementPackage meas_package) {
 
   }
 
+
+  /*****************************************************************************
+   *  Prediction
+   ****************************************************************************/
+    
+  cout << "Start predicting" << endl;
+
   long long incoming = meas_package.timestamp_;
   float dt = (incoming - previous_timestamp_) / 1000000.0;
 
 
+  previous_timestamp_ = meas_package.timestamp_;
 
+ 
   // SigmaPointPrediction
   Prediction(dt);
   // generate X(k+1) of 7 * 15 sigma points
+  cout << "End prediction" << endl;
+
+
+  /*****************************************************************************
+   *  Update
+   ****************************************************************************/
 
   // update
   if ( meas_package.sensor_type_ == MeasurementPackage::LASER ) { //lidar
-
-    //ekf_.H_ = H_laser_;
-    //ekf_.R_ = R_laser_;
+    cout << "Laser update" << endl;
 
     UpdateLidar(meas_package);
   }
 
   if ( meas_package.sensor_type_ == MeasurementPackage::RADAR ) { // radar
-
-    //ekf_.H_ = tools.CalculateJacobian(ekf_.x_);
-    //ekf_.R_ = R_radar_;
+    cout << "Radar update" << endl;
 
     UpdateRadar(meas_package);
   }
+
+  // print NIS
+  cout << "NIS_radar_ = " << NIS_radar_  << endl;
+  cout << "NIS_laser_ = " << NIS_laser_  << endl;
 }
 
 /**
@@ -373,6 +388,9 @@ P_aug_ <<
       Xsig_aug_.col(i+1)       = x_aug_ + sqrt(lambda_ + n_aug_) * L.col(i);
       Xsig_aug_.col(i+1+n_aug_) = x_aug_ - sqrt(lambda_ + n_aug_) * L.col(i);
     }
+
+    //print result
+    std::cout << "Xsig_aug_ = " << std::endl << Xsig_aug_ << std::endl;
 /*
 e.g.
  Xsig_aug =
@@ -434,6 +452,9 @@ e.g.
       Xsig_pred_(3,i) = yaw_p;
       Xsig_pred_(4,i) = yawd_p;
     }
+
+    //print result
+    std::cout << "Xsig_pred_ = " << std::endl << Xsig_pred_ << std::endl;
 /*
 e.g.
 Xsig_pred_ <<
@@ -484,6 +505,13 @@ x_predmean <<
 
       P_ = P_ + tmp ; // 5 * 5
     }
+
+    //print result
+    std::cout << "Predicted state" << std::endl;
+    std::cout << x_ << std::endl;
+    std::cout << "Predicted covariance matrix" << std::endl;
+    std::cout << P_ << std::endl;
+
 /*
 e.g.
 P_pred <<
@@ -516,8 +544,15 @@ void UKF::UpdateLidar(MeasurementPackage meas_package) {
 
   You'll also need to calculate the lidar NIS.
   */
+
+  /**
+z_ = VectorXd(2);
+z_ << meas_package.raw_measurements_[0], meas_package.raw_measurements_[1];
+  */
   VectorXd z_meas = meas_package.raw_measurements_  ; // [ px, py]
  
+  std::cout << "lidar raw meas: " << std::endl << meas_package.raw_measurements_ << std::endl;
+
   int n_z_lidar = 2;
 
   //create matrix for sigma points in measurement space
@@ -556,6 +591,9 @@ void UKF::UpdateLidar(MeasurementPackage meas_package) {
        z_pred = z_pred + weights_(i) * Zsig.col(i);
    }
 
+  std::cout << "Zsig: " << Zsig << std::endl;
+
+  std::cout << "z_pred: " << z_pred << std::endl;
 
 
    S.fill(0.0);
@@ -574,7 +612,7 @@ void UKF::UpdateLidar(MeasurementPackage meas_package) {
 
            
    S = S + R_laser_; // 2 * 2
-
+   std::cout << "S: " << std::endl << S << std::endl;
 
    //create matrix for cross correlation Tc
    MatrixXd Tc = MatrixXd( n_x_, n_z_lidar);  // 5 * 2 for laser 
@@ -616,6 +654,19 @@ void UKF::UpdateLidar(MeasurementPackage meas_package) {
 
    P_ = P_ - K * S * K.transpose();
 
+   // Calculate NIS
+
+   double NIS = z_measdiff.transpose() * S.inverse() * z_measdiff;
+   if (use_radar_ == true) { 
+     NIS_radar_ = NIS;
+   }
+   else {
+     NIS_laser_ = NIS;
+   }
+
+   //print result
+   std::cout << "Updated state x: " << std::endl << x_ << std::endl;
+   std::cout << "Updated state covariance P: " << std::endl << P_ << std::endl;
 }
 
 /**
@@ -641,6 +692,8 @@ z <<
 
   */
   VectorXd z_meas = meas_package.raw_measurements_  ;
+  std::cout << "radar raw meas: " << std::endl << meas_package.raw_measurements_ << std::endl;
+
   int n_z = 3;
   //create matrix for sigma points in measurement space
   MatrixXd Zsig = MatrixXd(n_z, 2 * n_aug_ + 1);
@@ -713,6 +766,11 @@ z_predmean:
 
            
    S = S + R_radar_;
+
+   //print result
+   std::cout << "z_predmean: " << std::endl << z_predmean << std::endl;
+   std::cout << "S: " << std::endl << S << std::endl;
+
 /*
 
 e.g.
