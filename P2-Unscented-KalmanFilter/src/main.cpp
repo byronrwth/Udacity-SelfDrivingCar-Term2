@@ -112,7 +112,15 @@ int main()
 
     	  VectorXd estimate(4);
 
-    	  double p_x = ukf.x_(0);
+        /*
+        x_ <<
+            px_p;
+            py_p;
+            v_p;
+            yaw_p;
+            yawd_p;
+        */
+        double p_x = ukf.x_(0);
     	  double p_y = ukf.x_(1);
     	  double v  = ukf.x_(2);
     	  double yaw = ukf.x_(3);
