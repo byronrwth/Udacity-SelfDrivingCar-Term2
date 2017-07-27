@@ -67,7 +67,16 @@ public:
   ///* Sigma point spreading parameter
   double lambda_;
 
+  long long previous_timestamp_ ;
 
+  MatrixXd Xsig_ ;  // 5 * 11
+
+
+  //create augmented sigma point matrix, when t = k, adding noise into consideration
+  MatrixXd Xsig_aug_ ; // 7 * 15
+
+  MatrixXd R_radar_ ;
+  MatrixXd R_laser_ ;
   /**
    * Constructor
    */
