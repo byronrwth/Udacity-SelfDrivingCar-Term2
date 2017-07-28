@@ -62,15 +62,15 @@ UKF::UKF() {
   // R matrices for measurement noise !!
   R_radar_ = MatrixXd(3,3);
   R_radar_ <<
-    std_radr_*std_radr_,                       0,                     0,
-                      0, std_radphi_*std_radphi_,                     0,
-                      0,                       0, std_radrd_*std_radrd_;
+    std_radr_ * std_radr_,                       0,                     0,
+                      0, std_radphi_ * std_radphi_,                     0,
+                      0,                       0, std_radrd_ * std_radrd_;
   
   // laser measurement has only position info !!
   R_laser_ = MatrixXd(2,2);
   R_laser_ <<
-  std_laspx_*std_laspx_,                     0,
-                      0, std_laspy_*std_laspy_;
+  std_laspx_ * std_laspx_,                     0,
+                      0, std_laspy_ * std_laspy_;
   
 
 
@@ -186,8 +186,8 @@ void UKF::ProcessMeasurement(MeasurementPackage meas_package) {
 
 
       // init at: ekf_.x_ = [ x, y, vx != 0 , vy != 0] 4 *1
-      Px = ro*std::cos(phi);
-      Py = ro*std::sin(phi);
+      Px = ro * std::cos(phi);
+      Py = ro * std::sin(phi);
       Vx = rho_dot * cos(phi);
       Vy = rho_dot * sin(phi);
 
@@ -425,24 +425,24 @@ e.g.
 
       //avoid division by zero
       if (fabs(yawd) > 0.001) {
-          px_p = p_x + v/yawd * ( sin (yaw + yawd*delta_t) - sin(yaw));
-          py_p = p_y + v/yawd * ( cos(yaw) - cos(yaw+yawd*delta_t) );
+          px_p = p_x + v/yawd * ( sin (yaw + yawd * delta_t) - sin(yaw));
+          py_p = p_y + v/yawd * ( cos(yaw) - cos(yaw + yawd * delta_t) );
       }
       else {
-          px_p = p_x + v*delta_t*cos(yaw);
-          py_p = p_y + v*delta_t*sin(yaw);
+          px_p = p_x + v * delta_t * cos(yaw);
+          py_p = p_y + v * delta_t * sin(yaw);
       }
 
       double v_p = v;
-      double yaw_p = yaw + yawd*delta_t;
+      double yaw_p = yaw + yawd * delta_t;
       double yawd_p = yawd;
 
       //add noise
-      px_p = px_p + 0.5*nu_a*delta_t*delta_t * cos(yaw);
-      py_p = py_p + 0.5*nu_a*delta_t*delta_t * sin(yaw);
-      v_p = v_p + nu_a*delta_t;
+      px_p = px_p + 0.5 * nu_a * delta_t * delta_t * cos(yaw);
+      py_p = py_p + 0.5 * nu_a * delta_t * delta_t * sin(yaw);
+      v_p = v_p + nu_a * delta_t;
 
-      yaw_p = yaw_p + 0.5*nu_yawdd*delta_t*delta_t;
+      yaw_p = yaw_p + 0.5 * nu_yawdd * delta_t * delta_t;
       yawd_p = yawd_p + nu_yawdd * delta_t;
 
       //write predicted sigma point into right column
@@ -493,10 +493,10 @@ x_predmean <<
 
       //angle normalization
       while (x_diff(3)> M_PI) {
-        x_diff(3)-=2.*M_PI;
+        x_diff(3)-=2. * M_PI;
       }
       while (x_diff(3)<-M_PI) {
-        x_diff(3)+=2.*M_PI;
+        x_diff(3)+=2. * M_PI;
       }
 
       MatrixXd tmp = weights_(i) * x_diff * x_diff.transpose() ;  // 5 * 5
@@ -602,8 +602,8 @@ z_ << meas_package.raw_measurements_[0], meas_package.raw_measurements_[1];
      VectorXd z_preddiff = Zsig.col(i) - z_pred;
 
      //angle normalization
-     while (z_preddiff(1)> M_PI) z_preddiff(1)-=2.*M_PI;
-     while (z_preddiff(1)<-M_PI) z_preddiff(1)+=2.*M_PI;
+     while (z_preddiff(1)> M_PI) z_preddiff(1)-=2. * M_PI;
+     while (z_preddiff(1)<-M_PI) z_preddiff(1)+=2. * M_PI;
 
      S = S + weights_(i) * z_preddiff * z_preddiff.transpose(); // 2*2
    }
@@ -626,15 +626,15 @@ z_ << meas_package.raw_measurements_[0], meas_package.raw_measurements_[1];
 
 
      //angle normalization
-     while (z_preddiff(1) > M_PI) z_preddiff(1) -= 2.*M_PI;
-     while (z_preddiff(1) < -M_PI) z_preddiff(1) += 2.*M_PI;
+     while (z_preddiff(1) > M_PI) z_preddiff(1) -= 2. * M_PI;
+     while (z_preddiff(1) < -M_PI) z_preddiff(1) += 2. * M_PI;
 
      // state difference
      VectorXd x_diff = Xsig_pred_.col(i) - x_ ; // x_ is global state vector from last time frame
 
      //angle normalization
-     while (x_diff(3) > M_PI) x_diff(3) -= 2.*M_PI;
-     while (x_diff(3) < -M_PI) x_diff(3) += 2.*M_PI;
+     while (x_diff(3) > M_PI) x_diff(3) -= 2. * M_PI;
+     while (x_diff(3) < -M_PI) x_diff(3) += 2. * M_PI;
 
      Tc = Tc + weights_(i) * x_diff * z_preddiff.transpose();
    }
@@ -646,8 +646,8 @@ z_ << meas_package.raw_measurements_[0], meas_package.raw_measurements_[1];
    VectorXd z_measdiff = z_meas - z_pred;
 
    //angle normalization
-   while (z_measdiff(1)> M_PI) z_measdiff(1)-=2.*M_PI;
-   while (z_measdiff(1)<-M_PI) z_measdiff(1)+=2.*M_PI;
+   while (z_measdiff(1)> M_PI) z_measdiff(1)-=2. * M_PI;
+   while (z_measdiff(1)<-M_PI) z_measdiff(1)+=2. * M_PI;
 
    //update state mean and covariance matrix
    x_ = x_ + K * z_measdiff;
@@ -719,13 +719,13 @@ z <<
      double v  = Xsig_pred_(2,i);
      double yaw = Xsig_pred_(3,i);
 
-     double v1 = cos(yaw)*v;
-     double v2 = sin(yaw)*v;
+     double v1 = cos(yaw) * v;
+     double v2 = sin(yaw) * v;
 
      // measurement model
-     Zsig(0,i) = sqrt(p_x*p_x + p_y*p_y);                        //r
+     Zsig(0,i) = sqrt(p_x * p_x + p_y * p_y);                        //r
      Zsig(1,i) = atan2(p_y,p_x);                                 //phi
-     Zsig(2,i) = (p_x*v1 + p_y*v2 ) / sqrt(p_x*p_x + p_y*p_y);   //r_dot
+     Zsig(2,i) = (p_x * v1 + p_y * v2 ) / sqrt(p_x * p_x + p_y * p_y);   //r_dot
    }
 /*
 e.g.
@@ -738,7 +738,7 @@ Zsig:
 
 
    z_predmean.fill(0.0);
-   for (int i=0; i < 2*n_aug_ +1; i++) {
+   for (int i=0; i < 2 * n_aug_ +1; i++) {
        z_predmean = z_predmean + weights_(i) * Zsig.col(i);
    }
 /*
@@ -756,8 +756,8 @@ z_predmean:
      VectorXd z_preddiff = Zsig.col(i) - z_predmean;
 
      //angle normalization
-     while (z_preddiff(1)> M_PI) z_preddiff(1)-=2.*M_PI;
-     while (z_preddiff(1)<-M_PI) z_preddiff(1)+=2.*M_PI;
+     while (z_preddiff(1)> M_PI) z_preddiff(1)-=2. * M_PI;
+     while (z_preddiff(1)<-M_PI) z_preddiff(1)+=2. * M_PI;
 
      S = S + weights_(i) * z_preddiff * z_preddiff.transpose(); // 3 * 3
    }
@@ -797,14 +797,14 @@ S:
     //residual
     VectorXd z_preddiff = Zsig.col(i) - z_predmean;
     //angle normalization
-    while (z_preddiff(1) > M_PI) z_preddiff(1) -= 2.*M_PI;
-    while (z_preddiff(1) < -M_PI) z_preddiff(1) += 2.*M_PI;
+    while (z_preddiff(1) > M_PI) z_preddiff(1) -= 2. * M_PI;
+    while (z_preddiff(1) < -M_PI) z_preddiff(1) += 2. * M_PI;
 
     // state difference
     VectorXd x_diff = Xsig_pred_.col(i) - x_ ;
     //angle normalization
-    while (x_diff(3) > M_PI) x_diff(3) -= 2.*M_PI;
-    while (x_diff(3) < -M_PI) x_diff(3) += 2.*M_PI;
+    while (x_diff(3) > M_PI) x_diff(3) -= 2. * M_PI;
+    while (x_diff(3) < -M_PI) x_diff(3) += 2. * M_PI;
 
     Tc = Tc + weights_(i) * x_diff * z_preddiff.transpose();
   }
@@ -816,8 +816,8 @@ S:
   VectorXd z_measdiff = z_meas - z_predmean;
 
   //angle normalization
-  while (z_measdiff(1)> M_PI) z_measdiff(1)-=2.*M_PI;
-  while (z_measdiff(1)<-M_PI) z_measdiff(1)+=2.*M_PI;
+  while (z_measdiff(1)> M_PI) z_measdiff(1)-=2. * M_PI;
+  while (z_measdiff(1)<-M_PI) z_measdiff(1)+=2. * M_PI;
 
   //update state mean and covariance matrix
   x_ = x_ + K * z_measdiff; //get x_predmean, store it and use it for next timeframe
