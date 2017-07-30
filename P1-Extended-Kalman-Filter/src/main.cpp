@@ -49,7 +49,16 @@ int main()
 
       auto s = hasData(std::string(data));
       if (s != "") {
-      	
+        /*
+main(): s=["telemetry",{"sensor_measurement":"L -3.694351e+00 4.521963e+00 1477010455700000 -3.576574e+00 4.649018e+00 -1.729394e+00 -4.902326e+00 4.373248e+00 -3.453479e-02"}]
+
+or 
+
+main(): s=["telemetry",{"sensor_measurement":"R 6.018233e+00 2.176838e+00 -3.190968e+00 1477010455650000 -3.490264e+00 4.894220e+00 -1.722807e+00 -4.905246e+00 4.374630e+00 -2.763437e-02"}]
+
+        */
+      	//std::cout << "main(): s=" << s << std::endl;
+        
         auto j = json::parse(s);
 
         std::string event = j[0].get<std::string>();

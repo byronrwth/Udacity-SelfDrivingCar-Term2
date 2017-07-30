@@ -50,6 +50,10 @@ int main()
       
       auto s = hasData(std::string(data));
       if (s != "") {
+
+        /*
+main(): s=["telemetry",{"lidar_measurement":"L\t0.2611\t-0.9724\t1477010443000000\t0.1800\t-0.8300\t5.0000\t0.0000","radar_measurement":"R\t0.1401\t-1.3702\t6.0960\t1477010443000000\t0.1800\t-0.8300\t5.0000\t0.0000","hunter_x":"-10.0000","hunter_y":"0.0000","hunter_heading":"0.0000"}]
+        */
       	std::cout << "main(): s=" << s << std::endl;
 
         auto j = json::parse(s);
@@ -61,58 +65,76 @@ int main()
           std::cout << " main(): data 42 start, event=telemetry : " << std::endl;
 
           //string sensor_measurment = j[1]["sensor_measurement"];
-          string sensor_measurment = j[1]["lidar_measurement"];
-          
+          string lidar_measurment = j[1]["lidar_measurement"];
+          string radar_measurment = j[1]["radar_measurement"];
+
           //std::string sensor_measurment = j[1].get<std::string>();
-          std::cout << "main(): sensor_measurment" << sensor_measurment << std::endl;
+          std::cout << "main(): lidar_measurment" << lidar_measurment << std::endl;
+          std::cout << "main(): radar_measurment" << radar_measurment << std::endl;
 
           MeasurementPackage meas_package;
-          istringstream iss(sensor_measurment);
+          istringstream iss_lidar(lidar_measurment);  //  ??
     	    long long timestamp;
   
     	    // reads first element from the current line
     	    string sensor_type;
-    	    iss >> sensor_type;
+    	    iss_lidar >> sensor_type;
 
     	    if (sensor_type.compare("L") == 0) {
                 std::cout << " got Lidar measurement ! " << std::endl;
       	    		meas_package.sensor_type_ = MeasurementPackage::LASER;
             		meas_package.raw_measurements_ = VectorXd(2);
-            		float px;
-      	    		float py;
-            		iss >> px;
-            		iss >> py;
+            		float px; //0.261
+      	    		float py; //-0.9724 
+            		iss_lidar >> px;
+            		iss_lidar >> py;
             		meas_package.raw_measurements_ << px, py;
-            		iss >> timestamp;
+            		iss_lidar >> timestamp; //1477010443000000
             		meas_package.timestamp_ = timestamp;
-            } else if (sensor_type.compare("R") == 0) {
+
+                // gt = t0.1800\t-0.8300\t5.0000\t0.0000
+            } 
+
+          istringstream iss_radar(radar_measurment);  //  ??
+          //long long timestamp;
+  
+          // reads first element from the current line
+          //string sensor_type;
+          iss_radar >> sensor_type;
+
+          if (sensor_type.compare("R") == 0) {
                 std::cout << " got Radar measurement ! " << std::endl;
       	    		meas_package.sensor_type_ = MeasurementPackage::RADAR;
             		meas_package.raw_measurements_ = VectorXd(3);
             		float ro;
       	    		float theta;
       	    		float ro_dot;
-            		iss >> ro;
-            		iss >> theta;
-            		iss >> ro_dot;
+            		iss_radar >> ro; // 0.1401
+            		iss_radar >> theta; // -1.3702
+            		iss_radar >> ro_dot; //6.0960
             		meas_package.raw_measurements_ << ro,theta, ro_dot;
-            		iss >> timestamp;
+            		iss_radar >> timestamp; //1477010443000000
             		meas_package.timestamp_ = timestamp;
+                // gt = \t0.1800\t-0.8300\t5.0000\t0.0000
+
+                // since the last 4 elements of ground truth are identical from lidar and radar, so save only once
+
+                float x_gt;
+                float y_gt;
+                float vx_gt;
+                float vy_gt;
+                iss_radar >> x_gt;
+                iss_radar >> y_gt;
+                iss_radar >> vx_gt;
+                iss_radar >> vy_gt;
+                VectorXd gt_values(4);
+                gt_values(0) = x_gt;
+                gt_values(1) = y_gt; 
+                gt_values(2) = vx_gt;
+                gt_values(3) = vy_gt;
+                ground_truth.push_back(gt_values);
           }
-          float x_gt;
-    	    float y_gt;
-    	    float vx_gt;
-    	    float vy_gt;
-    	    iss >> x_gt;
-    	    iss >> y_gt;
-    	    iss >> vx_gt;
-    	    iss >> vy_gt;
-    	    VectorXd gt_values(4);
-    	    gt_values(0) = x_gt;
-    	    gt_values(1) = y_gt; 
-    	    gt_values(2) = vx_gt;
-    	    gt_values(3) = vy_gt;
-    	    ground_truth.push_back(gt_values);
+
              
              //Call ProcessMeasurment(meas_package) for Kalman filter
     	    ukf.ProcessMeasurement(meas_package);    	  
