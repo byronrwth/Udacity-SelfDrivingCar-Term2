@@ -38,10 +38,10 @@ UKF::UKF() {
 
   /* These will need to be adjusted in order to get your Kalman filter working */
   // Process noise standard deviation longitudinal acceleration in m/s^2
-  std_a_ = 30;
+  std_a_ =  0.2; //30;
 
   // Process noise standard deviation yaw acceleration in rad/s^2
-  std_yawdd_ = 30;
+  std_yawdd_ =  0.2; //30;
 
   /* The measurement noise values should not be changed; these are provided by the sensor manufacturer. */
   // Laser measurement noise standard deviation position1 in m
@@ -60,14 +60,14 @@ UKF::UKF() {
   std_radrd_ = 0.3;
 
   // R matrices for measurement noise !!
-  R_radar_ = MatrixXd(3,3);
+
   R_radar_ <<
     std_radr_ * std_radr_,                       0,                     0,
                       0, std_radphi_ * std_radphi_,                     0,
                       0,                       0, std_radrd_ * std_radrd_;
   
   // laser measurement has only position info !!
-  R_laser_ = MatrixXd(2,2);
+  
   R_laser_ <<
   std_laspx_ * std_laspx_,                     0,
                       0, std_laspy_ * std_laspy_;
@@ -92,16 +92,7 @@ UKF::UKF() {
 
 
 
-  //create sigma point matrix, when t = k
-  MatrixXd Xsig_ = MatrixXd(n_x_, 2 * n_x_ + 1);  // 5 * 11
 
-
-  //create augmented sigma point matrix, when t = k, adding noise into consideration
-  MatrixXd Xsig_aug_ = MatrixXd(n_aug_, 2 * n_aug_ + 1); // 7 * 15
-
-
-  // 7.20 Predicted sigma points as columns, when t = k+1
-  Xsig_pred_ = MatrixXd(n_x_,  2 * n_aug_ + 1); // notice! 5 * 15
 
 
   time_us_ = 0.0;
@@ -112,7 +103,7 @@ UKF::UKF() {
 
 
 
-  VectorXd weights_ = VectorXd(n_sig_);
+  
 
   double weight_0 = lambda_ /(lambda_ + n_aug_ );
   weights_(0) = weight_0;
@@ -329,6 +320,7 @@ void UKF::Prediction(double delta_t) {
     */
     cout << "7.14:  x_ = " << x_  << endl;
 
+#if 0
     lambda_ = 3 - n_x_; 
 
     cout << "7.14:  lambda_ = " << lambda_  << endl;
@@ -353,6 +345,7 @@ e.g.
     0.3528 0.299973 0.462123 0.376339  0.48417 0.418721 0.405627 0.243477 0.329261  0.22143 0.286879
 
 */
+#endif
 
     /********************************
     7.16 Augmentation for t=k
@@ -402,13 +395,23 @@ P_aug_ <<
     cout << "7.16:  L = " << L  << endl;
 
     lambda_ = 3 - n_aug_; 
+    cout << "7.16:  lambda_ = " << lambda_  << endl;
+    cout << "7.16:  x_aug_ = " << x_aug_  << endl;
 
+    Xsig_aug_ = MatrixXd(n_aug_, 2 * n_aug_ + 1); // 7 * 15
 
     //create augmented sigma points
     Xsig_aug_.col(0)  = x_aug_;
+    cout << "7.16:  x_aug_ = " << x_aug_  << endl;
+    cout << "7.16:  Xsig_aug_ = " << Xsig_aug_  << endl;
+
+    cout << "7.16:  n_aug_ = " << n_aug_  << endl;
+
     for (int i = 0; i< n_aug_; i++) {
-      Xsig_aug_.col(i+1)       = x_aug_ + sqrt(lambda_ + n_aug_) * L.col(i);
-      Xsig_aug_.col(i+1+n_aug_) = x_aug_ - sqrt(lambda_ + n_aug_) * L.col(i);
+      Xsig_aug_.col( i +1)       = x_aug_ + sqrt( lambda_ + n_aug_) * L.col(i);
+      Xsig_aug_.col( i + 1 + n_aug_) = x_aug_ - sqrt( lambda_ + n_aug_) * L.col(i);
+
+      //cout << "7.16: i= " << i << ",  Xsig_aug_ = " << Xsig_aug_  << endl;
     }
 
     //print result
@@ -526,15 +529,15 @@ x_predmean <<
 
       MatrixXd tmp = weights_(i) * x_diff * x_diff.transpose() ;  // 5 * 5
 
-      std::cout << "tmp" << tmp << std::endl;
+      //std::cout << "tmp" << tmp << std::endl;
 
       P_ = P_ + tmp ; // 5 * 5
     }
 
     //print result
-    std::cout << "Predicted state" << std::endl;
+    std::cout << "7.20 Predicted state : " << std::endl;
     std::cout << x_ << std::endl;
-    std::cout << "Predicted covariance matrix" << std::endl;
+    std::cout << "7.20 Predicted covariance matrix : " << std::endl;
     std::cout << P_ << std::endl;
 
 /*
