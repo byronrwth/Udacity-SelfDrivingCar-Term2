@@ -11,7 +11,7 @@ using Eigen::MatrixXd;
 using Eigen::VectorXd;
 
 class UKF {
-public:
+ public:
 
   ///* initially set to false, set to true in first call of ProcessMeasurement
   bool is_initialized_;
@@ -79,20 +79,21 @@ public:
   //MatrixXd Xsig_aug_ ; // 7 * 15
 
   //create sigma point matrix, when t = k
-  MatrixXd Xsig_ = MatrixXd(n_x_, 2 * n_x_ + 1);  // 5 * 11
+  //MatrixXd Xsig_ = MatrixXd(n_x_, 2 * n_x_ + 1);  // 5 * 11
 
 
   //create augmented sigma point matrix, when t = k, adding noise into consideration
-  MatrixXd Xsig_aug_ = MatrixXd(n_aug_, 2 * n_aug_ + 1); // 7 * 15
-
+  //MatrixXd Xsig_aug_ = MatrixXd(n_aug_, 2 * n_aug_ + 1); // 7 * 15
+  //MatrixXd Xsig_aug_ ;
 
   // 7.20 Predicted sigma points as columns, when t = k+1
-  MatrixXd Xsig_pred_ = MatrixXd(n_x_,  2 * n_aug_ + 1); // notice! 5 * 15
+  //MatrixXd Xsig_pred_ = MatrixXd(n_x_,  2 * n_aug_ + 1); // notice! 5 * 15
+  MatrixXd Xsig_pred_ ;
 
   VectorXd weights_ = VectorXd(n_sig_);
 
-  MatrixXd R_radar_ = MatrixXd(3,3);
-  MatrixXd R_laser_ = MatrixXd(2,2);
+  MatrixXd R_radar_ ;
+  MatrixXd R_laser_ ;
 
   ///* the current NIS for radar
   double NIS_radar_;
@@ -100,7 +101,7 @@ public:
   ///* the current NIS for laser
   double NIS_laser_;
 
-  
+
   /**
    * Constructor
    */
