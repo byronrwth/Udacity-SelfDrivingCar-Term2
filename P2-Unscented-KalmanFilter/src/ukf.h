@@ -11,7 +11,7 @@ using Eigen::MatrixXd;
 using Eigen::VectorXd;
 
 class UKF {
-public:
+ public:
 
   ///* initially set to false, set to true in first call of ProcessMeasurement
   bool is_initialized_;
@@ -91,8 +91,8 @@ public:
 
   VectorXd weights_ = VectorXd(n_sig_);
 
-  MatrixXd R_radar_ = MatrixXd(3,3);
-  MatrixXd R_laser_ = MatrixXd(2,2);
+  MatrixXd R_radar_ = MatrixXd(3, 3);
+  MatrixXd R_laser_ = MatrixXd(2, 2);
 
   ///* the current NIS for radar
   double NIS_radar_;
@@ -100,7 +100,7 @@ public:
   ///* the current NIS for laser
   double NIS_laser_;
 
-  
+
   /**
    * Constructor
    */
