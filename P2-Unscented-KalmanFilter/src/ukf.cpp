@@ -59,19 +59,42 @@ UKF::UKF() {
   // Radar measurement noise standard deviation radius change in m/s
   std_radrd_ = 0.3;
 
-  // R matrices for measurement noise !!
+  // initialize variables defined in ukf.h
+  is_initialized_ = false ;
 
-  R_radar_ <<
-           std_radr_ * std_radr_,                       0,                     0,
-                     0, std_radphi_ * std_radphi_,                     0,
-                     0,                       0, std_radrd_ * std_radrd_;
+  n_x_ = 5;
+
+  n_aug_ = 7;  // added process noise / motion acceleration noise
+
+  n_sig_ = 2 * n_aug_ + 1 ;
+
+  MatrixXd Xsig_ = MatrixXd(n_x_, 2 * n_x_ + 1);  // 5 * 11
+
+
+  //create augmented sigma point matrix, when t = k, adding noise into consideration
+  MatrixXd Xsig_aug_ = MatrixXd(n_aug_, 2 * n_aug_ + 1); // 7 * 15
+  //Xsig_aug_ = MatrixXd(n_aug_, 2 * n_aug_ + 1);
+
+  // 7.20 Predicted sigma points as columns, when t = k+1
+  //MatrixXd Xsig_pred_ = MatrixXd(n_x_,  2 * n_aug_ + 1); // notice! 5 * 15
+  Xsig_pred_ = MatrixXd(n_x_,  2 * n_aug_ + 1);
+
+
+
+  R_laser_ = MatrixXd(2, 2);
+
+  // R matrices for measurement noise !!
+  R_radar_ = MatrixXd(3, 3);
+  R_radar_ << std_radr_ * std_radr_,                         0,                       0,
+           0, std_radphi_ * std_radphi_,                       0,
+           0,                         0, std_radrd_ * std_radrd_;
+
 
   // laser measurement has only position info !!
 
   R_laser_ <<
            std_laspx_ * std_laspx_,                     0,
                       0, std_laspy_ * std_laspy_;
-
 
 
   /**
@@ -81,15 +104,6 @@ UKF::UKF() {
 
   Hint: one or more values initialized above might be wildly off...
   */
-  // initialize variables defined in ukf.h
-  is_initialized_ = false ;
-
-  n_x_ = 5;
-
-  n_aug_ = 7;  // added process noise / motion acceleration noise
-
-  int n_sig_ = 2 * n_aug_ + 1 ;
-
 
 
 
@@ -99,9 +113,10 @@ UKF::UKF() {
 
 
   // notice:  lambda has different difinitions at different steps !
-  double lambda_ = 3 - n_aug_;
+  lambda_ = 3 - n_aug_;
 
 
+  weights_ = VectorXd(n_sig_);
 
 
 
@@ -369,7 +384,6 @@ void UKF::Prediction(double delta_t) {
          0.3528,
          0,
          0;
-
   */
 
   //create augmented covariance matrix
@@ -398,7 +412,8 @@ void UKF::Prediction(double delta_t) {
   cout << "7.16:  lambda_ = " << lambda_  << endl;
   cout << "7.16:  x_aug_ = " << x_aug_  << endl;
 
-  Xsig_aug_ = MatrixXd(n_aug_, 2 * n_aug_ + 1); // 7 * 15
+
+  MatrixXd Xsig_aug_ = MatrixXd(n_aug_, 2 * n_aug_ + 1); // 7 * 15
 
   //create augmented sigma points
   Xsig_aug_.col(0)  = x_aug_;
@@ -406,6 +421,7 @@ void UKF::Prediction(double delta_t) {
   cout << "7.16:  Xsig_aug_ = " << Xsig_aug_  << endl;
 
   cout << "7.16:  n_aug_ = " << n_aug_  << endl;
+
 
   for (int i = 0; i < n_aug_; i++) {
     Xsig_aug_.col( i + 1)       = x_aug_ + sqrt( lambda_ + n_aug_) * L.col(i);
@@ -432,6 +448,7 @@ void UKF::Prediction(double delta_t) {
   /********************************
   7.20 sigma prediction for t=k+1
   ********************************/
+
 
   //transform sigma points into measurement space
   for (int i = 0; i < 2 * n_aug_ + 1; i++) {  //2n+1 simga points
@@ -479,6 +496,7 @@ void UKF::Prediction(double delta_t) {
     Xsig_pred_(3, i) = yaw_p;
     Xsig_pred_(4, i) = yawd_p;
   }
+
 
   //print result
   std::cout << "7.20 Xsig_pred_ = " << Xsig_pred_ << std::endl;
@@ -595,6 +613,7 @@ void UKF::UpdateLidar(MeasurementPackage meas_package) {
   /********************************
    7.26 predict measurement sigma points at t=k+1
   ********************************/
+  //MatrixXd Xsig_pred_ = MatrixXd(n_x_,  2 * n_aug_ + 1); // notice! 5 * 15
 
   //transform sigma points into measurement space
   for (int i = 0; i < 2 * n_aug_ + 1; i++) {  //2n+1 simga points
@@ -607,6 +626,7 @@ void UKF::UpdateLidar(MeasurementPackage meas_package) {
     // measurement model
     Zsig(0, i) = p_x;                       //px
     Zsig(1, i) = p_y;                       //py
+
 
   }
 
@@ -627,6 +647,7 @@ void UKF::UpdateLidar(MeasurementPackage meas_package) {
   for (int i = 0; i < 2 * n_aug_ + 1; i++) {  //2n+1 simga points
     //residual
     VectorXd z_preddiff = Zsig.col(i) - z_pred;
+
 
     //angle normalization
     while (z_preddiff(1) > M_PI) z_preddiff(1) -= 2. * M_PI;
@@ -734,6 +755,7 @@ void UKF::UpdateRadar(MeasurementPackage meas_package) {
   /********************************
    7.26 predict measurement sigma points at t=k+1
   ********************************/
+  //MatrixXd Xsig_pred_ = MatrixXd(n_x_,  2 * n_aug_ + 1); // notice! 5 * 15
 
   //transform sigma points into measurement space
   // notice:  yawrate doesn"t needed here at all !
@@ -759,7 +781,6 @@ void UKF::UpdateRadar(MeasurementPackage meas_package) {
    6.11908  6.23346  6.15315  6.12835  6.11436  6.11908  6.12218  6.11908  6.00792  6.08839  6.11255  6.12488  6.11908  6.11886  6.12057
   0.244289  0.23371 0.273165 0.246166 0.248461 0.244289 0.245307 0.244289 0.257001 0.216927 0.244336 0.241934 0.244289 0.245157 0.245239
    2.11044  2.21881  2.06391   2.1875  2.03413  2.10616  2.14509  2.10929  2.00166   2.1298  2.03466  2.16518  2.11454  2.07862  2.11295
-
   */
 
 
