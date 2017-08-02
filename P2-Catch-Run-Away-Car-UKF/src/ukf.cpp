@@ -117,6 +117,28 @@ UKF::~UKF() {}
  * @param {MeasurementPackage} meas_package The latest measurement data of
  * either radar or laser.
  */
+
+static double SNormalizeAngle2(double phi)
+{
+  // Method 2:
+  // cout << "Normalising Angle" << endl;
+  //return atan2(sin(phi), cos(phi));
+  
+  // Method 1:
+  while (phi > M_PI) {
+    phi -= 2.*M_PI;
+  };
+  while (phi < -M_PI) {
+    phi += 2.*M_PI;
+  };
+  
+  return phi;
+}
+
+/**
+ * @param {MeasurementPackage} meas_package The latest measurement data of
+ * either radar or laser.
+ */
 void UKF::ProcessMeasurement(MeasurementPackage meas_package) {
   /**
   TODO:
@@ -385,13 +407,22 @@ void UKF::Prediction(double delta_t) {
 
   for (int i = 0; i < n_aug_; i++) {
     Xsig_aug_.col( i + 1)       = x_aug_ + sqrt( lambda_ + n_aug_) * L.col(i);
+    
+    Xsig_aug_.col( i + 1)(3)       = SNormalizeAngle2( Xsig_aug_.col( i + 1) )(3) ; 
+
     Xsig_aug_.col( i + 1 + n_aug_) = x_aug_ - sqrt( lambda_ + n_aug_) * L.col(i);
+
+    Xsig_aug_.col( i + 1 + n_aug_)(3)  = SNormalizeAngle2( Xsig_aug_.col( i + 1 + n_aug_)(3) ) ; 
 
     //cout << "7.16: i= " << i << ",  Xsig_aug_ = " << Xsig_aug_  << endl;
   }
 
   //print result
   std::cout << "7.16 Xsig_aug_ = " << Xsig_aug_ << std::endl;
+
+  SNormalizeAngle2
+
+
   /*
   e.g.
    Xsig_aug =
@@ -454,6 +485,8 @@ void UKF::Prediction(double delta_t) {
     Xsig_pred_(1, i) = py_p;
     Xsig_pred_(2, i) = v_p;
     Xsig_pred_(3, i) = yaw_p;
+
+    Xsig_pred_(3, i) = SNormalizeAngle2( Xsig_pred_(3, i) ) ;
     Xsig_pred_(4, i) = yawd_p;
   }
 
@@ -478,6 +511,8 @@ void UKF::Prediction(double delta_t) {
   x_.fill(0.0);
   for (int i = 0; i < 2 * n_aug_ + 1; i++) {  //iterate over sigma points
     x_ = x_ + weights_(i) * Xsig_pred_.col(i);
+
+    x_(3) = SNormalizeAngle2( x_(3)) ;
   }
 
   /* e.g.
@@ -497,12 +532,7 @@ void UKF::Prediction(double delta_t) {
     VectorXd x_diff = Xsig_pred_.col(i) - x_ ;  // 5 * 1
 
     //angle normalization
-    while (x_diff(3) > M_PI) {
-      x_diff(3) -= 2. * M_PI;
-    }
-    while (x_diff(3) < -M_PI) {
-      x_diff(3) += 2. * M_PI;
-    }
+    x_diff(3) = SNormalizeAngle2( x_diff(3) ) ;
 
     MatrixXd tmp = weights_(i) * x_diff * x_diff.transpose() ;  // 5 * 5
 
