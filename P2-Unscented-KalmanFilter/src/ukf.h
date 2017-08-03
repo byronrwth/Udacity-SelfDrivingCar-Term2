@@ -92,8 +92,10 @@ class UKF {
 
   VectorXd weights_ = VectorXd(n_sig_);
 
+
   MatrixXd R_radar_ ;
   MatrixXd R_laser_ ;
+
 
   ///* the current NIS for radar
   double NIS_radar_;

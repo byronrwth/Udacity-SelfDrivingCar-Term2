@@ -5,6 +5,7 @@
 
 class MeasurementPackage {
   public:
+
 	long timestamp_;
 
 	enum SensorType {
@@ -13,6 +14,7 @@ class MeasurementPackage {
 	} sensor_type_;
 
 	Eigen::VectorXd raw_measurements_;
+
 
 };
 
