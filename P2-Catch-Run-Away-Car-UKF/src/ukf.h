@@ -81,7 +81,7 @@ class UKF {
 
   ///* the current NIS for laser
   double NIS_laser_;
-  
+
   /**
    * Constructor
    */
