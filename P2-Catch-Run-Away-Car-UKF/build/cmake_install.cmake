@@ -1,4 +1,4 @@
-# Install script for directory: /mnt/hgfs/Linux/Udacity/Udacity-SelfDrivingCar-Term2/CarND-Catch-Run-Away-Car-UKF-master
+# Install script for directory: /mnt/shared/Udacity/Udacity-SelfDrivingCar-Term2/P2-Catch-Run-Away-Car-UKF/src
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -12,7 +12,7 @@ if(NOT DEFINED CMAKE_INSTALL_CONFIG_NAME)
     string(REGEX REPLACE "^[^A-Za-z0-9_]+" ""
            CMAKE_INSTALL_CONFIG_NAME "${BUILD_TYPE}")
   else()
-    set(CMAKE_INSTALL_CONFIG_NAME "")
+    set(CMAKE_INSTALL_CONFIG_NAME "Debug")
   endif()
   message(STATUS "Install configuration: \"${CMAKE_INSTALL_CONFIG_NAME}\"")
 endif()
@@ -40,5 +40,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "/mnt/hgfs/Linux/Udacity/Udacity-SelfDrivingCar-Term2/CarND-Catch-Run-Away-Car-UKF-master/build/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "/mnt/shared/Udacity/Udacity-SelfDrivingCar-Term2/P2-Catch-Run-Away-Car-UKF/build/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")
