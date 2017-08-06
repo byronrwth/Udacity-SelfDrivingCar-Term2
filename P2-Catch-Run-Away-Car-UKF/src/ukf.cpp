@@ -118,12 +118,11 @@ UKF::~UKF() {}
  * either radar or laser.
  */
 
-static double SNormalizeAngle2(double phi)
-{
+static double SNormalizeAngle2(double phi) {
   // Method 2:
   // cout << "Normalising Angle" << endl;
   //return atan2(sin(phi), cos(phi));
-  
+
   // Method 1:
   while (phi > M_PI) {
     phi -= 2.*M_PI;
@@ -131,7 +130,7 @@ static double SNormalizeAngle2(double phi)
   while (phi < -M_PI) {
     phi += 2.*M_PI;
   };
-  
+
   return phi;
 }
 
@@ -407,12 +406,12 @@ void UKF::Prediction(double delta_t) {
 
   for (int i = 0; i < n_aug_; i++) {
     Xsig_aug_.col( i + 1)       = x_aug_ + sqrt( lambda_ + n_aug_) * L.col(i);
-    
-    Xsig_aug_.col( i + 1)(3)       = SNormalizeAngle2( Xsig_aug_.col( i + 1) )(3) ; 
+
+    Xsig_aug_.col( i + 1)(3)       = SNormalizeAngle2( Xsig_aug_.col( i + 1) )(3) ;
 
     Xsig_aug_.col( i + 1 + n_aug_) = x_aug_ - sqrt( lambda_ + n_aug_) * L.col(i);
 
-    Xsig_aug_.col( i + 1 + n_aug_)(3)  = SNormalizeAngle2( Xsig_aug_.col( i + 1 + n_aug_)(3) ) ; 
+    Xsig_aug_.col( i + 1 + n_aug_)(3)  = SNormalizeAngle2( Xsig_aug_.col( i + 1 + n_aug_)(3) ) ;
 
     //cout << "7.16: i= " << i << ",  Xsig_aug_ = " << Xsig_aug_  << endl;
   }
