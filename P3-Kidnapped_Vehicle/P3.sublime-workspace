@@ -1,0 +1,937 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"n_",
+				"n_x_"
+			],
+			[
+				"S",
+				"Si"
+			],
+			[
+				"M",
+				"MatrixXd"
+			],
+			[
+				"H",
+				"Ht"
+			],
+			[
+				"u",
+				"urlopen"
+			]
+		]
+	},
+	"buffers":
+	[
+		{
+			"file": "lesson/3.6/main.cpp",
+			"settings":
+			{
+				"buffer_size": 4492,
+				"encoding": "UTF-8",
+				"line_ending": "Unix",
+				"name": "//================================================"
+			}
+		},
+		{
+			"file": "lesson/3.6/help_functions.h",
+			"settings":
+			{
+				"buffer_size": 7748,
+				"encoding": "UTF-8",
+				"line_ending": "Unix",
+				"name": "//================================================"
+			}
+		},
+		{
+			"file": "lesson/3.6/measurement_package.h",
+			"settings":
+			{
+				"buffer_size": 456,
+				"encoding": "UTF-8",
+				"line_ending": "Unix",
+				"name": "/*"
+			}
+		},
+		{
+			"file": "lesson/3.6/map.h",
+			"settings":
+			{
+				"buffer_size": 279,
+				"encoding": "UTF-8",
+				"line_ending": "Unix",
+				"name": "/*"
+			}
+		}
+	],
+	"build_system": "",
+	"build_system_choices":
+	[
+	],
+	"build_varint": "",
+	"command_palette":
+	{
+		"height": 283.0,
+		"last_filter": "install",
+		"selected_items":
+		[
+			[
+				"install",
+				"Package Control: Install Package"
+			],
+			[
+				"git diff",
+				"Git: Diff Current File"
+			],
+			[
+				"line end",
+				"Line Ending to all views: Unix"
+			],
+			[
+				"git status",
+				"Git: Status"
+			],
+			[
+				"git commit",
+				"Git: Commit"
+			],
+			[
+				"git add ",
+				"Git: Add Remote"
+			],
+			[
+				"git add",
+				"Git: Add Remote"
+			],
+			[
+				"git pull",
+				"Git: Pull"
+			]
+		],
+		"width": 735.0
+	},
+	"console":
+	{
+		"height": 0.0,
+		"history":
+		[
+		]
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"expanded_folders":
+	[
+		"/C/Users/uids6815/Linux/Udacity/Udacity-SelfDrivingCar-Term2/P3-Kidnapped_Vehicle",
+		"/C/Users/uids6815/Linux/Udacity/Udacity-SelfDrivingCar-Term2/P3-Kidnapped_Vehicle/lesson",
+		"/C/Users/uids6815/Linux/Udacity/Udacity-SelfDrivingCar-Term2/P3-Kidnapped_Vehicle/lesson/3.6",
+		"/C/Users/uids6815/Linux/Udacity/Udacity-SelfDrivingCar-Term2/P3-Kidnapped_Vehicle/src"
+	],
+	"file_history":
+	[
+		"/C/Users/uids6815/Linux/Udacity/Udacity-SelfDrivingCar-Term2/P2-Catch-Run-Away-Car-UKF/src/Eigen/src/SparseCore/SparseBlock.h",
+		"/C/Users/uids6815/Crackcode/Sublime/sublime_text.exe",
+		"/C/Users/uids6815/Linux/Udacity/Udacity-SelfDrivingCar-Term2/CarND-Catch-Run-Away-Car-UKF-master/src/ukf.cpp",
+		"/C/Users/uids6815/Linux/Udacity/Udacity-SelfDrivingCar-Term2/CarND-Catch-Run-Away-Car-UKF-master/src/ukf.h",
+		"/C/Users/uids6815/Linux/Udacity/Udacity-SelfDrivingCar-Term2/CarND-Catch-Run-Away-Car-UKF-master/src/measurement_package.h",
+		"/C/Users/uids6815/Linux/Udacity/Udacity-SelfDrivingCar-Term2/CarND-Catch-Run-Away-Car-UKF-master/src/json.hpp",
+		"/C/Users/uids6815/Linux/Udacity/Udacity-SelfDrivingCar-Term2/CarND-Catch-Run-Away-Car-UKF-master/src/main.cpp",
+		"/C/Users/uids6815/Linux/Udacity/Udacity-SelfDrivingCar-Term2/CarND-Catch-Run-Away-Car-UKF-master/src/Open Notebook.onetoc2",
+		"/C/Users/uids6815/Crackcode/Sublime/Data/Packages/User/SublimeAStyleFormatter.sublime-settings",
+		"/C/Users/uids6815/Crackcode/Sublime/Data/Packages/User/LineEndings.sublime-settings",
+		"/C/Users/uids6815/Linux/Udacity/Udacity-SelfDrivingCar-Term2/P2-Unscented-KalmanFilter/src/ukf.h",
+		"/C/Users/uids6815/Linux/Udacity/Udacity-SelfDrivingCar-Term2/P2-Unscented-KalmanFilter/src/json.hpp",
+		"/C/Users/uids6815/Linux/Udacity/Udacity-SelfDrivingCar-Term2/P2-Unscented-KalmanFilter/src/lesson/ukf-7.23mean-covariance-predict.h",
+		"/C/Users/uids6815/Linux/Udacity/Udacity-SelfDrivingCar-Term2/P2-Unscented-KalmanFilter/src/lesson/ukf-7.23mean-covariance-predict.cpp",
+		"/C/Users/uids6815/Linux/Udacity/Udacity-SelfDrivingCar-Term2/P2-Unscented-KalmanFilter/src/lesson/ukf-7.20sigmapointpredict.h",
+		"/C/Users/uids6815/Linux/Udacity/Udacity-SelfDrivingCar-Term2/P2-Unscented-KalmanFilter/src/lesson/ukf-7.20sigmapointpredict.cpp",
+		"/C/Users/uids6815/Linux/Udacity/Udacity-SelfDrivingCar-Term2/P2-Unscented-KalmanFilter/src/ukf.cpp",
+		"/C/Users/uids6815/Linux/Udacity/Udacity-SelfDrivingCar-Term2/P2-Unscented-KalmanFilter/src/tools.h",
+		"/C/Users/uids6815/Linux/Udacity/Udacity-SelfDrivingCar-Term2/P2-Unscented-KalmanFilter/src/tools.cpp",
+		"/C/Users/uids6815/Linux/Udacity/Udacity-SelfDrivingCar-Term2/P2-Unscented-KalmanFilter/src/measurement_package.h",
+		"/C/Users/uids6815/Linux/Udacity/Udacity-SelfDrivingCar-Term2/P2-Unscented-KalmanFilter/src/main.cpp",
+		"/C/Users/uids6815/Linux/Udacity/Udacity-SelfDrivingCar-Term2/P2-Unscented-KalmanFilter/src/lesson/main-7.14sigmaGeneration.cpp",
+		"/C/Users/uids6815/Linux/Udacity/Udacity-SelfDrivingCar-Term2/P2-Unscented-KalmanFilter/src/lesson/main-7.17augmentation.cpp",
+		"/C/Users/uids6815/Linux/Udacity/Udacity-SelfDrivingCar-Term2/P2-Unscented-KalmanFilter/src/lesson/main-7.20sigmapointpredict.cpp",
+		"/C/Users/uids6815/Linux/Udacity/Udacity-SelfDrivingCar-Term2/P2-Unscented-KalmanFilter/src/lesson/main-7.23mean-covariance-predict.cpp",
+		"/C/Users/uids6815/Linux/Udacity/Udacity-SelfDrivingCar-Term2/P2-Unscented-KalmanFilter/src/lesson/main-7.26Update-predictRadarMeas.cpp",
+		"/C/Users/uids6815/Linux/Udacity/Udacity-SelfDrivingCar-Term2/P2-Unscented-KalmanFilter/src/lesson/main-7.29Update-stateof-mean-covariance.cpp",
+		"/C/Users/uids6815/Linux/Udacity/Udacity-SelfDrivingCar-Term2/P2-Unscented-KalmanFilter/src/lesson/ukf-7.14sigmaGeneration.cpp",
+		"/C/Users/uids6815/Linux/Udacity/Udacity-SelfDrivingCar-Term2/P2-Unscented-KalmanFilter/src/lesson/ukf-7.14sigmaGeneration.h",
+		"/C/Users/uids6815/Linux/Udacity/Udacity-SelfDrivingCar-Term2/P2-Unscented-KalmanFilter/src/lesson/ukf-7.17augmentation.cpp",
+		"/C/Users/uids6815/Linux/Udacity/Udacity-SelfDrivingCar-Term2/P2-Unscented-KalmanFilter/src/lesson/ukf-7.17augmentation.h",
+		"/C/Users/uids6815/Linux/Udacity/Udacity-SelfDrivingCar-Term2/P2-Unscented-KalmanFilter/src/lesson/ukf-7.26Update-predictRadarMeas.cpp",
+		"/C/Users/uids6815/Linux/Udacity/Udacity-SelfDrivingCar-Term2/P2-Unscented-KalmanFilter/src/lesson/ukf-7.26Update-predictRadarMeas.h",
+		"/C/Users/uids6815/Linux/Udacity/Udacity-SelfDrivingCar-Term2/P2-Unscented-KalmanFilter/src/lesson/ukf-7.29Update-stateof-mean-covariance.h",
+		"/C/Users/uids6815/Linux/Udacity/Udacity-SelfDrivingCar-Term2/P2-Unscented-KalmanFilter/src/lesson/ukf-7.29Update-stateof-mean-covariance.cpp",
+		"/C/Users/uids6815/Crackcode/Conti/Redvine/tools/proxyCntlm/GetCurrentPasswordHash.bat",
+		"/C/Users/uids6815/Crackcode/Conti/Redvine/env/rv_windows_setup.py",
+		"/C/Users/uids6815/Crackcode/Conti/Redvine/rv_start.bat",
+		"/C/Users/uids6815/Crackcode/Conti/Redvine/rv_windows.ini",
+		"/C/Users/uids6815/Crackcode/Conti/Redvine/rv_windows.ini.template",
+		"/C/Users/uids6815/Crackcode/Conti/Redvine/tools/proxyCntlm/cntlm/cntlm.ini",
+		"/C/Users/uids6815/Linux/Udacity/Udacity-SelfDrivingCar-Term2/P2-Unscented-KalmanFilter/UKF.docx",
+		"/C/Users/uids6815/Crackcode/Sublime/Data/Packages/User/SideBarEnhancements/Open With/Side Bar.sublime-menu",
+		"/C/Users/uids6815/Crackcode/tensorflow/models/tutorials/image/mnist/data/t10k-images-idx3-ubyte.gz",
+		"/C/Users/uids6815/Linux/Udacity/Udacity-SelfDrivingCar-Term2/P2-Unscented-KalmanFilter/src/Eigen/src/Cholesky/LLT.h",
+		"/C/Users/uids6815/Crackcode/udacity/Udacity-SelfDrivingCar-Term2/P2-UKF/ukf-7.29.h",
+		"/C/Users/uids6815/Crackcode/udacity/Udacity-SelfDrivingCar-Term2/P2-UKF/ukf-7.20sigmapointpredict.h",
+		"/C/Users/uids6815/Crackcode/udacity/Udacity-SelfDrivingCar-Term2/P2-UKF/ukf-7.20sigmapointpredict.cpp",
+		"/C/Users/uids6815/Crackcode/udacity/Udacity-SelfDrivingCar-Term2/P2-UKF/main-7.20sigmapointpredict.cpp",
+		"/C/Users/uids6815/Crackcode/udacity/Udacity-SelfDrivingCar-Term2/P2-UKF/ukf-7.17augmentation.h",
+		"/C/Users/uids6815/Crackcode/udacity/Udacity-SelfDrivingCar-Term2/P2-UKF/ukf-7.17augmentation.cpp",
+		"/C/Users/uids6815/Crackcode/udacity/Udacity-SelfDrivingCar-Term2/P2-UKF/main-7.17augmentation.cpp",
+		"/C/Users/uids6815/Crackcode/udacity/Udacity-SelfDrivingCar-Term2/P2-UKF/main-7.14.cpp",
+		"/C/Users/uids6815/Crackcode/udacity/Udacity-SelfDrivingCar-Term2/P2-UKF/ukf-7.14.h",
+		"/C/Users/uids6815/Crackcode/udacity/Udacity-SelfDrivingCar-Term2/P2-UKF/ukf-7.14.cpp",
+		"/C/Users/uids6815/Crackcode/udacity/Udacity-SelfDrivingCar-Term2/P1-KalmanFilter/src/tracking5-12.h",
+		"/C/Users/uids6815/Crackcode/udacity/Udacity-SelfDrivingCar-Term2/P1-KalmanFilter/KalmanFilter.py",
+		"/C/Users/uids6815/Crackcode/udacity/Udacity-SelfDrivingCar-Term2/P1-KalmanFilter/src/measurement_package.h",
+		"/C/Users/uids6815/Crackcode/udacity/Udacity-SelfDrivingCar-Term2/P1-KalmanFilter/src/tracking5-12.cpp",
+		"/C/Users/uids6815/Crackcode/udacity/Udacity-SelfDrivingCar-Term2/P1-KalmanFilter/src/main5-12.cpp",
+		"/C/Users/uids6815/Crackcode/udacity/Udacity-SelfDrivingCar-Term2/P1-KalmanFilter/src/kalman5-12.h",
+		"/C/Users/uids6815/Crackcode/udacity/Udacity-SelfDrivingCar-Term2/P1-KalmanFilter/src/CalculateRMSE5-22.cpp",
+		"/C/Users/uids6815/Crackcode/udacity/Udacity-SelfDrivingCar-Term2/P1-KalmanFilter/src/JacobianMatrix5-18.cpp",
+		"/C/Users/uids6815/Crackcode/udacity/Udacity-SelfDrivingCar-Term2/P1-KalmanFilter/src/kalman5-12.cpp",
+		"/C/Users/uids6815/Downloads/cntlm - Kopie/Cntlm/cntlm.ini",
+		"/C/Users/uids6815/Downloads/cntlm - Kopie/cntlm.bat",
+		"/C/Users/uids6815/Crackcode/udacity/Udacity-SelfDrivingCar-Term2/P1-KalmanFilter/EKF_DATA/obj_pose-laser-radar-synthetic-input.txt",
+		"/C/Users/uids6815/Crackcode/udacity/Udacity-SelfDrivingCar-Term2/P1-KalmanFilter/src/measurement_package5-12.h",
+		"/C/Users/uids6815/Crackcode/udacity/Udacity-SelfDrivingCar-Term2/P1-KalmanFilter/src/FusionEKF.cpp",
+		"/C/Users/uids6815/Crackcode/udacity/Udacity-SelfDrivingCar-Term2/P1-KalmanFilter/src/Eigen/src/Core/Matrix.h",
+		"/C/Users/uids6815/Crackcode/udacity/Udacity-SelfDrivingCar-ND-Term1-master/ComputerVision/P5-VehicleDetection/README.md",
+		"/C/Users/uids6815/Crackcode/udacity/Udacity-SelfDrivingCar-ND-Term1-master/ComputerVision/P5-VehicleDetection/logs/train_results/result.md",
+		"/C/Users/uids6815/Crackcode/udacity/Udacity-SelfDrivingCar-ND-Term1-master/ComputerVision/P5-VehicleDetection/logs/hogviz_experiments/ppc_exp1.md",
+		"/C/Users/uids6815/Crackcode/tensorflow/test1"
+	],
+	"find":
+	{
+		"height": 28.0
+	},
+	"find_in_files":
+	{
+		"height": 133.0,
+		"where_history":
+		[
+			"C:\\Users\\uids6815\\Linux\\Udacity\\Udacity-SelfDrivingCar-Term2\\CarND-Catch-Run-Away-Car-UKF-master\\src\\Eigen",
+			"C:\\Users\\uids6815\\Linux\\Udacity\\Udacity-SelfDrivingCar-Term2\\CarND-Catch-Run-Away-Car-UKF-master\\src",
+			"C:\\Users\\uids6815\\Linux\\Udacity\\Udacity-SelfDrivingCar-Term2\\P2-Unscented-KalmanFilter\\src\\",
+			"C:\\Users\\uids6815\\Linux\\Udacity\\Udacity-SelfDrivingCar-Term2\\P2-Unscented-KalmanFilter",
+			"C:\\Users\\uids6815\\Crackcode\\Conti\\Redvine",
+			"C:\\Users\\uids6815\\Crackcode\\tensorflow\\models\\tutorials\\",
+			"C:\\Users\\uids6815\\Crackcode\\tensorflow\\models\\tutorials\\image\\mnist\\",
+			"C:\\Users\\uids6815\\Crackcode\\tensorflow\\models\\tutorials\\image\\mnist",
+			"C:\\Users\\uids6815\\Crackcode\\tensorflow\\models\\tutorials\\image\\cifar10",
+			"C:\\Users\\uids6815\\Linux\\Udacity\\Udacity-SelfDrivingCar-Term2\\P2-Unscented-KalmanFilter\\src",
+			"C:\\Users\\uids6815\\Linux\\Udacity\\Udacity-SelfDrivingCar-Term2\\P2-Unscented-KalmanFilter",
+			"C:\\Users\\uids6815\\Crackcode\\udacity\\Udacity-SelfDrivingCar-Term2\\P1-KalmanFilter\\src\\",
+			"C:\\Users\\uids6815\\Crackcode\\udacity\\Udacity-SelfDrivingCar-Term2\\P1-KalmanFilter\\src\\Eigen",
+			"C:\\Users\\uids6815\\Crackcode\\udacity\\Udacity-SelfDrivingCar-Term2\\P1-KalmanFilter",
+			"C:\\Users\\uids6815\\Crackcode\\udacity\\kalman-master",
+			"C:\\Users\\uids6815\\Crackcode\\udacity\\Udacity-SelfDrivingCar-ND-Term1-master\\ComputerVision\\P5-VehicleDetection"
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": true,
+		"find_history":
+		[
+			"0.0001",
+			"0.001",
+			"z_predmean",
+			"Xsig_aug_",
+			"= MatrixXd",
+			"= VectorXd",
+			"z_predmean",
+			"int n_z = ",
+			"n_z",
+			"0.001",
+			"0.0001",
+			"todo",
+			"R_radar_",
+			"VectorXd",
+			"TODO",
+			"Xsig_aug_",
+			"P_",
+			"X_aug_",
+			"x_aug_",
+			"Xsig_pred_",
+			"Xsig_aug_",
+			" L ",
+			"L",
+			"std_yawdd_",
+			"std_a_",
+			"L",
+			"Xsig_",
+			"object_detection",
+			"object",
+			"keras",
+			"kefas",
+			"train",
+			"training_data_from",
+			"training_from",
+			"training_data_from_mongo",
+			"flow_from_mongodb",
+			"ACTIONS",
+			"Xsig_pred_",
+			"Xsig_pred",
+			"Xsig_aug_",
+			"Xsig_",
+			"std_a_",
+			"std_a",
+			"n_x",
+			"n_x_",
+			"print",
+			"WORK_DIRECTORY",
+			"maybe_download",
+			"store_true",
+			"self_test",
+			"mnist",
+			"embedding_config",
+			"tmp",
+			"mnist_logs",
+			"mnist_log",
+			"num_epochs",
+			"step",
+			"i",
+			"cpu:0",
+			"gpu:0",
+			"/gpu:0",
+			"cpu",
+			"/tmp/cifar10_train",
+			"tmp/cifar10_train",
+			"_variable_on_cpu",
+			"cpu:0",
+			"cpu",
+			"train",
+			"inference",
+			"tf.nn.conv2d",
+			"_variable_on_cpu",
+			"DATA_URL",
+			"preprocess",
+			"preprocess_input_data",
+			"eval_dir",
+			"tf.Session",
+			"cpu",
+			"gpu",
+			"FLAGS",
+			"sess",
+			"main",
+			"tf.summary",
+			"with tf.Session",
+			"tf.summary",
+			"tf.get_variable",
+			"summary_dir",
+			"summaries_dir",
+			"SummaryWriter",
+			"GraphDef",
+			"logdir",
+			"tf.summary.scalar",
+			"NUM_EXAMPLES_PER_EPOCH_FOR_TRAIN",
+			"FLAGS",
+			"TODO",
+			"z_pred",
+			"dt",
+			"TODO",
+			"raw_measurements_",
+			"VectorXd",
+			"measurement_timestamp",
+			"noise_ax_",
+			"recording",
+			"extract_features_plot",
+			"0.90",
+			"0.91",
+			"scale",
+			"0.995",
+			"0.996",
+			"0.997",
+			"0.998",
+			"0.999",
+			"0.996",
+			"0.99",
+			"single_img",
+			"slide_window_polygonmask",
+			"0.968",
+			"0.969",
+			"0.97",
+			"color_hist",
+			"hog_cha",
+			"extract_features",
+			"extract_features_plot",
+			"urlopen"
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+			"x_aug_",
+			"X_aug_"
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": true,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"selected": 3,
+			"sheets":
+			[
+				{
+					"buffer": 0,
+					"file": "lesson/3.6/main.cpp",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 4492,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								3875,
+								3875
+							]
+						],
+						"settings":
+						{
+							"auto_name": "//================================================",
+							"bracket_highlighter.busy": false,
+							"bracket_highlighter.locations":
+							{
+								"close":
+								{
+									"1":
+									[
+										4380,
+										4381
+									]
+								},
+								"icon":
+								{
+									"1":
+									[
+										"Packages/BracketHighlighter/icons/curly_bracket.png",
+										"brackethighlighter.default"
+									]
+								},
+								"open":
+								{
+									"1":
+									[
+										3861,
+										3862
+									]
+								},
+								"unmatched":
+								{
+								}
+							},
+							"bracket_highlighter.regions":
+							[
+								"bh_c_define",
+								"bh_c_define_center",
+								"bh_c_define_open",
+								"bh_c_define_close",
+								"bh_c_define_content",
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_curly_content",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_unmatched_content",
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_angle_content",
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close",
+								"bh_tag_content",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_round_content",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close",
+								"bh_single_quote_content",
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_square_content",
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_regex_content",
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_double_quote_content",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_default_content"
+							],
+							"syntax": "Packages/C++/C++.sublime-syntax",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 377.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 3,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "lesson/3.6/help_functions.h",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 7748,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								6456,
+								6456
+							]
+						],
+						"settings":
+						{
+							"auto_name": "//================================================",
+							"bracket_highlighter.busy": false,
+							"bracket_highlighter.locations":
+							{
+								"close":
+								{
+									"1":
+									[
+										6484,
+										6485
+									]
+								},
+								"icon":
+								{
+									"1":
+									[
+										"Packages/BracketHighlighter/icons/double_quote.png",
+										"brackethighlighter.default"
+									]
+								},
+								"open":
+								{
+									"1":
+									[
+										6432,
+										6433
+									]
+								},
+								"unmatched":
+								{
+								}
+							},
+							"bracket_highlighter.regions":
+							[
+								"bh_c_define",
+								"bh_c_define_center",
+								"bh_c_define_open",
+								"bh_c_define_close",
+								"bh_c_define_content",
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_curly_content",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_unmatched_content",
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_angle_content",
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close",
+								"bh_tag_content",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_round_content",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close",
+								"bh_single_quote_content",
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_square_content",
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_regex_content",
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_double_quote_content",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_default_content"
+							],
+							"syntax": "Packages/C++/C++.sublime-syntax",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 3900.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 2,
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "lesson/3.6/measurement_package.h",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 456,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								456,
+								456
+							]
+						],
+						"settings":
+						{
+							"auto_name": "/*",
+							"bracket_highlighter.busy": false,
+							"bracket_highlighter.locations":
+							{
+								"close":
+								{
+								},
+								"icon":
+								{
+								},
+								"open":
+								{
+								},
+								"unmatched":
+								{
+								}
+							},
+							"bracket_highlighter.regions":
+							[
+								"bh_c_define",
+								"bh_c_define_center",
+								"bh_c_define_open",
+								"bh_c_define_close",
+								"bh_c_define_content",
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_curly_content",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_unmatched_content",
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_angle_content",
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close",
+								"bh_tag_content",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_round_content",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close",
+								"bh_single_quote_content",
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_square_content",
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_regex_content",
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_double_quote_content",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_default_content"
+							],
+							"syntax": "Packages/C++/C++.sublime-syntax"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "lesson/3.6/map.h",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 279,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								279,
+								279
+							]
+						],
+						"settings":
+						{
+							"auto_name": "/*",
+							"bracket_highlighter.busy": false,
+							"bracket_highlighter.locations":
+							{
+								"close":
+								{
+								},
+								"icon":
+								{
+								},
+								"open":
+								{
+								},
+								"unmatched":
+								{
+								}
+							},
+							"bracket_highlighter.regions":
+							[
+								"bh_c_define",
+								"bh_c_define_center",
+								"bh_c_define_open",
+								"bh_c_define_close",
+								"bh_c_define_content",
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_curly_content",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_unmatched_content",
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_angle_content",
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close",
+								"bh_tag_content",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_round_content",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close",
+								"bh_single_quote_content",
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_square_content",
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_regex_content",
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_double_quote_content",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_default_content"
+							],
+							"syntax": "Packages/C++/C++.sublime-syntax"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				}
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 28.0
+	},
+	"input":
+	{
+		"height": 38.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.astyle_error_message":
+	{
+		"height": 0.0
+	},
+	"output.find_results":
+	{
+		"height": 0.0
+	},
+	"output.git-pull":
+	{
+		"height": 0.0
+	},
+	"output.unsaved_changes":
+	{
+		"height": 248.0
+	},
+	"pinned_build_system": "",
+	"project": "P3.sublime-project",
+	"replace":
+	{
+		"height": 52.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_symbol":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"selected_group": 0,
+	"settings":
+	{
+	},
+	"show_minimap": true,
+	"show_open_files": false,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 301.0,
+	"status_bar_visible": true,
+	"template_settings":
+	{
+	}
+}
