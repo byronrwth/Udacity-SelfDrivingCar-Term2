@@ -32,8 +32,12 @@ int main() {
 
   double target_x = 0.0;
   double target_y = 0.0;
+  double target_v = 0.0;
+  double remaining_t = 0.0;
+  long long previous_t;
 
-  h.onMessage([&ukf, &target_x, &target_y](uWS::WebSocket<uWS::SERVER> ws, char *data, size_t length, uWS::OpCode opCode) {
+
+  h.onMessage([&ukf, &target_x, &target_y, &target_v, &remaining_t, &previous_t](uWS::WebSocket<uWS::SERVER> ws, char *data, size_t length, uWS::OpCode opCode) {
     // "42" at the start of the message means there's a websocket message event.
     // The 4 signifies a websocket message
     // The 2 signifies a websocket event
@@ -104,16 +108,62 @@ int main() {
 
           target_x = ukf.x_[0];
           target_y = ukf.x_[1];
+          target_v = ukf.x_[2];
 
-          double heading_to_target = atan2(target_y - hunter_y, target_x - hunter_x);
+    double heading_to_target=0.0;
+    double distance_difference=0.0;
+    double heading_difference=0.0;    
+
+           heading_to_target = atan2(target_y - hunter_y, target_x - hunter_x);
           while (heading_to_target > M_PI) heading_to_target -= 2.*M_PI;
           while (heading_to_target < -M_PI) heading_to_target += 2.*M_PI;
+
           //turn towards the target
-          double heading_difference = heading_to_target - hunter_heading;
+           heading_difference = heading_to_target - hunter_heading;
           while (heading_difference > M_PI) heading_difference -= 2.*M_PI;
           while (heading_difference < -M_PI) heading_difference += 2.*M_PI;
 
-          double distance_difference = sqrt((target_y - hunter_y) * (target_y - hunter_y) + (target_x - hunter_x) * (target_x - hunter_x));
+
+		  heading_difference = heading_difference*0.2;
+    
+           distance_difference = sqrt((target_y - hunter_y) * (target_y - hunter_y) + (target_x - hunter_x) * (target_x - hunter_x));
+
+          if (ukf.P_.maxCoeff() < 0.1) {
+            //scan increasingly long time intervals
+
+            for (double delta_t = 0.1; delta_t < 5; delta_t += 0.05) {
+              //predict for that interval
+              
+              // limit max delta_t = 0.1
+              ukf.Prediction_chase(delta_t);
+              
+              double future_target_x = ukf.predicted_x_[0];
+              double future_target_y = ukf.predicted_x_[1];
+              double distance_y = future_target_y - hunter_y;
+              double distance_x = future_target_x - hunter_x;
+              double distance_pred = sqrt(distance_y * distance_y + distance_x * distance_x);
+              //Assume we take our max speed ... the lineal speed we are measuring for the other car.
+              double intercept_distance = distance_pred - delta_t * target_v;
+              if (intercept_distance < 0) {
+                //gotcha
+                cout << "On my way to intercept in " << delta_t << " seconds! Crossing at " << intercept_distance << " units." << endl;
+                remaining_t = delta_t;
+
+                heading_to_target = atan2(distance_y, distance_x);
+                heading_to_target = ukf.SNormalizeAngle2(heading_to_target);
+                heading_difference = (heading_to_target - hunter_heading);
+
+                //Again small proportional signals
+                heading_difference = ukf.SNormalizeAngle2(heading_difference) * 0.1;
+                distance_difference = distance_pred * 0.3;
+                break;
+              }
+            }
+          }
+
+
+          cout << "HTT: " << heading_to_target * 180 / M_PI << " DDIFF: " << distance_difference << " " << target_y - hunter_y << " " << target_x - hunter_x << endl;
+
 
           json msgJson;
           msgJson["turn"] = heading_difference;

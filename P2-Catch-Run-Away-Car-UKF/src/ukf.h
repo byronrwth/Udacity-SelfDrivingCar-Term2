@@ -25,6 +25,9 @@ class UKF {
   ///* state vector: [pos1 pos2 vel_abs yaw_angle yaw_rate] in SI units and rad
   VectorXd x_;
 
+  ///* predicted vector: [pos1 pos2 vel_abs yaw_angle yaw_rate] in SI units and rad
+  VectorXd predicted_x_;
+
   ///* state covariance matrix
   MatrixXd P_;
 
@@ -81,7 +84,7 @@ class UKF {
 
   ///* the current NIS for laser
   double NIS_laser_;
-  
+
   /**
    * Constructor
    */
@@ -105,6 +108,9 @@ class UKF {
    */
   void Prediction(double delta_t);
 
+  // if delta_t > 0.1 , use delta_t = 0.1
+  void Prediction_chase(double delta_t);
+  
   /**
    * Updates the state and the state covariance matrix using a laser measurement
    * @param meas_package The measurement at k+1
@@ -116,6 +122,11 @@ class UKF {
    * @param meas_package The measurement at k+1
    */
   void UpdateRadar(MeasurementPackage meas_package);
+  
+  void UpdateLidar_linear(MeasurementPackage meas_package);
+  
+
+  double SNormalizeAngle2(double x);
 };
 
 #endif /* UKF_H */

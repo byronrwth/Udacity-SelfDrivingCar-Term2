@@ -90,7 +90,7 @@ class UKF {
   //MatrixXd Xsig_pred_ = MatrixXd(n_x_,  2 * n_aug_ + 1); // notice! 5 * 15
   MatrixXd Xsig_pred_ ;
 
-  VectorXd weights_ = VectorXd(n_sig_);
+  VectorXd weights_ = VectorXd(n_sig_); // 15 * 1
 
 
   MatrixXd R_radar_ ;

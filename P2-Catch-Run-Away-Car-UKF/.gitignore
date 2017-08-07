@@ -1,0 +1,9 @@
+# silly macOS
+.DS_Store
+
+# build files
+build/
+
+#sublime project
+.sublime-project
+.sublime-workspace
