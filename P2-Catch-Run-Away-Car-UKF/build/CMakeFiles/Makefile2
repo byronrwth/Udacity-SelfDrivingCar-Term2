@@ -54,10 +54,10 @@ RM = /usr/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /mnt/shared/Udacity/Udacity-SelfDrivingCar-Term2/P2-Catch-Run-Away-Car-UKF/src
+CMAKE_SOURCE_DIR = /mnt/hgfs/Linux/Udacity/Udacity-SelfDrivingCar-Term2/P2-Catch-Run-Away-Car-UKF
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /mnt/shared/Udacity/Udacity-SelfDrivingCar-Term2/P2-Catch-Run-Away-Car-UKF/build
+CMAKE_BINARY_DIR = /mnt/hgfs/Linux/Udacity/Udacity-SelfDrivingCar-Term2/P2-Catch-Run-Away-Car-UKF/build
 
 #=============================================================================
 # Target rules for target CMakeFiles/UnscentedKF.dir
@@ -66,7 +66,7 @@ CMAKE_BINARY_DIR = /mnt/shared/Udacity/Udacity-SelfDrivingCar-Term2/P2-Catch-Run
 CMakeFiles/UnscentedKF.dir/all:
 	$(MAKE) -f CMakeFiles/UnscentedKF.dir/build.make CMakeFiles/UnscentedKF.dir/depend
 	$(MAKE) -f CMakeFiles/UnscentedKF.dir/build.make CMakeFiles/UnscentedKF.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/mnt/shared/Udacity/Udacity-SelfDrivingCar-Term2/P2-Catch-Run-Away-Car-UKF/build/CMakeFiles --progress-num=1,2,3 "Built target UnscentedKF"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/mnt/hgfs/Linux/Udacity/Udacity-SelfDrivingCar-Term2/P2-Catch-Run-Away-Car-UKF/build/CMakeFiles --progress-num=1,2,3 "Built target UnscentedKF"
 .PHONY : CMakeFiles/UnscentedKF.dir/all
 
 # Include target in all.
@@ -76,9 +76,9 @@ all: CMakeFiles/UnscentedKF.dir/all
 
 # Build rule for subdir invocation for target.
 CMakeFiles/UnscentedKF.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /mnt/shared/Udacity/Udacity-SelfDrivingCar-Term2/P2-Catch-Run-Away-Car-UKF/build/CMakeFiles 3
+	$(CMAKE_COMMAND) -E cmake_progress_start /mnt/hgfs/Linux/Udacity/Udacity-SelfDrivingCar-Term2/P2-Catch-Run-Away-Car-UKF/build/CMakeFiles 3
 	$(MAKE) -f CMakeFiles/Makefile2 CMakeFiles/UnscentedKF.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /mnt/shared/Udacity/Udacity-SelfDrivingCar-Term2/P2-Catch-Run-Away-Car-UKF/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /mnt/hgfs/Linux/Udacity/Udacity-SelfDrivingCar-Term2/P2-Catch-Run-Away-Car-UKF/build/CMakeFiles 0
 .PHONY : CMakeFiles/UnscentedKF.dir/rule
 
 # Convenience name for target.

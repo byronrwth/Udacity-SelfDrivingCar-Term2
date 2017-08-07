@@ -1,6 +1,6 @@
 file(REMOVE_RECURSE
-  "CMakeFiles/UnscentedKF.dir/ukf.cpp.o"
-  "CMakeFiles/UnscentedKF.dir/main.cpp.o"
+  "CMakeFiles/UnscentedKF.dir/src/ukf.cpp.o"
+  "CMakeFiles/UnscentedKF.dir/src/main.cpp.o"
   "UnscentedKF.pdb"
   "UnscentedKF"
 )

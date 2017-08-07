@@ -115,4 +115,60 @@ int main() {
         std::cout << "..................................................." << std::endl;
     }
     return 0;
+
+    /*
+Print out the map landmarks:
+ID: 1   value in x: 9
+ID: 2   value in x: 15
+ID: 3   value in x: 25
+ID: 4   value in x: 31
+ID: 5   value in x: 59
+ID: 6   value in x: 77
+...................................................
+...................................................
+Print out the measurement packages:
+Step 0 includes the move 1[m] in driving direction 
+    No observations in step 0
+...................................................
+Step 1 includes the move 1[m] in driving direction 
+    No observations in step 1
+...................................................
+Step 2 includes the move 1[m] in driving direction 
+    No observations in step 2
+...................................................
+Step 3 includes the move 1[m] in driving direction 
+    No observations in step 3
+...................................................
+Step 4 includes the move 1[m] in driving direction 
+    No observations in step 4
+...................................................
+Step 5 includes the move 1[m] in driving direction 
+    No observations in step 5
+...................................................
+Step 6 includes the move 1[m] in driving direction 
+    No observations in step 6
+...................................................
+Step 7 includes the move 1[m] in driving direction 
+    No observations in step 7
+...................................................
+Step 8 includes the move 1[m] in driving direction 
+    No observations in step 8
+...................................................
+Step 9 includes the move 1[m] in driving direction 
+    No observations in step 9
+...................................................
+Step 10 includes the move 1[m] in driving direction 
+    No observations in step 10
+...................................................
+Step 11 includes the move 1[m] in driving direction 
+    No observations in step 11
+...................................................
+Step 12 includes the move 1[m] in driving direction 
+    No observations in step 12
+...................................................
+Step 13 includes the move 1[m] in driving direction 
+    No observations in step 13
+...................................................
+
+    */
 }

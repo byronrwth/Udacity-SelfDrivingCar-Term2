@@ -48,10 +48,10 @@ RM = /usr/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /mnt/shared/Udacity/Udacity-SelfDrivingCar-Term2/P2-Catch-Run-Away-Car-UKF/src
+CMAKE_SOURCE_DIR = /mnt/hgfs/Linux/Udacity/Udacity-SelfDrivingCar-Term2/P2-Catch-Run-Away-Car-UKF
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /mnt/shared/Udacity/Udacity-SelfDrivingCar-Term2/P2-Catch-Run-Away-Car-UKF/build
+CMAKE_BINARY_DIR = /mnt/hgfs/Linux/Udacity/Udacity-SelfDrivingCar-Term2/P2-Catch-Run-Away-Car-UKF/build
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -80,9 +80,9 @@ rebuild_cache/fast: rebuild_cache
 
 # The main all target
 all: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /mnt/shared/Udacity/Udacity-SelfDrivingCar-Term2/P2-Catch-Run-Away-Car-UKF/build/CMakeFiles /mnt/shared/Udacity/Udacity-SelfDrivingCar-Term2/P2-Catch-Run-Away-Car-UKF/build/CMakeFiles/progress.marks
+	$(CMAKE_COMMAND) -E cmake_progress_start /mnt/hgfs/Linux/Udacity/Udacity-SelfDrivingCar-Term2/P2-Catch-Run-Away-Car-UKF/build/CMakeFiles /mnt/hgfs/Linux/Udacity/Udacity-SelfDrivingCar-Term2/P2-Catch-Run-Away-Car-UKF/build/CMakeFiles/progress.marks
 	$(MAKE) -f CMakeFiles/Makefile2 all
-	$(CMAKE_COMMAND) -E cmake_progress_start /mnt/shared/Udacity/Udacity-SelfDrivingCar-Term2/P2-Catch-Run-Away-Car-UKF/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /mnt/hgfs/Linux/Udacity/Udacity-SelfDrivingCar-Term2/P2-Catch-Run-Away-Car-UKF/build/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
@@ -123,59 +123,59 @@ UnscentedKF/fast:
 	$(MAKE) -f CMakeFiles/UnscentedKF.dir/build.make CMakeFiles/UnscentedKF.dir/build
 .PHONY : UnscentedKF/fast
 
-main.o: main.cpp.o
+src/main.o: src/main.cpp.o
 
-.PHONY : main.o
-
-# target to build an object file
-main.cpp.o:
-	$(MAKE) -f CMakeFiles/UnscentedKF.dir/build.make CMakeFiles/UnscentedKF.dir/main.cpp.o
-.PHONY : main.cpp.o
-
-main.i: main.cpp.i
-
-.PHONY : main.i
-
-# target to preprocess a source file
-main.cpp.i:
-	$(MAKE) -f CMakeFiles/UnscentedKF.dir/build.make CMakeFiles/UnscentedKF.dir/main.cpp.i
-.PHONY : main.cpp.i
-
-main.s: main.cpp.s
-
-.PHONY : main.s
-
-# target to generate assembly for a file
-main.cpp.s:
-	$(MAKE) -f CMakeFiles/UnscentedKF.dir/build.make CMakeFiles/UnscentedKF.dir/main.cpp.s
-.PHONY : main.cpp.s
-
-ukf.o: ukf.cpp.o
-
-.PHONY : ukf.o
+.PHONY : src/main.o
 
 # target to build an object file
-ukf.cpp.o:
-	$(MAKE) -f CMakeFiles/UnscentedKF.dir/build.make CMakeFiles/UnscentedKF.dir/ukf.cpp.o
-.PHONY : ukf.cpp.o
+src/main.cpp.o:
+	$(MAKE) -f CMakeFiles/UnscentedKF.dir/build.make CMakeFiles/UnscentedKF.dir/src/main.cpp.o
+.PHONY : src/main.cpp.o
 
-ukf.i: ukf.cpp.i
+src/main.i: src/main.cpp.i
 
-.PHONY : ukf.i
+.PHONY : src/main.i
 
 # target to preprocess a source file
-ukf.cpp.i:
-	$(MAKE) -f CMakeFiles/UnscentedKF.dir/build.make CMakeFiles/UnscentedKF.dir/ukf.cpp.i
-.PHONY : ukf.cpp.i
+src/main.cpp.i:
+	$(MAKE) -f CMakeFiles/UnscentedKF.dir/build.make CMakeFiles/UnscentedKF.dir/src/main.cpp.i
+.PHONY : src/main.cpp.i
 
-ukf.s: ukf.cpp.s
+src/main.s: src/main.cpp.s
 
-.PHONY : ukf.s
+.PHONY : src/main.s
 
 # target to generate assembly for a file
-ukf.cpp.s:
-	$(MAKE) -f CMakeFiles/UnscentedKF.dir/build.make CMakeFiles/UnscentedKF.dir/ukf.cpp.s
-.PHONY : ukf.cpp.s
+src/main.cpp.s:
+	$(MAKE) -f CMakeFiles/UnscentedKF.dir/build.make CMakeFiles/UnscentedKF.dir/src/main.cpp.s
+.PHONY : src/main.cpp.s
+
+src/ukf.o: src/ukf.cpp.o
+
+.PHONY : src/ukf.o
+
+# target to build an object file
+src/ukf.cpp.o:
+	$(MAKE) -f CMakeFiles/UnscentedKF.dir/build.make CMakeFiles/UnscentedKF.dir/src/ukf.cpp.o
+.PHONY : src/ukf.cpp.o
+
+src/ukf.i: src/ukf.cpp.i
+
+.PHONY : src/ukf.i
+
+# target to preprocess a source file
+src/ukf.cpp.i:
+	$(MAKE) -f CMakeFiles/UnscentedKF.dir/build.make CMakeFiles/UnscentedKF.dir/src/ukf.cpp.i
+.PHONY : src/ukf.cpp.i
+
+src/ukf.s: src/ukf.cpp.s
+
+.PHONY : src/ukf.s
+
+# target to generate assembly for a file
+src/ukf.cpp.s:
+	$(MAKE) -f CMakeFiles/UnscentedKF.dir/build.make CMakeFiles/UnscentedKF.dir/src/ukf.cpp.s
+.PHONY : src/ukf.cpp.s
 
 # Help Target
 help:
@@ -186,12 +186,12 @@ help:
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
 	@echo "... UnscentedKF"
-	@echo "... main.o"
-	@echo "... main.i"
-	@echo "... main.s"
-	@echo "... ukf.o"
-	@echo "... ukf.i"
-	@echo "... ukf.s"
+	@echo "... src/main.o"
+	@echo "... src/main.i"
+	@echo "... src/main.s"
+	@echo "... src/ukf.o"
+	@echo "... src/ukf.i"
+	@echo "... src/ukf.s"
 .PHONY : help
 
 
