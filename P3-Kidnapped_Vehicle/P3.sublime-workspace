@@ -4,25 +4,29 @@
 		"selected_items":
 		[
 			[
-				"R_",
-				"R_radar_"
+				"n_",
+				"n_x_"
 			],
 			[
-				"vec",
-				"VectorXd"
+				"S",
+				"Si"
+			],
+			[
+				"M",
+				"MatrixXd"
+			],
+			[
+				"H",
+				"Ht"
+			],
+			[
+				"u",
+				"urlopen"
 			]
 		]
 	},
 	"buffers":
 	[
-		{
-			"file": "src/particle_filter.cpp",
-			"settings":
-			{
-				"buffer_size": 4433,
-				"line_ending": "Windows"
-			}
-		}
 	],
 	"build_system": "",
 	"build_system_choices":
@@ -31,12 +35,12 @@
 	"build_varint": "",
 	"command_palette":
 	{
-		"height": 110.0,
-		"last_filter": "LineEndings",
+		"height": 500.0,
+		"last_filter": "line ending ",
 		"selected_items":
 		[
 			[
-				"LineEndings",
+				"line ending ",
 				"Line Endings Unify"
 			],
 			[
@@ -44,43 +48,39 @@
 				"Package Control: Install Package"
 			],
 			[
-				"compare",
-				"Compare with..."
+				"line",
+				"Line Ending to all views: Unix"
 			],
 			[
 				"git diff",
 				"Git: Diff Current File"
 			],
 			[
-				"git  status",
-				"Git: Status"
-			],
-			[
-				"mer",
-				"Sublimerge: Compare Foremost Views"
-			],
-			[
-				"inst",
-				"Package Control: Install Package"
-			],
-			[
-				"git con",
-				"Git Conflict Resolver: Show Conflict Files"
-			],
-			[
-				"git add",
-				"Git: Add Remote"
+				"line end",
+				"Line Ending to all views: Unix"
 			],
 			[
 				"git status",
 				"Git: Status"
 			],
 			[
-				"install ",
-				"Package Control: Install Package"
+				"git commit",
+				"Git: Commit"
+			],
+			[
+				"git add ",
+				"Git: Add Remote"
+			],
+			[
+				"git add",
+				"Git: Add Remote"
+			],
+			[
+				"git pull",
+				"Git: Pull"
 			]
 		],
-		"width": 514.0
+		"width": 735.0
 	},
 	"console":
 	{
@@ -100,80 +100,123 @@
 	},
 	"expanded_folders":
 	[
-		"/C/Users/byroncheng/VirtualBox/Udacity/Udacity-SelfDrivingCar-Term2/P3-Kidnapped_Vehicle",
-		"/C/Users/byroncheng/VirtualBox/Udacity/Udacity-SelfDrivingCar-Term2/P3-Kidnapped_Vehicle/lesson",
-		"/C/Users/byroncheng/VirtualBox/Udacity/Udacity-SelfDrivingCar-Term2/P3-Kidnapped_Vehicle/lesson/Markov Localization",
-		"/C/Users/byroncheng/VirtualBox/Udacity/Udacity-SelfDrivingCar-Term2/P3-Kidnapped_Vehicle/lesson/Particle Filter",
-		"/C/Users/byroncheng/VirtualBox/Udacity/Udacity-SelfDrivingCar-Term2/P3-Kidnapped_Vehicle/lesson/Particle Filter/14.4 gaussian sampling",
-		"/C/Users/byroncheng/VirtualBox/Udacity/Udacity-SelfDrivingCar-Term2/P3-Kidnapped_Vehicle/src"
+		"/C/Users/uids6815/Linux/Udacity/Udacity-SelfDrivingCar-Term2/P3-Kidnapped_Vehicle",
+		"/C/Users/uids6815/Linux/Udacity/Udacity-SelfDrivingCar-Term2/P3-Kidnapped_Vehicle/lesson/Markov Localization/11.19 motion model",
+		"/C/Users/uids6815/Linux/Udacity/Udacity-SelfDrivingCar-Term2/P3-Kidnapped_Vehicle/lesson/Markov Localization/11.26 one and multiple observation",
+		"/C/Users/uids6815/Linux/Udacity/Udacity-SelfDrivingCar-Term2/P3-Kidnapped_Vehicle/lesson/Markov Localization/11.6",
+		"/C/Users/uids6815/Linux/Udacity/Udacity-SelfDrivingCar-Term2/P3-Kidnapped_Vehicle/lesson/Particle Filter",
+		"/C/Users/uids6815/Linux/Udacity/Udacity-SelfDrivingCar-Term2/P3-Kidnapped_Vehicle/lesson/Particle Filter/14.4 gaussian sampling",
+		"/C/Users/uids6815/Linux/Udacity/Udacity-SelfDrivingCar-Term2/P3-Kidnapped_Vehicle/src"
 	],
 	"file_history":
 	[
-		"/C/Users/byroncheng/VirtualBox/Udacity/Udacity-SelfDrivingCar-Term2/P3-Kidnapped_Vehicle/lesson/Particle Filter/14.4 gaussian sampling/print_samples.cpp",
-		"/C/Users/byroncheng/VirtualBox/Udacity/Udacity-SelfDrivingCar-Term2/P3-Kidnapped_Vehicle/lesson/Markov Localization/11.26 one and multiple observation/bayesianFilter.h",
-		"/C/Users/byroncheng/VirtualBox/Udacity/Udacity-SelfDrivingCar-Term2/P3-Kidnapped_Vehicle/lesson/Markov Localization/11.26 one and multiple observation/help_functions.h",
-		"/C/Users/byroncheng/AppData/Roaming/Sublime Text 3/Packages/User/LineEndings.sublime-settings",
-		"/C/Users/byroncheng/VirtualBox/Udacity/Udacity-SelfDrivingCar-Term2/P3-Kidnapped_Vehicle/lesson/Markov Localization/11.26 one and multiple observation/map.h",
-		"/C/Users/byroncheng/VirtualBox/Udacity/Udacity-SelfDrivingCar-Term2/P3-Kidnapped_Vehicle/lesson/Markov Localization/11.26 one and multiple observation/measurement_package.h",
-		"/C/Users/byroncheng/VirtualBox/Udacity/Udacity-SelfDrivingCar-Term2/P3-Kidnapped_Vehicle/lesson/Markov Localization/11.26 one and multiple observation/bayesianFilter.cpp",
-		"/C/Users/byroncheng/VirtualBox/Udacity/Udacity-SelfDrivingCar-Term2/P3-Kidnapped_Vehicle/lesson/Markov Localization/11.26 one and multiple observation/main.cpp",
-		"/C/Users/byroncheng/AppData/Roaming/Sublime Text 3/Packages/User/SublimeAStyleFormatter.sublime-settings",
-		"/C/Users/byroncheng/VirtualBox/Udacity/Udacity-SelfDrivingCar-Term2/P2-Catch-Run-Away-Car-UKF/src/json.hpp",
-		"/C/Users/byroncheng/VirtualBox/Udacity/Udacity-SelfDrivingCar-Term2/P2-Unscented-KalmanFilter/P2.sublime-project",
-		"/C/Users/byroncheng/VirtualBox/Udacity/Udacity-SelfDrivingCar-Term2/P2-Unscented-KalmanFilter/install-ubuntu.sh",
-		"/C/Users/byroncheng/VirtualBox/Udacity/Udacity-SelfDrivingCar-Term2/P1-Extended-Kalman-Filter/src/FusionEKF.cpp",
-		"/C/Users/byroncheng/VirtualBox/Udacity/Udacity-SelfDrivingCar-Term2/P2-Unscented-KalmanFilter/src/lesson/ukf-7.26Update-predictRadarMeas.cpp",
-		"/C/Users/byroncheng/VirtualBox/Udacity/Udacity-SelfDrivingCar-Term2/P2-Unscented-KalmanFilter/src/lesson/ukf-7.26Update-predictRadarMeas.h",
-		"/C/Users/byroncheng/VirtualBox/Udacity/Udacity-SelfDrivingCar-Term2/P2-Unscented-KalmanFilter/src/lesson/ukf-7.29Update-stateof-mean-covariance.cpp",
-		"/C/Users/byroncheng/VirtualBox/Udacity/Udacity-SelfDrivingCar-Term2/P2-Unscented-KalmanFilter/src/lesson/ukf-7.29Update-stateof-mean-covariance.h",
-		"/C/Users/byroncheng/VirtualBox/Udacity/Udacity-SelfDrivingCar-Term2/P2-Unscented-KalmanFilter/src/ukf.h",
-		"/C/Users/byroncheng/VirtualBox/Udacity/Udacity-SelfDrivingCar-Term2/P2-Unscented-KalmanFilter/src/tools.h",
-		"/C/Users/byroncheng/VirtualBox/Udacity/Udacity-SelfDrivingCar-Term2/P2-Unscented-KalmanFilter/src/lesson/ukf-7.23mean-covariance-predict.cpp",
-		"/C/Users/byroncheng/VirtualBox/Udacity/Udacity-SelfDrivingCar-Term2/P2-Unscented-KalmanFilter/src/lesson/ukf-7.23mean-covariance-predict.h",
-		"/C/Users/byroncheng/VirtualBox/Udacity/Udacity-SelfDrivingCar-Term2/P2-Unscented-KalmanFilter/src/lesson/ukf-7.20sigmapointpredict.h",
-		"/C/Users/byroncheng/VirtualBox/Udacity/Udacity-SelfDrivingCar-Term2/P2-Unscented-KalmanFilter/src/lesson/main-7.14sigmaGeneration.cpp",
-		"/C/Users/byroncheng/VirtualBox/Udacity/Udacity-SelfDrivingCar-Term2/P2-Unscented-KalmanFilter/src/lesson/main-7.17augmentation.cpp",
-		"/C/Users/byroncheng/VirtualBox/Udacity/Udacity-SelfDrivingCar-Term2/P2-Unscented-KalmanFilter/src/lesson/main-7.20sigmapointpredict.cpp",
-		"/C/Users/byroncheng/VirtualBox/Udacity/Udacity-SelfDrivingCar-Term2/P2-Unscented-KalmanFilter/src/lesson/main-7.23mean-covariance-predict.cpp",
-		"/C/Users/byroncheng/VirtualBox/Udacity/Udacity-SelfDrivingCar-Term2/P2-Unscented-KalmanFilter/src/lesson/main-7.26Update-predictRadarMeas.cpp",
-		"/C/Users/byroncheng/VirtualBox/Udacity/Udacity-SelfDrivingCar-Term2/P2-Unscented-KalmanFilter/src/lesson/main-7.29Update-stateof-mean-covariance.cpp",
-		"/C/Users/byroncheng/VirtualBox/Udacity/Udacity-SelfDrivingCar-Term2/P2-Unscented-KalmanFilter/src/lesson/ukf-7.14sigmaGeneration.cpp",
-		"/C/Users/byroncheng/VirtualBox/Udacity/Udacity-SelfDrivingCar-Term2/P2-Unscented-KalmanFilter/src/lesson/ukf-7.14sigmaGeneration.h",
-		"/C/Users/byroncheng/VirtualBox/Udacity/Udacity-SelfDrivingCar-Term2/P2-Unscented-KalmanFilter/src/lesson/ukf-7.17augmentation.cpp",
-		"/C/Users/byroncheng/VirtualBox/Udacity/Udacity-SelfDrivingCar-Term2/P2-Unscented-KalmanFilter/src/lesson/ukf-7.17augmentation.h",
-		"/C/Users/byroncheng/VirtualBox/Udacity/Udacity-SelfDrivingCar-Term2/P2-Unscented-KalmanFilter/src/lesson/ukf-7.20sigmapointpredict.cpp",
-		"/C/Users/byroncheng/VirtualBox/Udacity/Udacity-SelfDrivingCar-Term2/P2-Unscented-KalmanFilter/src/tools.cpp",
-		"/C/Users/byroncheng/VirtualBox/Udacity/Udacity-SelfDrivingCar-Term2/P2-Unscented-KalmanFilter/src/measurement_package.h",
-		"/C/Users/byroncheng/VirtualBox/Udacity/Udacity-SelfDrivingCar-Term2/P2-Unscented-KalmanFilter/src/main.cpp",
-		"/C/Users/byroncheng/VirtualBox/Udacity/Udacity-SelfDrivingCar-Term2/P2-Unscented-KalmanFilter/src/json.hpp",
-		"/C/Users/byroncheng/VirtualBox/Udacity/Udacity-SelfDrivingCar-Term2/P2-Unscented-KalmanFilter/src/lesson/ukf-7.14.cpp",
-		"/C/Users/byroncheng/AppData/Roaming/Sublime Text 3/Packages/User/Colorsublime.sublime-settings",
-		"/C/Users/byroncheng/AppData/Roaming/Sublime Text 3/Packages/User/Base File.sublime-settings",
-		"/C/Users/byroncheng/AppData/Roaming/Sublime Text 3/Packages/Default/Preferences.sublime-settings",
-		"/C/Users/byroncheng/AppData/Roaming/Sublime Text 3/Packages/User/MarkdownPreview.sublime-settings",
-		"/C/Users/byroncheng/AppData/Roaming/Sublime Text 3/Packages/Markdown Preview/MarkdownPreview.sublime-settings",
-		"/C/Users/byroncheng/VirtualBox/Udacity/Udacity-SelfDrivingCar-Term2/P1-Extended-Kalman-Filter/Docs/Data_Flow_Doc.txt",
-		"/C/Users/byroncheng/VirtualBox/Udacity/Udacity-SelfDrivingCar-Term2/P2-Unscented-KalmanFilter/src/ukf-7.29update.h",
-		"/C/Users/byroncheng/VirtualBox/Udacity/Udacity-SelfDrivingCar-Term2/P2-Unscented-KalmanFilter/src/ukf-7.29update.cpp",
-		"/C/Users/byroncheng/VirtualBox/Udacity/Udacity-SelfDrivingCar-Term2/P2-Unscented-KalmanFilter/src/main-7.29update.cpp",
-		"/C/Users/byroncheng/VirtualBox/Udacity/Udacity-SelfDrivingCar-Term2/P2-Unscented-KalmanFilter/src/main-7.26radar-predict.cpp",
-		"/C/Users/byroncheng/VirtualBox/Udacity/Udacity-SelfDrivingCar-Term2/P2-Unscented-KalmanFilter/src/ukf-7.23mean-covariance-predict.h",
-		"/C/Users/byroncheng/VirtualBox/Udacity/Udacity-SelfDrivingCar-Term2/P2-Unscented-KalmanFilter/src/ukf-7.23mean-covariance-predict.cpp",
-		"/C/Users/byroncheng/VirtualBox/Udacity/Udacity-SelfDrivingCar-Term2/P2-Unscented-KalmanFilter/src/main-7.23mean-covariance-predict.cpp",
-		"/C/Users/byroncheng/VirtualBox/Udacity/Udacity-SelfDrivingCar-Term2/P2-Unscented-KalmanFilter/src/ukf-7.20sigmapointpredict.h",
-		"/C/Users/byroncheng/VirtualBox/Udacity/Udacity-SelfDrivingCar-Term2/P2-Unscented-KalmanFilter/src/ukf-7.20sigmapointpredict.cpp",
-		"/C/Users/byroncheng/VirtualBox/Udacity/Udacity-SelfDrivingCar-Term2/P2-Unscented-KalmanFilter/src/main-7.20sigmapointpredict.cpp",
-		"/C/Users/byroncheng/VirtualBox/Udacity/Udacity-SelfDrivingCar-Term2/P2-Unscented-KalmanFilter/src/main-7.17augmentation.cpp",
-		"/C/Users/byroncheng/VirtualBox/Udacity/Udacity-SelfDrivingCar-Term2/P2-Unscented-KalmanFilter/src/ukf-7.17.h",
-		"/C/Users/byroncheng/VirtualBox/Udacity/Udacity-SelfDrivingCar-Term2/P2-Unscented-KalmanFilter/src/ukf-7.17.cpp",
-		"/C/Users/byroncheng/VirtualBox/Udacity/Udacity-SelfDrivingCar-Term2/P2-Unscented-KalmanFilter/src/main-7.17.cpp",
-		"/C/Users/byroncheng/VirtualBox/Udacity/Udacity-SelfDrivingCar-Term2/P2-Unscented-KalmanFilter/src/Eigen/src/Cholesky/LDLT.h",
-		"/C/Users/byroncheng/VirtualBox/Udacity/Udacity-SelfDrivingCar-Term2/P2-Unscented-KalmanFilter/src/main-7.14.cpp",
-		"/C/Users/byroncheng/VirtualBox/Udacity/Udacity-SelfDrivingCar-Term2/P2-Unscented-KalmanFilter/src/ukf-7.14.h",
-		"/C/Users/byroncheng/VirtualBox/Udacity/Udacity-SelfDrivingCar-Term2/P2-Unscented-KalmanFilter/src/ukf-7.14.cpp",
-		"/C/Users/byroncheng/VirtualBox/Udacity/Udacity-SelfDrivingCar-Term2/P1-Extended-Kalman-Filter/src/ukf-7.14.h",
-		"/C/Users/byroncheng/VirtualBox/Udacity/Udacity-SelfDrivingCar-Term2/P1-Extended-Kalman-Filter/src/ukf-7.14.cpp",
-		"/C/Users/byroncheng/VirtualBox/Udacity/Udacity-SelfDrivingCar-Term2/P1-Extended-Kalman-Filter/src/main-7.14.cpp"
+		"/C/Users/uids6815/Linux/Udacity/Udacity-SelfDrivingCar-Term2/P3-Kidnapped_Vehicle/lesson/Markov Localization/11.26 one and multiple observation/help_functions.h",
+		"/C/Users/uids6815/Linux/Udacity/Udacity-SelfDrivingCar-Term2/P3-Kidnapped_Vehicle/src/helper_functions.h",
+		"/C/Users/uids6815/Linux/Udacity/Udacity-SelfDrivingCar-Term2/P3-Kidnapped_Vehicle/src/json.hpp",
+		"/C/Users/uids6815/Linux/Udacity/Udacity-SelfDrivingCar-Term2/P3-Kidnapped_Vehicle/src/main.cpp",
+		"/C/Users/uids6815/Linux/Udacity/Udacity-SelfDrivingCar-Term2/P3-Kidnapped_Vehicle/src/map.h",
+		"/C/Users/uids6815/Linux/Udacity/Udacity-SelfDrivingCar-Term2/P3-Kidnapped_Vehicle/src/particle_filter.cpp",
+		"/C/Users/uids6815/Linux/Udacity/Udacity-SelfDrivingCar-Term2/P3-Kidnapped_Vehicle/src/particle_filter.h",
+		"/C/Users/uids6815/Linux/Udacity/Udacity-SelfDrivingCar-Term2/P3-Kidnapped_Vehicle/lesson/Markov Localization/11.26 one and multiple observation/bayesianFilter.cpp",
+		"/C/Users/uids6815/Linux/Udacity/Udacity-SelfDrivingCar-Term2/P3-Kidnapped_Vehicle/lesson/Markov Localization/11.26 one and multiple observation/bayesianFilter.h",
+		"/C/Users/uids6815/Linux/Udacity/Udacity-SelfDrivingCar-Term2/P3-Kidnapped_Vehicle/lesson/Markov Localization/11.26 one and multiple observation/main.cpp",
+		"/C/Users/uids6815/Linux/Udacity/Udacity-SelfDrivingCar-Term2/P3-Kidnapped_Vehicle/lesson/Markov Localization/11.26 one and multiple observation/map.h",
+		"/C/Users/uids6815/Linux/Udacity/Udacity-SelfDrivingCar-Term2/P3-Kidnapped_Vehicle/lesson/Markov Localization/11.26 one and multiple observation/measurement_package.h",
+		"/C/Users/uids6815/Linux/Udacity/Udacity-SelfDrivingCar-Term2/P3-Kidnapped_Vehicle/lesson/Markov Localization/11.6/help_functions.h",
+		"/C/Users/uids6815/Linux/Udacity/Udacity-SelfDrivingCar-Term2/P3-Kidnapped_Vehicle/lesson/Markov Localization/11.6/main.cpp",
+		"/C/Users/uids6815/Linux/Udacity/Udacity-SelfDrivingCar-Term2/P3-Kidnapped_Vehicle/lesson/Markov Localization/11.6/map.h",
+		"/C/Users/uids6815/Linux/Udacity/Udacity-SelfDrivingCar-Term2/P3-Kidnapped_Vehicle/lesson/Markov Localization/11.6/measurement_package.h",
+		"/C/Users/uids6815/Linux/Udacity/Udacity-SelfDrivingCar-Term2/P3-Kidnapped_Vehicle/lesson/Particle Filter/14.4 gaussian sampling/print_samples.cpp",
+		"/C/Users/uids6815/Linux/Udacity/Udacity-SelfDrivingCar-Term2/P3-Kidnapped_Vehicle/lesson/Markov Localization/11.19 motion model/bayesianFilter.cpp",
+		"/C/Users/uids6815/Linux/Udacity/Udacity-SelfDrivingCar-Term2/P3-Kidnapped_Vehicle/lesson/Markov Localization/11.19 motion model/bayesianFilter.h",
+		"/C/Users/uids6815/Linux/Udacity/Udacity-SelfDrivingCar-Term2/P3-Kidnapped_Vehicle/lesson/Markov Localization/11.19 motion model/help_functions.h",
+		"/C/Users/uids6815/Linux/Udacity/Udacity-SelfDrivingCar-Term2/P3-Kidnapped_Vehicle/lesson/Markov Localization/11.19 motion model/main.cpp",
+		"/C/Users/uids6815/Linux/Udacity/Udacity-SelfDrivingCar-Term2/P3-Kidnapped_Vehicle/lesson/Markov Localization/11.19 motion model/map.h",
+		"/C/Users/uids6815/Linux/Udacity/Udacity-SelfDrivingCar-Term2/P3-Kidnapped_Vehicle/lesson/Markov Localization/11.19 motion model/measurement_package.h",
+		"/C/Users/uids6815/Linux/Udacity/Udacity-SelfDrivingCar-Term2/P3-Kidnapped_Vehicle/lesson/3.19 motion model/main.cpp",
+		"/C/Users/uids6815/Linux/Udacity/Udacity-SelfDrivingCar-Term2/P3-Kidnapped_Vehicle/lesson/3.19 motion model/bayesianFilter.cpp",
+		"/C/Users/uids6815/Linux/Udacity/Udacity-SelfDrivingCar-Term2/P3-Kidnapped_Vehicle/lesson/3.19 motion model/bayesianFilter.h",
+		"/C/Users/uids6815/Linux/Udacity/Udacity-SelfDrivingCar-Term2/P3-Kidnapped_Vehicle/lesson/3.19 motion model/help_functions.h",
+		"/C/Users/uids6815/Linux/Udacity/Udacity-SelfDrivingCar-Term2/P3-Kidnapped_Vehicle/lesson/3.19 motion model/map.h",
+		"/C/Users/uids6815/Linux/Udacity/Udacity-SelfDrivingCar-Term2/P3-Kidnapped_Vehicle/lesson/3.6/map.h",
+		"/C/Users/uids6815/Linux/Udacity/Udacity-SelfDrivingCar-Term2/P3-Kidnapped_Vehicle/lesson/3.19 motion model/measurement_package.h",
+		"/C/Users/uids6815/Linux/Udacity/Udacity-SelfDrivingCar-Term2/P3-Kidnapped_Vehicle/lesson/3.6/measurement_package.h",
+		"/C/Users/uids6815/Linux/Udacity/Udacity-SelfDrivingCar-Term2/P3-Kidnapped_Vehicle/lesson/3.6/help_functions.h",
+		"/C/Users/uids6815/Linux/Udacity/Udacity-SelfDrivingCar-Term2/P3-Kidnapped_Vehicle/lesson/3.6/main.cpp",
+		"/C/Users/uids6815/Linux/Udacity/Udacity-SelfDrivingCar-Term2/P2-Catch-Run-Away-Car-UKF/src/Eigen/src/SparseCore/SparseBlock.h",
+		"/C/Users/uids6815/Crackcode/Sublime/sublime_text.exe",
+		"/C/Users/uids6815/Linux/Udacity/Udacity-SelfDrivingCar-Term2/CarND-Catch-Run-Away-Car-UKF-master/src/ukf.cpp",
+		"/C/Users/uids6815/Linux/Udacity/Udacity-SelfDrivingCar-Term2/CarND-Catch-Run-Away-Car-UKF-master/src/ukf.h",
+		"/C/Users/uids6815/Linux/Udacity/Udacity-SelfDrivingCar-Term2/CarND-Catch-Run-Away-Car-UKF-master/src/measurement_package.h",
+		"/C/Users/uids6815/Linux/Udacity/Udacity-SelfDrivingCar-Term2/CarND-Catch-Run-Away-Car-UKF-master/src/json.hpp",
+		"/C/Users/uids6815/Linux/Udacity/Udacity-SelfDrivingCar-Term2/CarND-Catch-Run-Away-Car-UKF-master/src/main.cpp",
+		"/C/Users/uids6815/Linux/Udacity/Udacity-SelfDrivingCar-Term2/CarND-Catch-Run-Away-Car-UKF-master/src/Open Notebook.onetoc2",
+		"/C/Users/uids6815/Crackcode/Sublime/Data/Packages/User/SublimeAStyleFormatter.sublime-settings",
+		"/C/Users/uids6815/Crackcode/Sublime/Data/Packages/User/LineEndings.sublime-settings",
+		"/C/Users/uids6815/Linux/Udacity/Udacity-SelfDrivingCar-Term2/P2-Unscented-KalmanFilter/src/ukf.h",
+		"/C/Users/uids6815/Linux/Udacity/Udacity-SelfDrivingCar-Term2/P2-Unscented-KalmanFilter/src/json.hpp",
+		"/C/Users/uids6815/Linux/Udacity/Udacity-SelfDrivingCar-Term2/P2-Unscented-KalmanFilter/src/lesson/ukf-7.23mean-covariance-predict.h",
+		"/C/Users/uids6815/Linux/Udacity/Udacity-SelfDrivingCar-Term2/P2-Unscented-KalmanFilter/src/lesson/ukf-7.23mean-covariance-predict.cpp",
+		"/C/Users/uids6815/Linux/Udacity/Udacity-SelfDrivingCar-Term2/P2-Unscented-KalmanFilter/src/lesson/ukf-7.20sigmapointpredict.h",
+		"/C/Users/uids6815/Linux/Udacity/Udacity-SelfDrivingCar-Term2/P2-Unscented-KalmanFilter/src/lesson/ukf-7.20sigmapointpredict.cpp",
+		"/C/Users/uids6815/Linux/Udacity/Udacity-SelfDrivingCar-Term2/P2-Unscented-KalmanFilter/src/ukf.cpp",
+		"/C/Users/uids6815/Linux/Udacity/Udacity-SelfDrivingCar-Term2/P2-Unscented-KalmanFilter/src/tools.h",
+		"/C/Users/uids6815/Linux/Udacity/Udacity-SelfDrivingCar-Term2/P2-Unscented-KalmanFilter/src/tools.cpp",
+		"/C/Users/uids6815/Linux/Udacity/Udacity-SelfDrivingCar-Term2/P2-Unscented-KalmanFilter/src/measurement_package.h",
+		"/C/Users/uids6815/Linux/Udacity/Udacity-SelfDrivingCar-Term2/P2-Unscented-KalmanFilter/src/main.cpp",
+		"/C/Users/uids6815/Linux/Udacity/Udacity-SelfDrivingCar-Term2/P2-Unscented-KalmanFilter/src/lesson/main-7.14sigmaGeneration.cpp",
+		"/C/Users/uids6815/Linux/Udacity/Udacity-SelfDrivingCar-Term2/P2-Unscented-KalmanFilter/src/lesson/main-7.17augmentation.cpp",
+		"/C/Users/uids6815/Linux/Udacity/Udacity-SelfDrivingCar-Term2/P2-Unscented-KalmanFilter/src/lesson/main-7.20sigmapointpredict.cpp",
+		"/C/Users/uids6815/Linux/Udacity/Udacity-SelfDrivingCar-Term2/P2-Unscented-KalmanFilter/src/lesson/main-7.23mean-covariance-predict.cpp",
+		"/C/Users/uids6815/Linux/Udacity/Udacity-SelfDrivingCar-Term2/P2-Unscented-KalmanFilter/src/lesson/main-7.26Update-predictRadarMeas.cpp",
+		"/C/Users/uids6815/Linux/Udacity/Udacity-SelfDrivingCar-Term2/P2-Unscented-KalmanFilter/src/lesson/main-7.29Update-stateof-mean-covariance.cpp",
+		"/C/Users/uids6815/Linux/Udacity/Udacity-SelfDrivingCar-Term2/P2-Unscented-KalmanFilter/src/lesson/ukf-7.14sigmaGeneration.cpp",
+		"/C/Users/uids6815/Linux/Udacity/Udacity-SelfDrivingCar-Term2/P2-Unscented-KalmanFilter/src/lesson/ukf-7.14sigmaGeneration.h",
+		"/C/Users/uids6815/Linux/Udacity/Udacity-SelfDrivingCar-Term2/P2-Unscented-KalmanFilter/src/lesson/ukf-7.17augmentation.cpp",
+		"/C/Users/uids6815/Linux/Udacity/Udacity-SelfDrivingCar-Term2/P2-Unscented-KalmanFilter/src/lesson/ukf-7.17augmentation.h",
+		"/C/Users/uids6815/Linux/Udacity/Udacity-SelfDrivingCar-Term2/P2-Unscented-KalmanFilter/src/lesson/ukf-7.26Update-predictRadarMeas.cpp",
+		"/C/Users/uids6815/Linux/Udacity/Udacity-SelfDrivingCar-Term2/P2-Unscented-KalmanFilter/src/lesson/ukf-7.26Update-predictRadarMeas.h",
+		"/C/Users/uids6815/Linux/Udacity/Udacity-SelfDrivingCar-Term2/P2-Unscented-KalmanFilter/src/lesson/ukf-7.29Update-stateof-mean-covariance.h",
+		"/C/Users/uids6815/Linux/Udacity/Udacity-SelfDrivingCar-Term2/P2-Unscented-KalmanFilter/src/lesson/ukf-7.29Update-stateof-mean-covariance.cpp",
+		"/C/Users/uids6815/Crackcode/Conti/Redvine/tools/proxyCntlm/GetCurrentPasswordHash.bat",
+		"/C/Users/uids6815/Crackcode/Conti/Redvine/env/rv_windows_setup.py",
+		"/C/Users/uids6815/Crackcode/Conti/Redvine/rv_start.bat",
+		"/C/Users/uids6815/Crackcode/Conti/Redvine/rv_windows.ini",
+		"/C/Users/uids6815/Crackcode/Conti/Redvine/rv_windows.ini.template",
+		"/C/Users/uids6815/Crackcode/Conti/Redvine/tools/proxyCntlm/cntlm/cntlm.ini",
+		"/C/Users/uids6815/Linux/Udacity/Udacity-SelfDrivingCar-Term2/P2-Unscented-KalmanFilter/UKF.docx",
+		"/C/Users/uids6815/Crackcode/Sublime/Data/Packages/User/SideBarEnhancements/Open With/Side Bar.sublime-menu",
+		"/C/Users/uids6815/Crackcode/tensorflow/models/tutorials/image/mnist/data/t10k-images-idx3-ubyte.gz",
+		"/C/Users/uids6815/Linux/Udacity/Udacity-SelfDrivingCar-Term2/P2-Unscented-KalmanFilter/src/Eigen/src/Cholesky/LLT.h",
+		"/C/Users/uids6815/Crackcode/udacity/Udacity-SelfDrivingCar-Term2/P2-UKF/ukf-7.29.h",
+		"/C/Users/uids6815/Crackcode/udacity/Udacity-SelfDrivingCar-Term2/P2-UKF/ukf-7.20sigmapointpredict.h",
+		"/C/Users/uids6815/Crackcode/udacity/Udacity-SelfDrivingCar-Term2/P2-UKF/ukf-7.20sigmapointpredict.cpp",
+		"/C/Users/uids6815/Crackcode/udacity/Udacity-SelfDrivingCar-Term2/P2-UKF/main-7.20sigmapointpredict.cpp",
+		"/C/Users/uids6815/Crackcode/udacity/Udacity-SelfDrivingCar-Term2/P2-UKF/ukf-7.17augmentation.h",
+		"/C/Users/uids6815/Crackcode/udacity/Udacity-SelfDrivingCar-Term2/P2-UKF/ukf-7.17augmentation.cpp",
+		"/C/Users/uids6815/Crackcode/udacity/Udacity-SelfDrivingCar-Term2/P2-UKF/main-7.17augmentation.cpp",
+		"/C/Users/uids6815/Crackcode/udacity/Udacity-SelfDrivingCar-Term2/P2-UKF/main-7.14.cpp",
+		"/C/Users/uids6815/Crackcode/udacity/Udacity-SelfDrivingCar-Term2/P2-UKF/ukf-7.14.h",
+		"/C/Users/uids6815/Crackcode/udacity/Udacity-SelfDrivingCar-Term2/P2-UKF/ukf-7.14.cpp",
+		"/C/Users/uids6815/Crackcode/udacity/Udacity-SelfDrivingCar-Term2/P1-KalmanFilter/src/tracking5-12.h",
+		"/C/Users/uids6815/Crackcode/udacity/Udacity-SelfDrivingCar-Term2/P1-KalmanFilter/KalmanFilter.py",
+		"/C/Users/uids6815/Crackcode/udacity/Udacity-SelfDrivingCar-Term2/P1-KalmanFilter/src/measurement_package.h",
+		"/C/Users/uids6815/Crackcode/udacity/Udacity-SelfDrivingCar-Term2/P1-KalmanFilter/src/tracking5-12.cpp",
+		"/C/Users/uids6815/Crackcode/udacity/Udacity-SelfDrivingCar-Term2/P1-KalmanFilter/src/main5-12.cpp",
+		"/C/Users/uids6815/Crackcode/udacity/Udacity-SelfDrivingCar-Term2/P1-KalmanFilter/src/kalman5-12.h",
+		"/C/Users/uids6815/Crackcode/udacity/Udacity-SelfDrivingCar-Term2/P1-KalmanFilter/src/CalculateRMSE5-22.cpp",
+		"/C/Users/uids6815/Crackcode/udacity/Udacity-SelfDrivingCar-Term2/P1-KalmanFilter/src/JacobianMatrix5-18.cpp",
+		"/C/Users/uids6815/Crackcode/udacity/Udacity-SelfDrivingCar-Term2/P1-KalmanFilter/src/kalman5-12.cpp",
+		"/C/Users/uids6815/Downloads/cntlm - Kopie/Cntlm/cntlm.ini",
+		"/C/Users/uids6815/Downloads/cntlm - Kopie/cntlm.bat",
+		"/C/Users/uids6815/Crackcode/udacity/Udacity-SelfDrivingCar-Term2/P1-KalmanFilter/EKF_DATA/obj_pose-laser-radar-synthetic-input.txt",
+		"/C/Users/uids6815/Crackcode/udacity/Udacity-SelfDrivingCar-Term2/P1-KalmanFilter/src/measurement_package5-12.h",
+		"/C/Users/uids6815/Crackcode/udacity/Udacity-SelfDrivingCar-Term2/P1-KalmanFilter/src/FusionEKF.cpp",
+		"/C/Users/uids6815/Crackcode/udacity/Udacity-SelfDrivingCar-Term2/P1-KalmanFilter/src/Eigen/src/Core/Matrix.h",
+		"/C/Users/uids6815/Crackcode/udacity/Udacity-SelfDrivingCar-ND-Term1-master/ComputerVision/P5-VehicleDetection/README.md",
+		"/C/Users/uids6815/Crackcode/udacity/Udacity-SelfDrivingCar-ND-Term1-master/ComputerVision/P5-VehicleDetection/logs/train_results/result.md",
+		"/C/Users/uids6815/Crackcode/udacity/Udacity-SelfDrivingCar-ND-Term1-master/ComputerVision/P5-VehicleDetection/logs/hogviz_experiments/ppc_exp1.md",
+		"/C/Users/uids6815/Crackcode/tensorflow/test1"
 	],
 	"find":
 	{
@@ -181,69 +224,157 @@
 	},
 	"find_in_files":
 	{
-		"height": 93.0,
+		"height": 133.0,
 		"where_history":
 		[
-			"C:\\Users\\byroncheng\\VirtualBox\\Udacity\\Udacity-SelfDrivingCar-Term2\\P2-Catch-Run-Away-Car-UKF\\src\\",
-			"C:\\Users\\byroncheng\\VirtualBox\\Udacity\\Udacity-SelfDrivingCar-Term2\\P2-Catch-Run-Away-Car-UKF",
-			"C:\\Users\\byroncheng\\VirtualBox\\Udacity\\Udacity-SelfDrivingCar-Term2\\P2-Unscented-KalmanFilter\\src\\",
-			"C:\\Users\\byroncheng\\VirtualBox\\Udacity\\Udacity-SelfDrivingCar-Term2\\P2-Unscented-KalmanFilter\\src\\lesson\\",
-			"C:\\Users\\byroncheng\\VirtualBox\\Udacity\\Udacity-SelfDrivingCar-Term2\\P2-Unscented-KalmanFilter",
-			"C:\\Users\\byroncheng\\VirtualBox\\Udacity\\Udacity-SelfDrivingCar-Term2\\P1-Extended-Kalman-Filter"
+			"C:\\Users\\uids6815\\Linux\\Udacity\\Udacity-SelfDrivingCar-Term2\\P3-Kidnapped_Vehicle\\lesson\\3.19 motion model",
+			"C:\\Users\\uids6815\\Linux\\Udacity\\Udacity-SelfDrivingCar-Term2\\CarND-Catch-Run-Away-Car-UKF-master\\src\\Eigen",
+			"C:\\Users\\uids6815\\Linux\\Udacity\\Udacity-SelfDrivingCar-Term2\\CarND-Catch-Run-Away-Car-UKF-master\\src",
+			"C:\\Users\\uids6815\\Linux\\Udacity\\Udacity-SelfDrivingCar-Term2\\P2-Unscented-KalmanFilter\\src\\",
+			"C:\\Users\\uids6815\\Linux\\Udacity\\Udacity-SelfDrivingCar-Term2\\P2-Unscented-KalmanFilter",
+			"C:\\Users\\uids6815\\Crackcode\\Conti\\Redvine",
+			"C:\\Users\\uids6815\\Crackcode\\tensorflow\\models\\tutorials\\",
+			"C:\\Users\\uids6815\\Crackcode\\tensorflow\\models\\tutorials\\image\\mnist\\",
+			"C:\\Users\\uids6815\\Crackcode\\tensorflow\\models\\tutorials\\image\\mnist",
+			"C:\\Users\\uids6815\\Crackcode\\tensorflow\\models\\tutorials\\image\\cifar10",
+			"C:\\Users\\uids6815\\Linux\\Udacity\\Udacity-SelfDrivingCar-Term2\\P2-Unscented-KalmanFilter\\src",
+			"C:\\Users\\uids6815\\Linux\\Udacity\\Udacity-SelfDrivingCar-Term2\\P2-Unscented-KalmanFilter",
+			"C:\\Users\\uids6815\\Crackcode\\udacity\\Udacity-SelfDrivingCar-Term2\\P1-KalmanFilter\\src\\",
+			"C:\\Users\\uids6815\\Crackcode\\udacity\\Udacity-SelfDrivingCar-Term2\\P1-KalmanFilter\\src\\Eigen",
+			"C:\\Users\\uids6815\\Crackcode\\udacity\\Udacity-SelfDrivingCar-Term2\\P1-KalmanFilter",
+			"C:\\Users\\uids6815\\Crackcode\\udacity\\kalman-master",
+			"C:\\Users\\uids6815\\Crackcode\\udacity\\Udacity-SelfDrivingCar-ND-Term1-master\\ComputerVision\\P5-VehicleDetection"
 		]
 	},
 	"find_state":
 	{
-		"case_sensitive": false,
+		"case_sensitive": true,
 		"find_history":
 		[
-			"R_laser_",
-			"predicted_x_",
-			"NIS",
-			"Prediction_chase",
-			"Normalize",
-			"Normaliz",
-			"Normalize",
-			"target_v",
-			"target_y",
-			"target_v",
-			"targetv",
-			"heading_to_target",
-			"SNormalizeAngle2",
-			"Xsig_aug_",
-			"Xsig_",
-			"Xsig_pred_",
-			"Xsig_aug_",
-			"MatrixXd Xsig_aug_",
-			"Xsig_",
-			"MatrixXd Xsig_",
-			"MatrixXd Xsig_ = MatrixXd(n_x_, 2 * n_x_ + 1)",
-			"Xsig_aug",
-			"MatrixXd Xsig_aug",
-			"MatrixXd Xsig_aug_ = MatrixXd(n_aug_, 2 * n_aug_ + 1)",
-			"MatrixXd Xsig_aug_ = MatrixXd(n_aug_, 2 * n_aug_ + 1);",
-			"MatrixXd Xsig_aug_ = MatrixXd(n_aug_, 2 * n_aug_ + 1)",
-			"MatrixXd Xsig_pred_ = MatrixXd(n_x_,  2 * n_aug_ + 1); // notice! 5 * 15",
-			"Xsig_pred_",
-			"Xsig_aug_",
-			"previous_timestamp_",
-			"tools",
-			"x_predmean",
+			"landmark_list",
+			"0.0001",
+			"0.001",
 			"z_predmean",
-			"R_laser_",
-			"weights",
-			"Zsig_",
-			"n_aug_",
-			"n_aug?",
-			"n_aug",
-			"R_laser_",
+			"Xsig_aug_",
+			"= MatrixXd",
+			"= VectorXd",
+			"z_predmean",
+			"int n_z = ",
+			"n_z",
+			"0.001",
+			"0.0001",
+			"todo",
 			"R_radar_",
-			"R",
-			"NIS",
-			"ignore",
-			"ekf_",
-			"ekf",
-			"MatrixXd"
+			"VectorXd",
+			"TODO",
+			"Xsig_aug_",
+			"P_",
+			"X_aug_",
+			"x_aug_",
+			"Xsig_pred_",
+			"Xsig_aug_",
+			" L ",
+			"L",
+			"std_yawdd_",
+			"std_a_",
+			"L",
+			"Xsig_",
+			"object_detection",
+			"object",
+			"keras",
+			"kefas",
+			"train",
+			"training_data_from",
+			"training_from",
+			"training_data_from_mongo",
+			"flow_from_mongodb",
+			"ACTIONS",
+			"Xsig_pred_",
+			"Xsig_pred",
+			"Xsig_aug_",
+			"Xsig_",
+			"std_a_",
+			"std_a",
+			"n_x",
+			"n_x_",
+			"print",
+			"WORK_DIRECTORY",
+			"maybe_download",
+			"store_true",
+			"self_test",
+			"mnist",
+			"embedding_config",
+			"tmp",
+			"mnist_logs",
+			"mnist_log",
+			"num_epochs",
+			"step",
+			"i",
+			"cpu:0",
+			"gpu:0",
+			"/gpu:0",
+			"cpu",
+			"/tmp/cifar10_train",
+			"tmp/cifar10_train",
+			"_variable_on_cpu",
+			"cpu:0",
+			"cpu",
+			"train",
+			"inference",
+			"tf.nn.conv2d",
+			"_variable_on_cpu",
+			"DATA_URL",
+			"preprocess",
+			"preprocess_input_data",
+			"eval_dir",
+			"tf.Session",
+			"cpu",
+			"gpu",
+			"FLAGS",
+			"sess",
+			"main",
+			"tf.summary",
+			"with tf.Session",
+			"tf.summary",
+			"tf.get_variable",
+			"summary_dir",
+			"summaries_dir",
+			"SummaryWriter",
+			"GraphDef",
+			"logdir",
+			"tf.summary.scalar",
+			"NUM_EXAMPLES_PER_EPOCH_FOR_TRAIN",
+			"FLAGS",
+			"TODO",
+			"z_pred",
+			"dt",
+			"TODO",
+			"raw_measurements_",
+			"VectorXd",
+			"measurement_timestamp",
+			"noise_ax_",
+			"recording",
+			"extract_features_plot",
+			"0.90",
+			"0.91",
+			"scale",
+			"0.995",
+			"0.996",
+			"0.997",
+			"0.998",
+			"0.999",
+			"0.996",
+			"0.99",
+			"single_img",
+			"slide_window_polygonmask",
+			"0.968",
+			"0.969",
+			"0.97",
+			"color_hist",
+			"hog_cha",
+			"extract_features",
+			"extract_features_plot",
+			"urlopen"
 		],
 		"highlight": true,
 		"in_selection": false,
@@ -251,6 +382,8 @@
 		"regex": false,
 		"replace_history":
 		[
+			"x_aug_",
+			"X_aug_"
 		],
 		"reverse": false,
 		"show_context": true,
@@ -261,111 +394,8 @@
 	"groups":
 	[
 		{
-			"selected": 0,
 			"sheets":
 			[
-				{
-					"buffer": 0,
-					"file": "src/particle_filter.cpp",
-					"semi_transient": true,
-					"settings":
-					{
-						"buffer_size": 4433,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								319,
-								319
-							]
-						],
-						"settings":
-						{
-							"bracket_highlighter.busy": false,
-							"bracket_highlighter.locations":
-							{
-								"close":
-								{
-								},
-								"icon":
-								{
-								},
-								"open":
-								{
-								},
-								"unmatched":
-								{
-								}
-							},
-							"bracket_highlighter.regions":
-							[
-								"bh_round",
-								"bh_round_center",
-								"bh_round_open",
-								"bh_round_close",
-								"bh_round_content",
-								"bh_default",
-								"bh_default_center",
-								"bh_default_open",
-								"bh_default_close",
-								"bh_default_content",
-								"bh_unmatched",
-								"bh_unmatched_center",
-								"bh_unmatched_open",
-								"bh_unmatched_close",
-								"bh_unmatched_content",
-								"bh_double_quote",
-								"bh_double_quote_center",
-								"bh_double_quote_open",
-								"bh_double_quote_close",
-								"bh_double_quote_content",
-								"bh_square",
-								"bh_square_center",
-								"bh_square_open",
-								"bh_square_close",
-								"bh_square_content",
-								"bh_c_define",
-								"bh_c_define_center",
-								"bh_c_define_open",
-								"bh_c_define_close",
-								"bh_c_define_content",
-								"bh_regex",
-								"bh_regex_center",
-								"bh_regex_open",
-								"bh_regex_close",
-								"bh_regex_content",
-								"bh_curly",
-								"bh_curly_center",
-								"bh_curly_open",
-								"bh_curly_close",
-								"bh_curly_content",
-								"bh_single_quote",
-								"bh_single_quote_center",
-								"bh_single_quote_open",
-								"bh_single_quote_close",
-								"bh_single_quote_content",
-								"bh_angle",
-								"bh_angle_center",
-								"bh_angle_open",
-								"bh_angle_close",
-								"bh_angle_content",
-								"bh_tag",
-								"bh_tag_center",
-								"bh_tag_open",
-								"bh_tag_close",
-								"bh_tag_content"
-							],
-							"syntax": "Packages/C++/C++.sublime-syntax"
-						},
-						"translation.x": 0.0,
-						"translation.y": 1200.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 0,
-					"type": "text"
-				}
 			]
 		}
 	],
@@ -375,7 +405,7 @@
 	},
 	"input":
 	{
-		"height": 31.0
+		"height": 38.0
 	},
 	"layout":
 	{
@@ -407,6 +437,14 @@
 	"output.find_results":
 	{
 		"height": 0.0
+	},
+	"output.git-pull":
+	{
+		"height": 0.0
+	},
+	"output.unsaved_changes":
+	{
+		"height": 248.0
 	},
 	"pinned_build_system": "",
 	"project": "P3.sublime-project",
@@ -450,7 +488,7 @@
 	"show_open_files": false,
 	"show_tabs": true,
 	"side_bar_visible": true,
-	"side_bar_width": 229.0,
+	"side_bar_width": 301.0,
 	"status_bar_visible": true,
 	"template_settings":
 	{
