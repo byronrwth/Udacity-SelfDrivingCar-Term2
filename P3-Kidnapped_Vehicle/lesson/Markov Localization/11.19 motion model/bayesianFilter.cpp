@@ -88,6 +88,9 @@ void bayesianFilter::process_measurement(const MeasurementPackage &measurements,
     MeasurementPackage::control_s     controls = measurements.control_s_;
     MeasurementPackage::observation_s observations = measurements.observation_s_;
 
+    std::cout << "controls.delta_x_f= " << controls.delta_x_f <<  std::endl;
+    std::cout << "control_std= " << control_std <<  std::endl;
+
     //run over the whole state (index represents the pose in x!):
     for (int i = 0; i < bel_x.size(); ++i) {
 
