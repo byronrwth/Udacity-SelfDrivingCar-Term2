@@ -213,7 +213,7 @@ public:
         error_sum  = 0.0f;
         belief_sum = 0.0f;
         std::cout <<"..................................................."<< std::endl;
-        std::cout <<"...............----> Results <----................."<< std::endl;
+        std::cout <<".............result_vec..----> Results <----................."<< std::endl;
         std::cout <<"..................................................."<< std::endl;
 
         for (int i = 0; i <  result_vec.size(); ++i){
