@@ -127,7 +127,7 @@ void bayesianFilter::process_measurement(const MeasurementPackage &measurements,
 			//and the current state position pose_i:
 			float range_l = map_1d.landmark_list[l].x_f - pose_i;
 			
-			//check, if distances are positive: 
+			//check, if distances are positive: assuming sensor only sense forward !!
 			if(range_l > 0.0f)
 			pseudo_ranges.push_back(range_l) ;
 		}
@@ -138,6 +138,9 @@ void bayesianFilter::process_measurement(const MeasurementPackage &measurements,
 		//define observation posterior:
 		float posterior_obs = 1.0f ;
 		
+		std::cout << "bayesianFilter: observations is of size " << observations.distance_f.size() << std::endl; // 2
+
+
 		//run over current observation vector:
 		for (unsigned int z=0; z< observations.distance_f.size(); ++z){
 

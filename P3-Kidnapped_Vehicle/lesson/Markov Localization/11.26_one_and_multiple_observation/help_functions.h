@@ -136,7 +136,7 @@ class help_functions {
 			//read data from line to values:
 			iss >> delta_x_f;
 
-
+			std::cout << "help_functions: read controls delta_x_f= " << delta_x_f <<  std::endl;
 			//set control information:
 			meas_package.control_s_.delta_x_f = delta_x_f ;
 
@@ -167,10 +167,12 @@ class help_functions {
 
 				//read data from line to values:
 				iss_obs >> distance_f;
+				std::cout << "help_functions: read observation_s_ distance_f= "<< distance_f <<  std::endl;
 
 				//set observation information:
 				meas_package.observation_s_.distance_f.push_back(distance_f);
 			}
+			std::cout << "help_functions: in_file_observation is of size " << meas_package.observation_s_.distance_f.size() << std::endl; // 
 			//push_back single package in measurement list:
 			measurement_pack_list.push_back(meas_package);
 

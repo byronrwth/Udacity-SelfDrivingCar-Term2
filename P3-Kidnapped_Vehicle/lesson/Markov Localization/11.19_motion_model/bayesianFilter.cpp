@@ -122,7 +122,11 @@ void bayesianFilter::process_measurement(const MeasurementPackage &measurements,
             posterior_motion += transition_prob * bel_x_init[j];
         }
 
-        //update = motion_model
+		/**************************************************************************
+		 *  observation update:
+		**************************************************************************/
+        //update = motion_model, because no observations !!
+		// default  posterior_obs = 1.0f ;
         bel_x[i] = posterior_motion ;
         std::cout << "bel_x[" << i << "]= " << bel_x[i] << std::endl;
 

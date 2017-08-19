@@ -90,12 +90,27 @@ class robot:
         prob = 1.0;
         for i in range(len(landmarks)):
             dist = sqrt((self.x - landmarks[i][0]) ** 2 + (self.y - landmarks[i][1]) ** 2)
-            prob *= self.Gaussian(dist, self.sense_noise, measurement[i])
+            
+            print("measurement[",i,"]=", measurement[i])
+            print("prob=", prob)
+            tmp = self.Gaussian(dist, self.sense_noise, measurement[i])
+            print("tmp=", tmp)
+            prob *= tmp
+            print("prob=", prob)
+        print("-----this particle has prob=", prob,"--------")
         return prob
     
     def __repr__(self):
         return '[x=%.6s y=%.6s orient=%.6s]' % (str(self.x), str(self.y), str(self.orientation))
 
+def eval(r, p):
+    sum = 0.0;
+    for i in range(len(p)): # calculate mean error
+        dx = (p[i].x - r.x + (world_size/2.0)) % world_size - (world_size/2.0)
+        dy = (p[i].y - r.y + (world_size/2.0)) % world_size - (world_size/2.0)
+        err = sqrt(dx * dx + dy * dy)
+        sum += err
+    return sum / float(len(p))
 
 #myrobot = robot()
 #myrobot.set_noise(5.0, 0.1, 5.0)
@@ -109,35 +124,52 @@ class robot:
 myrobot = robot()
 myrobot = myrobot.move(0.1, 5.0)
 Z = myrobot.sense()
-
+T = 10 #Leave this as 10 for grading purposes.
 N = 1000
+
+
 p = []
 for i in range(N):
     x = robot()
     x.set_noise(0.05, 0.05, 5.0)
     p.append(x)
 
-p2 = []
-for i in range(N):
-    p2.append(p[i].move(0.1, 5.0))
-p = p2
+print(myrobot) # where robot really is !!
+print(p)  # where 1000 random particles are, i.e. 1000 predicted positions for the real robot
+print(eval(myrobot, p)) # no 1000* particles performance !
 
-w = []
-for i in range(N):
-    w.append(p[i].measurement_prob(Z))
+for t in range(T):
 
-p3 = []
-index = int(random.random() * N)
-beta = 0.0
-mw = max(w)
-for i in range(N):
-    beta += random.random() * 2.0 * mw
-    while beta > w[index]:
-        beta -= w[index]
-        index = (index + 1) % N
-    p3.append(p[index])
-p = p3
+    # motion update !
+    myrobot = myrobot.move(0.1, 5.0)
+    
+    # measurement update !
+    Z = myrobot.sense()
 
-print p #Leave this print statement for grading purposes!
+    p2 = []
+    for i in range(N):
+        p2.append(p[i].move(0.1, 5.0))
+    p = p2
+    
+    w = []
+    for i in range(N):
+        w.append(p[i].measurement_prob(Z))
+    
+    p3 = []
+    index = int(random.random() * N)
+    beta = 0.0
+    mw = max(w)
+    for i in range(N):
+        beta += random.random() * 2.0 * mw
+        while beta > w[index]:
+            beta -= w[index]
+            index = (index + 1) % N
+        # adding redundant but larger possible
+        print("--adding: ", "p[",index,"]= ", p[index])
+        p3.append(p[index])
+    p = p3
 
-
+    
+    print(myrobot) # where robot really is !!
+    print(p)  # where 1000 random particles are, i.e. 1000 predicted positions for the real robot
+    print(eval(myrobot, p)) # no 1000* particles performance !
