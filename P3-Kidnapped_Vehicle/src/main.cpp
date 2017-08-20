@@ -68,12 +68,16 @@ int main() {
             double sense_x = std::stod(j[1]["sense_x"].get<std::string>());
             double sense_y = std::stod(j[1]["sense_y"].get<std::string>());
             double sense_theta = std::stod(j[1]["sense_theta"].get<std::string>());
-
+            
+            cout << " -----------main: init: sense_x= " << sense_x << " sense_y= " <<  sense_y << " sense_theta= " << sense_theta << endl;
+            
             pf.init(sense_x, sense_y, sense_theta, sigma_pos);
           } else {
             // Predict the vehicle's next state from previous (noiseless control) data.
             double previous_velocity = std::stod(j[1]["previous_velocity"].get<std::string>());
             double previous_yawrate = std::stod(j[1]["previous_yawrate"].get<std::string>());
+
+            cout << " -----------main: predict with previous: previous_velocity= " << previous_velocity << " previous_yawrate= " <<  previous_yawrate << endl;
 
             pf.prediction(delta_t, sigma_pos, previous_velocity, previous_yawrate);
           }
@@ -83,6 +87,8 @@ int main() {
           vector<LandmarkObs> noisy_observations;
           string sense_observations_x = j[1]["sense_observations_x"];
           string sense_observations_y = j[1]["sense_observations_y"];
+          
+          cout << " -----------main: noisy_observations: sense_observations_x= " << sense_observations_x << " sense_observations_y= " <<  sense_observations_y << endl;
 
           std::vector<float> x_sense;
           std::istringstream iss_x(sense_observations_x);
@@ -104,6 +110,8 @@ int main() {
             obs.y = y_sense[i];
             noisy_observations.push_back(obs);
           }
+
+
 
           // Update the weights and resample
           pf.updateWeights(sensor_range, sigma_landmark, noisy_observations, map);
