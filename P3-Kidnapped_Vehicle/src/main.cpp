@@ -68,9 +68,9 @@ int main() {
             double sense_x = std::stod(j[1]["sense_x"].get<std::string>());
             double sense_y = std::stod(j[1]["sense_y"].get<std::string>());
             double sense_theta = std::stod(j[1]["sense_theta"].get<std::string>());
-            
+
             cout << " -----------main: init: sense_x= " << sense_x << " sense_y= " <<  sense_y << " sense_theta= " << sense_theta << endl;
-            
+
             pf.init(sense_x, sense_y, sense_theta, sigma_pos);
           } else {
             // Predict the vehicle's next state from previous (noiseless control) data.
@@ -87,7 +87,7 @@ int main() {
           vector<LandmarkObs> noisy_observations;
           string sense_observations_x = j[1]["sense_observations_x"];
           string sense_observations_y = j[1]["sense_observations_y"];
-          
+
           cout << " -----------main: noisy_observations: sense_observations_x= " << sense_observations_x << " sense_observations_y= " <<  sense_observations_y << endl;
 
           std::vector<float> x_sense;
