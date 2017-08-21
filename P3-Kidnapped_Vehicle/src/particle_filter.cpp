@@ -112,40 +112,44 @@ void ParticleFilter::dataAssociation(std::vector<LandmarkObs> predicted, std::ve
 	std::cout << "-------------dataAssociation---------------" << std::endl ;
 
 	//vector<LandmarkObs> associations;
+	std::vector<LandmarkObs> landmarks = predicted;
 
 	// for each observed measurement
 	for (int i = 0 ; i < observations.size(); i++) {
 
 		// make code easier to read
 		LandmarkObs &obs = observations[i];
-		std::cout << "---------observations[" << i << "]-------- \n has obs.x = " << obs.x << "obs.y = " << obs.y << std::endl;
+		//std::cout << "---------observations[" << i << "]-------- \n has obs.x = " << obs.x << "obs.y = " << obs.y << std::endl;
 
 		// find predicted measurement closest to observation
 		// initialise minimum distance prediction (pred closest to obs)
-		//LandmarkObs min = predicted[0];
+
 		double  min_distance_squared = 99999999.0;
-		//std::cout << "min.x = " << min.x << "min.y = " << min.y << std::endl;
+		int to_erase = -1;
 
-		//double min_distance_squared = pow(min.x - obs.x, 2) + pow(min.y - obs.y, 2);
-		//std::cout <<"min_distance_squared = " << min_distance_squared << std::endl;
-
+		
 		// for each prediction
-		for (int j = 0; j < predicted.size(); j++) {
-			std::cout << "predicted[" << j << "] has id= " << predicted[j].id << " x= " << predicted[j].x << " y = " << predicted[j].y << std::endl;
+		for (int j = 0; j < landmarks.size(); j++) {
+			//std::cout << "landmarks[" << j << "] has id= " << landmarks[j].id << " x= " << landmarks[j].x << " y = " << landmarks[j].y << std::endl;
 
 			// calculate distance between predicted measurement and obs
-			double distance_squared = pow(predicted[j].x - obs.x, 2) + pow(predicted[j].y - obs.y, 2);
-			std::cout << "distance_squared = " << distance_squared << std::endl;
+			double distance_squared = pow(landmarks[j].x - obs.x, 2) + pow(landmarks[j].y - obs.y, 2);
+			//std::cout << "distance_squared = " << distance_squared << std::endl;
 
 			if (distance_squared < min_distance_squared) {
-				//min = predicted[j];
-				//std::cout << "min change to be min.x= " << min.x << " min.y= " << min.y << std::endl;
+
 				min_distance_squared = distance_squared ;
 
-				obs.id = predicted[j].id;
-				std::cout << "min belongs to prediction id= " << predicted[j].id << std::endl;
+				obs.id = landmarks[j].id ;
+				to_erase = j ;
+				//std::cout << "min belongs to landmarks id= " << landmarks[j].id << std::endl;
 			}
 		}
+		if ( obs.id != -1){
+			landmarks.erase(landmarks.begin() + to_erase );
+			//std::cout << "after erase size of predicted= " << landmarks.size() << std::endl;
+		}
+		
 
 		//associations.push_back(min);
 	}
@@ -205,10 +209,10 @@ void ParticleFilter::updateWeights(double sensor_range, double std_landmark[],
 	for (int i = 0; i < num_particles; i++) {
 
 		Particle &particle = particles[i]; // reference of a particle
-		std::cout << "updateWeights : for particles[" << i << "] use x= : " << particle.x << " y= " << particle.y << " theta= " << particle.theta << " to clac in range landmarks !" << std::endl ;
+		std::cout << "updateWeights : for particles[" << i << "] has x= : " << particle.x << " y= " << particle.y << " theta= " << particle.theta << " to clac in range landmarks !" << std::endl ;
 
 		for (int j = 0; j < observations.size(); j++) {
-			std::cout << "updateWeights : for observations[" << j << "] has x= " << observations[j].x << " y= " << observations[j].y << std::endl ;
+			//std::cout << "updateWeights : for observations[" << j << "] has x= " << observations[j].x << " y= " << observations[j].y << std::endl ;
 
 			LandmarkObs transformed_ob;
 			// transform from vehicle coordinate to map coordinate
@@ -216,8 +220,9 @@ void ParticleFilter::updateWeights(double sensor_range, double std_landmark[],
 			transformed_ob.y = observations[j].x * sin(particle.theta) + observations[j].y * cos(particle.theta) + particle.y;
 
 			// leave transformed_ob.id to be the most likely landmark.id_i !!
+			transformed_ob.id = -1 ;
 
-			std::cout << "updateWeights : for observations[" << j << "] transformed x= " << transformed_ob.x << " y= " << transformed_ob.y << std::endl ;
+			//std::cout << "updateWeights : for observations[" << j << "] transformed x= " << transformed_ob.x << " y= " << transformed_ob.y << std::endl ;
 
 			transformed_obs[j] = transformed_ob;
 		}
@@ -229,7 +234,7 @@ void ParticleFilter::updateWeights(double sensor_range, double std_landmark[],
 
 		for (const auto& landmark : map_landmarks.landmark_list) {
 			double distance = dist(landmark.x_f, landmark.y_f, particle.x, particle.y);
-			std::cout << "updateWeights : for particles[" << i << "] to landmark i= " << landmark.id_i << " has distance= " << distance << std::endl ;
+			//std::cout << "updateWeights : for particles[" << i << "] to landmark i= " << landmark.id_i << " has distance= " << distance << std::endl ;
 
 			if (distance <= sensor_range) {
 
@@ -248,10 +253,10 @@ void ParticleFilter::updateWeights(double sensor_range, double std_landmark[],
 
 			particle.weight = 1.0; //reset the weight of the particle
 
-			std::cout << "updateWeights : for particles[" << i << "] has reset weight : " << particle.weight << " | " << particles[i].weight << std::endl ;
+			//std::cout << "updateWeights : for particles[" << i << "] has reset weight : " << particle.weight << " | " << particles[i].weight << std::endl ;
 
 			for (const auto observation : transformed_obs) {
-				std::cout << "updateWeights after dataAssociation: for observation x= " << observation.x << " y= " << observation.y << " the most likely landmark is id= : " << observation.id << " at x= " << idx2landmark[observation.id].x_f << " y=" << idx2landmark[observation.id].y_f << std::endl ;
+				//std::cout << "updateWeights after dataAssociation: for observation x= " << observation.x << " y= " << observation.y << " the most likely landmark is id= : " << observation.id << " at x= " << idx2landmark[observation.id].x_f << " y=" << idx2landmark[observation.id].y_f << std::endl ;
 
 				double mu_x = idx2landmark[observation.id].x_f;
 				double mu_y = idx2landmark[observation.id].y_f;
@@ -279,10 +284,14 @@ void ParticleFilter::resample() {
 	//   http://en.cppreference.com/w/cpp/numeric/random/discrete_distribution
 	std::random_device rd;
 	std::mt19937 gen(rd());
-	std::discrete_distribution<> d(weights.begin(), weights.end());
+
+	//sort(weights.begin(), weights.end());
+
+	std::discrete_distribution<int> d(weights.begin(), weights.end());
 	vector<Particle> particles_new;
 
 	particles_new.resize(num_particles);
+
 	for (int n = 0; n < num_particles; ++n) {
 		particles_new[n] = particles[d(gen)];
 		std::cout << "resample : new particle at n= " << n << " with id= " << particles_new[n].id << std::endl ;
@@ -292,6 +301,7 @@ void ParticleFilter::resample() {
 
 }
 
+/*
 void ParticleFilter::write(std::string filename) {
 	// You don't need to modify this file.
 	std::ofstream dataFile;
@@ -302,7 +312,7 @@ void ParticleFilter::write(std::string filename) {
 	dataFile.close();
 }
 
-
+*/
 
 
 Particle ParticleFilter::SetAssociations(Particle particle, std::vector<int> associations, std::vector<double> sense_x, std::vector<double> sense_y) {
