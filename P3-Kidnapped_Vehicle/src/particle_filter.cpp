@@ -114,30 +114,30 @@ void ParticleFilter::dataAssociation(std::vector<LandmarkObs> predicted, std::ve
 
 		// make code easier to read
 		LandmarkObs obs = observations[i];
-		std::cout << "observations[" <<i<<"] has obs.x = " << obs.x << "obs.y = " << obs.y << std::endl;
+		//std::cout << "observations[" <<i<<"] has obs.x = " << obs.x << "obs.y = " << obs.y << std::endl;
 
 		// find predicted measurement closest to observation
 		// initialise minimum distance prediction (pred closest to obs)
 		LandmarkObs min = predicted[0]; // double  min_distance = 99999999.0;
-		std::cout << "min.x = " << min.x << "min.y = " << min.y << std::endl;
+		//std::cout << "min.x = " << min.x << "min.y = " << min.y << std::endl;
 
 		double min_distance_squared = pow(min.x - obs.x, 2) + pow(min.y - obs.y, 2);
-		std::cout <<"min_distance_squared = " << min_distance_squared << std::endl;
+		//std::cout <<"min_distance_squared = " << min_distance_squared << std::endl;
 
 		// for each prediction
 		for (int j=0; j < predicted.size(); j++) {
-			std::cout <<"predicted["<<j<<"] has x= " << predicted[j].x <<" y = " << predicted[j].y << std::endl;
+			//std::cout <<"predicted["<<j<<"] has x= " << predicted[j].x <<" y = " << predicted[j].y << std::endl;
 
 			// calculate distance between predicted measurement and obs
 			double distance_squared = pow(predicted[j].x - obs.x, 2) + pow(predicted[j].y - obs.y, 2);
-			std::cout <<"distance_squared = " << distance_squared << std::endl;
+			//std::cout <<"distance_squared = " << distance_squared << std::endl;
 
 			if (distance_squared < min_distance_squared) {
 				min = predicted[j];
-				std::cout << "min change to be min.x= " << min.x << " min.y= " << min.y << std::endl;
+				//std::cout << "min change to be min.x= " << min.x << " min.y= " << min.y << std::endl;
 
 				obs.id = predicted[j].id;
-				std::cout << "min belongs to prediction id= " << predicted[j].id << std::endl;
+				//std::cout << "min belongs to prediction id= " << predicted[j].id << std::endl;
 			}
 		}
 
@@ -235,6 +235,9 @@ void ParticleFilter::updateWeights(double sensor_range, double std_landmark[],
 	        dataAssociation(inrange_landmarks, transformed_obs);
 
 	        particle.weight = 1.0; //reset the weight of the particle
+	        
+	        std::cout << "updateWeights : for particles["<<i<<"] has reset weight : " << particle.weight << " | " << particles[i].weight << std::endl ;
+
 	        for (const auto observation:transformed_obs) {
 	            double mu_x = idx2landmark[observation.id].x_f;
 	            double mu_y = idx2landmark[observation.id].y_f;
@@ -251,6 +254,9 @@ void ParticleFilter::updateWeights(double sensor_range, double std_landmark[],
 	    else{
 	        weights[i] = 0.0;
 	    }
+
+		std::cout << "updateWeights : for particles["<<i<<"] has weight : " << particle.weight << " | " << particles[i].weight << std::endl ;
+	    
 	}
 }
 
