@@ -1,0 +1,10 @@
+.vscode
+build
+tags
+.editorconfig
+
+build/
+
+#sublime project
+.sublime-project
+.sublime-workspace
