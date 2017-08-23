@@ -17,6 +17,9 @@ class PID {
   double Ki;
   double Kd;
 
+  int n;
+  double total_square_error;
+
   /*
   * Constructor
   */
