@@ -27,15 +27,25 @@ std::string hasData(std::string s) {
   return "";
 }
 
-int main() {
+int main(int argc, char *argv[]) {
   uWS::Hub h;
 
   PID pid;
   // TODO: Initialize the pid variable.
-  const double init_Kp = -0.1;
-  const double init_Ki = -0.0001;
-  const double init_Kd = -3.2;
+
+  // -1.0 of Kp proportional is too large leading to overshoot;
+  //
+  //const double init_Kp = -0.1;
+  const double init_Kp = atof(argv[1]) ;
   
+  // use Ki to keep the car to stay away from curved edges
+  //const double init_Ki = -0.001 ; 
+  const double init_Ki = atof(argv[2]) ;
+
+  // use Kd derivative to minimize the oscillation 
+  //const double init_Kd = -10.0;
+  const double init_Kd = atof(argv[3]) ;
+
   pid.Init(init_Kp, init_Ki, init_Kd);
 
   h.onMessage([&pid](uWS::WebSocket<uWS::SERVER> ws, char *data, size_t length, uWS::OpCode opCode) {
@@ -77,8 +87,14 @@ int main() {
           std::cout << "CTE: " << cte << " within [-1, 1]: Steering Value: " << steer_value << std::endl;*/
 
           json msgJson;
+
+          // to display yellow line
+          //msgJson["next_x"] = next_x_vals;
+          //msgJson["next_y"] = next_y_vals; 
+
           msgJson["steering_angle"] = steer_value;
           msgJson["throttle"] = 0.3;
+
           auto msg = "42[\"steer\"," + msgJson.dump() + "]";
           std::cout << msg << std::endl;
           ws.send(msg.data(), msg.length(), uWS::OpCode::TEXT);
