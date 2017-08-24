@@ -66,7 +66,15 @@ int main() {
           steer_value = pid.TotalError() ;
 
           // DEBUG
-          std::cout << "CTE: " << cte << " Steering Value: " << steer_value << std::endl;
+          std::cout << "CTE: " << cte << " origin Steering Value: " << steer_value << std::endl;
+          
+          /*while ( steer_value > 1) {
+            steer_value -= 1 ; 
+          } 
+          while ( steer_value < -1) {
+            steer_value += 1 ; 
+          }
+          std::cout << "CTE: " << cte << " within [-1, 1]: Steering Value: " << steer_value << std::endl;*/
 
           json msgJson;
           msgJson["steering_angle"] = steer_value;

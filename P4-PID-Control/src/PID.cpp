@@ -43,7 +43,7 @@ void PID::UpdateError(double cte) {
 double PID::TotalError() {
     //steer = -tau_p * cte - tau_d * diff_cte - tau_i * int_cte ;
     //steer = -params[0] * cte - params[1] * diff_cte - params[2] * int_cte ;
-    double steer = this->Kp * this->p_error + this->Kd * this->d_error + this->Ki * this->i_error ;
+    double steer = 1. * (this->Kp * this->p_error + this->Kd * this->d_error + this->Ki * this->i_error) ;
     return steer;
 
 }
