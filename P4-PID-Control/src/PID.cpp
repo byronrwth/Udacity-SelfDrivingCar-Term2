@@ -21,12 +21,14 @@ void PID::Init(double Kp, double Ki, double Kd) {
     this->d_error = 0.0;
 
     this->total_square_error = 0.0;
+    this->average_error = 0.0;
     this->n = 1;
 }
 
 void PID::UpdateError(double cte) {
     this->total_square_error += cte * cte;
-    //double average_error = total_square_error / n;
+    
+    this->average_error = total_square_error / n;
     this->n++;
 
     // cte = robot.y ; diff_cte = cte - prev_cte

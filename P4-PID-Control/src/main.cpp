@@ -76,7 +76,7 @@ int main(int argc, char *argv[]) {
           steer_value = pid.TotalError() ;
 
           // DEBUG
-          std::cout << "CTE: " << cte << " origin Steering Value: " << steer_value << std::endl;
+          std::cout << "CTE: " << cte << " Steering: " << steer_value << " aver total square error: "<< pid.average_error << std::endl;
           
           /*while ( steer_value > 1) {
             steer_value -= 1 ; 
@@ -96,7 +96,7 @@ int main(int argc, char *argv[]) {
           msgJson["throttle"] = 0.3;
 
           auto msg = "42[\"steer\"," + msgJson.dump() + "]";
-          std::cout << msg << std::endl;
+          //std::cout << msg << std::endl;
           ws.send(msg.data(), msg.length(), uWS::OpCode::TEXT);
         }
       } else {
