@@ -4,6 +4,7 @@ Self-Driving Car Engineer Nanodegree Program
 ---
 
 **Reflection of PID**
+
 The goal of this project is to build a PID controller and tune the PID hyperparameters by applying the general processing flow as described in the previous lessons.
 
 * Implement PID updateError and TotalError functions with Kp, Kd, Ki
@@ -31,6 +32,7 @@ PID controller has Kp, Kd and Ki, the Ki is the intergral of all CTEs accumulate
 1, first try to find a Kp which keeps you car on the track atleast for 2-3 seconds. The car might oscillate but that is fine.
 
 I found Kp = -0.1, Kd = 0, Ki = 0:
+
 [test1](https://youtu.be/WNbz_QOxAZ4)
 
 
@@ -38,6 +40,7 @@ I found Kp = -0.1, Kd = 0, Ki = 0:
 2, to tune down the oscillation gradually try with increased Kd values, increasing Kd reduces oscillations, whereas increasing Kp increases the magnitude of turning. You need to find a sweet spot where the car turns sufficiently but does not oscillate
 
 I found Kp = -0.1, Kd = -10, Ki = 0:
+
 [test2](https://youtu.be/Lmprfa0rurI)
 
 
@@ -45,6 +48,7 @@ I found Kp = -0.1, Kd = -10, Ki = 0:
 3, Once you find Kp and Kd values which work well, try very small values of Ki. Don’t be surprised if Ki is many orders of magnitude lower than Kp or Kd.
 
 I found Kp = -0.1, Kd = -10, Ki = -0.001:
+
 [test3](https://youtu.be/38PP9rMj53Y)
 
 with added Ki,  the average of total square error in test2 has been reduced from 0.8  to 0.3 in 2 loops of track.
