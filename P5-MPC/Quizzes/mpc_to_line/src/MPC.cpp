@@ -100,7 +100,8 @@ class FG_eval {
 
     // The rest of the constraints
     for (int t = 1; t < N; t++) {
-      // The state at time t+1 .
+
+      //************ The state at time t+1 . ********************//
       AD<double> x1 = vars[x_start + t];
       AD<double> y1 = vars[y_start + t];
 
@@ -110,7 +111,7 @@ class FG_eval {
       AD<double> cte1 = vars[cte_start + t];
       AD<double> epsi1 = vars[epsi_start + t];
 
-      // The state at time t.
+      //************ The state at time t . ********************//
       AD<double> x0 = vars[x_start + t - 1];
       AD<double> y0 = vars[y_start + t - 1];
 
