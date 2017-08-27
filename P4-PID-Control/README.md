@@ -27,11 +27,29 @@ PD controller has Kp and Kd,  in addition to Kp, Kd is the derivative of current
 
 PID controller has Kp, Kd and Ki, the Ki is the intergral of all CTEs accumulated, with Ki the average of the whole duration total square error will be reduced to 0 finally 
 
+
+**adding parameters into compilation**
+
+to avoid re-compile with modified Kp, Kd, Ki, I added parameters as argv options into compilation:
+
+
+const double init_Kp = atof(argv[1]) ;
+  
+
+const double init_Ki = atof(argv[2]) ;
+
+
+const double init_Kd = atof(argv[3]) ;
+
+
+
 **Steps to manually tune P4 vehicle in simulator**
 
 1, first try to find a Kp which keeps you car on the track atleast for 2-3 seconds. The car might oscillate but that is fine.
 
 I found Kp = -0.1, Kd = 0, Ki = 0:
+
+run with:  ./pid -0.1 0 0  :
 
 [test1](https://youtu.be/WNbz_QOxAZ4)
 
@@ -41,6 +59,8 @@ I found Kp = -0.1, Kd = 0, Ki = 0:
 
 I found Kp = -0.1, Kd = -10, Ki = 0:
 
+run with:  ./pid -0.1 0 -10 :
+
 [test2](https://youtu.be/Lmprfa0rurI)
 
 
@@ -48,6 +68,8 @@ I found Kp = -0.1, Kd = -10, Ki = 0:
 3, Once you find Kp and Kd values which work well, try very small values of Ki. Don’t be surprised if Ki is many orders of magnitude lower than Kp or Kd.
 
 I found Kp = -0.1, Kd = -10, Ki = -0.001:
+
+run with:  ./pid -0.1 -0.001 -10 :
 
 [test3](https://youtu.be/38PP9rMj53Y)
 
