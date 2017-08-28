@@ -10,11 +10,12 @@ PID::PID() {}
 
 PID::~PID() {}
 
-void PID::Init(double Kp, double Ki, double Kd) {
+void PID::Init(double Kp, double Ki, double Kd, double throttle) {
 
     this->Kp = Kp; // param[0]
     this->Kd = Kd; // param[1]
     this->Ki = Ki; // param[2]
+	this->throttle = throttle; // param[3]
 
     this->p_error = 0.0;
     this->i_error = 0.0;

@@ -3,6 +3,7 @@
 #include "json.hpp"
 #include "PID.h"
 #include <math.h>
+#include <stdlib.h> // To open gnuplot
 
 // for convenience
 using json = nlohmann::json;
@@ -21,44 +22,40 @@ std::string hasData(std::string s) {
   auto b2 = s.find_last_of("]");
   if (found_null != std::string::npos) {
     return "";
-  } else if (b1 != std::string::npos && b2 != std::string::npos) {
+  }
+  else if (b1 != std::string::npos && b2 != std::string::npos) {
     return s.substr(b1, b2 - b1 + 1);
   }
   return "";
 }
 
-int main(int argc, char *argv[]) {
+int main()
+{
   uWS::Hub h;
 
-  PID pid;
-  // TODO: Initialize the pid variable.
+  // Initialize the pid gains for both speed and throttle
+  PID pid_s, pid_t;
+  pid_s.Init(0.058, 0.003, 0.7, false, "steer.out");
+  pid_t.Init(0.11, 0.0, 0.6, false, "throttle.out");
+  double ref_throttle = 0.45;
+  
+  try {
+    /* *************************************
+     * Open the plotting utility
+     * **requires GNUPLOT and STDLIB.H**
+     * *************************************
+     */
+    system("gnuplot postprocess.plt > /dev/null 2>&1 &");
+  } catch (...) {
+    std::cout << "**Error** requires GNUPLOT and STDLIB.H (for running system commands)";
+  }
 
-  // -1.0 of Kp proportional is too large leading to overshoot;
-  //
-  //const double init_Kp = -0.1;
-  const double init_Kp = atof(argv[1]) ;
-
-  // use Ki to keep the car to stay away from curved edges
-  //const double init_Ki = -0.001 ;
-  const double init_Ki = atof(argv[2]) ;
-
-  // use Kd derivative to minimize the oscillation
-  //const double init_Kd = -10.0;
-  const double init_Kd = atof(argv[3]) ;
-
-  // command input speed/throttle, 0.3 i.e. 30 mph
-  const double init_throttle = atof(argv[4]) ;
-
-
-
-  pid.Init(init_Kp, init_Ki, init_Kd, init_throttle);
-
-
-  h.onMessage([&pid](uWS::WebSocket<uWS::SERVER> ws, char *data, size_t length, uWS::OpCode opCode) {
+  h.onMessage([&pid_s, &pid_t, &ref_throttle](uWS::WebSocket<uWS::SERVER> ws, char *data, size_t length, uWS::OpCode opCode) {
     // "42" at the start of the message means there's a websocket message event.
     // The 4 signifies a websocket message
     // The 2 signifies a websocket event
-    if (length && length > 2 && data[0] == '4' && data[1] == '2') {
+    if (length && length > 2 && data[0] == '4' && data[1] == '2')
+    {
       auto s = hasData(std::string(data).substr(0, length));
       if (s != "") {
         auto j = json::parse(s);
@@ -68,11 +65,6 @@ int main(int argc, char *argv[]) {
           double cte = std::stod(j[1]["cte"].get<std::string>());
           double speed = std::stod(j[1]["speed"].get<std::string>());
           double angle = std::stod(j[1]["steering_angle"].get<std::string>());
-          double steer_value;
-          //double throttle = init_throttle ;
-
-          pid.UpdateError(cte);
-
           /*
           * TODO: Calcuate steering value here, remember the steering value is
           * [-1, 1].
@@ -80,28 +72,30 @@ int main(int argc, char *argv[]) {
           * another PID controller to control the speed!
           */
 
-          steer_value = pid.TotalError() ;
+	  pid_t.speed = speed;
+	  pid_s.speed = speed;
+
+	  // Update steering PID controller
+	  pid_s.UpdateError(cte);
+	  double steer_value = pid_s.CalculateControl();
+
+	  // Update throttle PID controller
+	  double cte_t = std::fabs(cte);
+	  pid_t.UpdateError(cte_t);
+	  double throttle = pid_t.CalculateControl(ref_throttle);
+
+	  //if (speed<5) throttle = 0.2;
 
           // DEBUG
-          //std::cout << "CTE: " << cte << " origin Steering Value: " << steer_value << std::endl;
-
-          /*while ( steer_value > 1) {
-            steer_value -= 1 ;
-          }
-          while ( steer_value < -1) {
-            steer_value += 1 ;
-          }
-          std::cout << "CTE: " << cte << " within [-1, 1]: Steering Value: " << steer_value << std::endl;*/
+	  std::cout << " CTE     : " << std::setw(12) << cte ;
+	  std::cout << " STEER   : " << std::setw(12) << steer_value;
+	  std::cout << " Angle   : " << std::setw(12) << angle;
+	  std::cout << " Speed   : " << std::setw(12) << speed;
+	  std::cout << " Throttle: " << std::setw(12) << throttle << std::endl;
 
           json msgJson;
-
-          // to display yellow line
-          //msgJson["next_x"] = next_x_vals;
-          //msgJson["next_y"] = next_y_vals;
-
           msgJson["steering_angle"] = steer_value;
-          msgJson["throttle"] = 0.3; //pid.throttle ; //0.3;
-
+          msgJson["throttle"] = throttle;
           auto msg = "42[\"steer\"," + msgJson.dump() + "]";
           //std::cout << msg << std::endl;
           ws.send(msg.data(), msg.length(), uWS::OpCode::TEXT);
@@ -116,11 +110,14 @@ int main(int argc, char *argv[]) {
 
   // We don't need this since we're not using HTTP but if it's removed the program
   // doesn't compile :-(
-  h.onHttpRequest([](uWS::HttpResponse * res, uWS::HttpRequest req, char *data, size_t, size_t) {
+  h.onHttpRequest([](uWS::HttpResponse *res, uWS::HttpRequest req, char *data, size_t, size_t) {
     const std::string s = "<h1>Hello world!</h1>";
-    if (req.getUrl().valueLength == 1) {
+    if (req.getUrl().valueLength == 1)
+    {
       res->end(s.data(), s.length());
-    } else {
+    }
+    else
+    {
       // i guess this should be done more gracefully?
       res->end(nullptr, 0);
     }
@@ -136,9 +133,12 @@ int main(int argc, char *argv[]) {
   });
 
   int port = 4567;
-  if (h.listen(port)) {
+  if (h.listen(port))
+  {
     std::cout << "Listening to port " << port << std::endl;
-  } else {
+  }
+  else
+  {
     std::cerr << "Failed to listen to port" << std::endl;
     return -1;
   }
