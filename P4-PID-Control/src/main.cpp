@@ -83,7 +83,12 @@ int main(int argc, char *argv[]) {
           steer_value = pid.TotalError() ;
 
           // DEBUG
+
           //std::cout << "CTE: " << cte << " origin Steering Value: " << steer_value << std::endl;
+
+
+          std::cout << "CTE: " << cte << " Steering: " << steer_value << " aver total square error: "<< pid.average_error << std::endl;
+          
 
           /*while ( steer_value > 1) {
             steer_value -= 1 ;

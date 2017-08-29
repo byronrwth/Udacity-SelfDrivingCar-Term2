@@ -100,7 +100,8 @@ class FG_eval {
 
     // The rest of the constraints
     for (int t = 1; t < N; t++) {
-      // The state at time t+1 .
+
+      //************ The state at time t+1 . ********************//
       AD<double> x1 = vars[x_start + t];
       AD<double> y1 = vars[y_start + t];
 
@@ -110,7 +111,7 @@ class FG_eval {
       AD<double> cte1 = vars[cte_start + t];
       AD<double> epsi1 = vars[epsi_start + t];
 
-      // The state at time t.
+      //************ The state at time t . ********************//
       AD<double> x0 = vars[x_start + t - 1];
       AD<double> y0 = vars[y_start + t - 1];
 
@@ -213,8 +214,8 @@ vector<double> MPC::Solve(Eigen::VectorXd x0, Eigen::VectorXd coeffs) {
   // degrees (values in radians).
   // NOTE: Feel free to change this to something else.
   for (int i = delta_start; i < a_start; i++) {
-    vars_lowerbound[i] = -0.436332;
-    vars_upperbound[i] = 0.436332;
+    vars_lowerbound[i] = -0.436332; // 25'
+    vars_upperbound[i] = 0.436332;  // -25'
   }
 
   // Acceleration/decceleration upper and lower limits.
@@ -288,6 +289,9 @@ double polyeval(Eigen::VectorXd coeffs, double x) {
   for (int i = 0; i < coeffs.size(); i++) {
     result += coeffs[i] * pow(x, i);
   }
+
+  std::cout << "polyeval: for coeffs: " << coeffs << " , x: " << x << " ,result: " << result << std::endl;
+
   return result;
 }
 
@@ -312,12 +316,13 @@ Eigen::VectorXd polyfit(Eigen::VectorXd xvals, Eigen::VectorXd yvals,
 
   auto Q = A.householderQr();
   auto result = Q.solve(yvals);
+  std::cout << "polyfit: for xvals: " << xvals << " , yvals: " << yvals << " ,result: " << result << std::endl;
   return result;
 }
 
 int main() {
   MPC mpc;
-  int iters = 50;
+  int iters = 5 ; //50;
 
   Eigen::VectorXd ptsx(2);
   Eigen::VectorXd ptsy(2);
@@ -334,8 +339,14 @@ int main() {
   double v = 10;
   // TODO: calculate the cross track error
   double cte = polyeval(coeffs, x) - y;
+  std::cout << "main: cte: " << cte << " , x: " << x << " ,coeffs: " << coeffs << " ,y: " << y << std::endl;
+
+
   // TODO: calculate the orientation error
   double epsi = psi - atan(coeffs[1]);
+  std::cout << "main: epsi: " << epsi << " , psi: " << psi << " ,coeffs[1]: " << coeffs[1] << " ,atan(coeffs[1]): " << atan(coeffs[1]) << std::endl;
+
+
 
   Eigen::VectorXd state(6);
   state << x, y, psi, v, cte, epsi;
@@ -352,7 +363,10 @@ int main() {
   for (size_t i = 0; i < iters; i++) {
     std::cout << "Iteration " << i << std::endl;
 
+    std::cout << "main: before Solve: state: " << state << " ,coeffs: " << coeffs << std::endl;
+
     auto vars = mpc.Solve(state, coeffs);
+    //std::cout << "main: after Solve: vars size: " << vars.size() << " , state: " << state << " ,coeffs: " << coeffs << std::endl;
 
     x_vals.push_back(vars[0]);
     y_vals.push_back(vars[1]);
@@ -363,8 +377,22 @@ int main() {
 
     delta_vals.push_back(vars[6]);
     a_vals.push_back(vars[7]);
-
+/*    
+    std::cout << "x_vals size = " << x_vals.size() << std::endl;
+    std::cout << "y_vals size= " << y_vals.size() << std::endl;
+    std::cout << "psi_vals size= " << psi_vals.size() << std::endl;
+    std::cout << "v_vals size= " << v_vals.size() << std::endl;
+    std::cout << "cte_vals size= " << cte_vals.size() << std::endl;
+    std::cout << "epsi_vals size= " << epsi_vals.size() << std::endl;
+    std::cout << "delta_vals size= " << delta_vals.size() << std::endl;
+    std::cout << "a_vals size= " << a_vals.size() << std::endl;
+*/
     state << vars[0], vars[1], vars[2], vars[3], vars[4], vars[5];
+
+    std::cout << "------------------------------ " << std::endl;
+
+    std::cout << "main: updated state: " << state << std::endl;
+
     std::cout << "x = " << vars[0] << std::endl;
     std::cout << "y = " << vars[1] << std::endl;
     std::cout << "psi = " << vars[2] << std::endl;
@@ -373,7 +401,7 @@ int main() {
     std::cout << "epsi = " << vars[5] << std::endl;
     std::cout << "delta = " << vars[6] << std::endl;
     std::cout << "a = " << vars[7] << std::endl;
-    std::cout << std::endl;
+    //std::cout << std::endl;
   }
 
   // Plot values

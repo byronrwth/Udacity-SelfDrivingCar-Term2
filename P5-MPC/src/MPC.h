@@ -1,6 +1,8 @@
 #ifndef MPC_H
 #define MPC_H
 
+#define HAVE_CSTDDEF
+
 #include <vector>
 #include "Eigen-3.3/Eigen/Core"
 

@@ -28,38 +28,27 @@
 	"buffers":
 	[
 		{
-			"contents": "Searching 6525 files for \"CppAD\"\n\nC:\\Users\\uids6815\\Linux\\Udacity\\Udacity-SelfDrivingCar-Term2\\P5-MPC\\Quizzes\\CarND-MPC-Quizzes\\Dockerfile:\n   14      git \\\n   15      wget \\\n   16:     cppad \\\n   17      python-matplotlib \\ \n   18      python2.7-dev\n\nC:\\Users\\uids6815\\Linux\\Udacity\\Udacity-SelfDrivingCar-Term2\\P5-MPC\\Quizzes\\CarND-MPC-Quizzes\\mpc_to_line\\solution\\MPC.cpp:\n    1  #include \"MPC.h\"\n    2  #include <math.h>\n    3: #include <cppad/cppad.hpp>\n    4: #include <cppad/ipopt/solve.hpp>\n    5  #include \"Eigen-3.3/Eigen/Core\"\n    6  #include \"Eigen-3.3/Eigen/QR\"\n    .\n    9  namespace plt = matplotlibcpp;\n   10  \n   11: using CppAD::AD;\n   12  \n   13  // We set the number of timesteps to 25\n   ..\n   51    FG_eval(Eigen::VectorXd coeffs) { this->coeffs = coeffs; }\n   52  \n   53:   typedef CPPAD_TESTVECTOR(AD<double>) ADvector;\n   54    // `fg` is a vector containing the cost and constraints.\n   55    // `vars` is a vector containing the variable values (state & actuators).\n   ..\n   61      // The part of the cost based on the reference state.\n   62      for (int t = 0; t < N; t++) {\n   63:       fg[0] += CppAD::pow(vars[cte_start + t], 2);\n   64:       fg[0] += CppAD::pow(vars[epsi_start + t], 2);\n   65:       fg[0] += CppAD::pow(vars[v_start + t] - ref_v, 2);\n   66      }\n   67  \n   68      // Minimize the use of actuators.\n   69      for (int t = 0; t < N - 1; t++) {\n   70:       fg[0] += CppAD::pow(vars[delta_start + t], 2);\n   71:       fg[0] += CppAD::pow(vars[a_start + t], 2);\n   72      }\n   73  \n   74      // Minimize the value gap between sequential actuations.\n   75      for (int t = 0; t < N - 2; t++) {\n   76:       fg[0] += CppAD::pow(vars[delta_start + t + 1] - vars[delta_start + t], 2);\n   77:       fg[0] += CppAD::pow(vars[a_start + t + 1] - vars[a_start + t], 2);\n   78      }\n   79  \n   ..\n  118  \n  119        AD<double> f0 = coeffs[0] + coeffs[1] * x0;\n  120:       AD<double> psides0 = CppAD::atan(coeffs[1]);\n  121  \n  122        // Here's `x` to get you started.\n  ...\n  130        // cte[t+1] = f(x[t]) - y[t] + v[t] * sin(epsi[t]) * dt\n  131        // epsi[t+1] = psi[t] - psides[t] + v[t] * delta[t] / Lf * dt\n  132:       fg[1 + x_start + t] = x1 - (x0 + v0 * CppAD::cos(psi0) * dt);\n  133:       fg[1 + y_start + t] = y1 - (y0 + v0 * CppAD::sin(psi0) * dt);\n  134        fg[1 + psi_start + t] = psi1 - (psi0 + v0 * delta0 / Lf * dt);\n  135        fg[1 + v_start + t] = v1 - (v0 + a0 * dt);\n  136        fg[1 + cte_start + t] =\n  137:           cte1 - ((f0 - y0) + (v0 * CppAD::sin(epsi0) * dt));\n  138        fg[1 + epsi_start + t] =\n  139            epsi1 - ((psi0 - psides0) + v0 * delta0 / Lf * dt);\n  ...\n  151  vector<double> MPC::Solve(Eigen::VectorXd x0, Eigen::VectorXd coeffs) {\n  152    size_t i;\n  153:   typedef CPPAD_TESTVECTOR(double) Dvector;\n  154  \n  155    double x = x0[0];\n  ...\n  239  \n  240    // place to return solution\n  241:   CppAD::ipopt::solve_result<Dvector> solution;\n  242  \n  243    // solve the problem\n  244:   CppAD::ipopt::solve<Dvector, FG_eval>(\n  245        options, vars, vars_lowerbound, vars_upperbound, constraints_lowerbound,\n  246        constraints_upperbound, fg_eval, solution);\n  ...\n  250    //\n  251    bool ok = true;\n  252:   ok &= solution.status == CppAD::ipopt::solve_result<Dvector>::success;\n  253  \n  254    auto cost = solution.obj_value;\n\nC:\\Users\\uids6815\\Linux\\Udacity\\Udacity-SelfDrivingCar-Term2\\P5-MPC\\Quizzes\\CarND-MPC-Quizzes\\mpc_to_line\\src\\MPC.cpp:\n    1  #include \"MPC.h\"\n    2  #include <math.h>\n    3: #include <cppad/cppad.hpp>\n    4: #include <cppad/ipopt/solve.hpp>\n    5  #include \"Eigen-3.3/Eigen/Core\"\n    6  #include \"Eigen-3.3/Eigen/QR\"\n    .\n    9  namespace plt = matplotlibcpp;\n   10  \n   11: using CppAD::AD;\n   12  \n   13  // TODO: Set N and dt\n   ..\n   49    FG_eval(Eigen::VectorXd coeffs) { this->coeffs = coeffs; }\n   50  \n   51:   typedef CPPAD_TESTVECTOR(AD<double>) ADvector;\n   52    // `fg` is a vector containing the cost and constraints.\n   53    // `vars` is a vector containing the variable values (state & actuators).\n   ..\n   89        // The idea here is to constraint this value to be 0.\n   90        //\n   91:       // NOTE: The use of `AD<double>` and use of `CppAD`!\n   92:       // This is also CppAD can compute derivatives and pass\n   93        // these to the solver.\n   94  \n   95        // TODO: Setup the rest of the model constraints\n   96:       fg[1 + x_start + t] = x1 - (x0 + v0 * CppAD::cos(psi0) * dt);\n   97      }\n   98    }\n   ..\n  108  vector<double> MPC::Solve(Eigen::VectorXd x0, Eigen::VectorXd coeffs) {\n  109    size_t i;\n  110:   typedef CPPAD_TESTVECTOR(double) Dvector;\n  111  \n  112    double x = x0[0];\n  ...\n  196  \n  197    // place to return solution\n  198:   CppAD::ipopt::solve_result<Dvector> solution;\n  199  \n  200    // solve the problem\n  201:   CppAD::ipopt::solve<Dvector, FG_eval>(\n  202        options, vars, vars_lowerbound, vars_upperbound, constraints_lowerbound,\n  203        constraints_upperbound, fg_eval, solution);\n  ...\n  207    //\n  208    bool ok = true;\n  209:   ok &= solution.status == CppAD::ipopt::solve_result<Dvector>::success;\n  210  \n  211    auto cost = solution.obj_value;\n\nC:\\Users\\uids6815\\Linux\\Udacity\\Udacity-SelfDrivingCar-Term2\\P5-MPC\\Quizzes\\CarND-MPC-Quizzes\\README.md:\n   19  \n   20  The *Global Kinematic Quiz* and *Polynomial Fitting* quizzes have all the dependencies in repo. For the *MPC* quiz\n   21: you'll have to install Ipopt and CppAD.\n   22  \n   23  * [Ipopt](https://projects.coin-or.org/Ipopt)\n   ..\n   32      * Then call `install_ipopt.sh` with the source directory as the first argument, ex: `sudo bash install_ipopt.sh Ipopt-3.12.1`.\n   33    * Windows: TODO. If you can use the Linux subsystem and follow the Linux instructions.\n   34: * [CppAD](https://www.coin-or.org/CppAD/)\n   35:   * Mac: `brew install cppad`\n   36:   * Linux `sudo apt-get install cppad` or equivalent.\n   37    * Windows: TODO. If you can use the Linux subsystem and follow the Linux instructions.\n   38  \n\nC:\\Users\\uids6815\\Linux\\Udacity\\Udacity-SelfDrivingCar-Term2\\P5-MPC\\README.md:\n   45      * Then call `install_ipopt.sh` with the source directory as the first argument, ex: `sudo bash install_ipopt.sh Ipopt-3.12.1`. \n   46    * Windows: TODO. If you can use the Linux subsystem and follow the Linux instructions.\n   47: * [CppAD](https://www.coin-or.org/CppAD/)\n   48:   * Mac: `brew install cppad`\n   49:   * Linux `sudo apt-get install cppad` or equivalent.\n   50    * Windows: TODO. If you can use the Linux subsystem and follow the Linux instructions.\n   51  * [Eigen](http://eigen.tuxfamily.org/index.php?title=Main_Page). This is already part of the repo so you shouldn't have to worry about it.\n\nC:\\Users\\uids6815\\Linux\\Udacity\\Udacity-SelfDrivingCar-Term2\\P5-MPC\\src\\MPC.cpp:\n    1  #include \"MPC.h\"\n    2: #include <cppad/cppad.hpp>\n    3: #include <cppad/ipopt/solve.hpp>\n    4  #include \"Eigen-3.3/Eigen/Core\"\n    5  \n    6: using CppAD::AD;\n    7  \n    8  // TODO: Set the timestep length and duration\n    .\n   28    FG_eval(Eigen::VectorXd coeffs) { this->coeffs = coeffs; }\n   29  \n   30:   typedef CPPAD_TESTVECTOR(AD<double>) ADvector;\n   31    void operator()(ADvector& fg, const ADvector& vars) {\n   32      // TODO: implement MPC\n   ..\n   46    bool ok = true;\n   47    size_t i;\n   48:   typedef CPPAD_TESTVECTOR(double) Dvector;\n   49  \n   50    // TODO: Set the number of model variables (includes both states and inputs).\n   ..\n   99  \n  100    // place to return solution\n  101:   CppAD::ipopt::solve_result<Dvector> solution;\n  102  \n  103    // solve the problem\n  104:   CppAD::ipopt::solve<Dvector, FG_eval>(\n  105        options, vars, vars_lowerbound, vars_upperbound, constraints_lowerbound,\n  106        constraints_upperbound, fg_eval, solution);\n  107  \n  108    // Check some of the solution values\n  109:   ok &= solution.status == CppAD::ipopt::solve_result<Dvector>::success;\n  110  \n  111    // Cost\n\n51 matches across 6 files\n",
+			"file": "Quizzes/mpc_to_line/src/MPC.cpp",
 			"settings":
 			{
-				"buffer_size": 8010,
-				"line_ending": "Unix",
-				"name": "Find Results",
-				"scratch": true
-			}
-		},
-		{
-			"file": "Quizzes/CarND-MPC-Quizzes/mpc_to_line/src/MPC.cpp",
-			"settings":
-			{
-				"buffer_size": 11920,
+				"buffer_size": 13404,
 				"encoding": "UTF-8",
 				"line_ending": "Unix"
 			}
 		},
 		{
-			"file": "Quizzes/CarND-MPC-Quizzes/mpc_to_line/src/MPC.h",
+			"file": "Quizzes/mpc_to_line/src/Eigen-3.3/Eigen/src/Core/MatrixBase.h",
 			"settings":
 			{
-				"buffer_size": 370,
-				"encoding": "UTF-8",
-				"line_ending": "Unix"
+				"buffer_size": 22339,
+				"line_ending": "Windows"
 			}
 		},
 		{
-			"file": "Quizzes/CarND-MPC-Quizzes/mpc_to_line/src/matplotlibcpp.h",
+			"file": "src/Eigen-3.3/Eigen/src/QR/HouseholderQR.h",
 			"settings":
 			{
-				"buffer_size": 22805,
+				"buffer_size": 14022,
 				"line_ending": "Windows"
 			}
 		}
@@ -130,16 +119,19 @@
 	[
 		"/C/Users/uids6815/Linux/Udacity/Udacity-SelfDrivingCar-Term2/P5-MPC",
 		"/C/Users/uids6815/Linux/Udacity/Udacity-SelfDrivingCar-Term2/P5-MPC/Quizzes",
-		"/C/Users/uids6815/Linux/Udacity/Udacity-SelfDrivingCar-Term2/P5-MPC/Quizzes/CarND-MPC-Quizzes",
-		"/C/Users/uids6815/Linux/Udacity/Udacity-SelfDrivingCar-Term2/P5-MPC/Quizzes/CarND-MPC-Quizzes/global_kinematic_model",
-		"/C/Users/uids6815/Linux/Udacity/Udacity-SelfDrivingCar-Term2/P5-MPC/Quizzes/CarND-MPC-Quizzes/mpc_to_line",
-		"/C/Users/uids6815/Linux/Udacity/Udacity-SelfDrivingCar-Term2/P5-MPC/Quizzes/CarND-MPC-Quizzes/mpc_to_line/solution",
-		"/C/Users/uids6815/Linux/Udacity/Udacity-SelfDrivingCar-Term2/P5-MPC/Quizzes/CarND-MPC-Quizzes/mpc_to_line/src",
-		"/C/Users/uids6815/Linux/Udacity/Udacity-SelfDrivingCar-Term2/P5-MPC/Quizzes/CarND-MPC-Quizzes/polyfit",
+		"/C/Users/uids6815/Linux/Udacity/Udacity-SelfDrivingCar-Term2/P5-MPC/Quizzes/mpc_to_line",
+		"/C/Users/uids6815/Linux/Udacity/Udacity-SelfDrivingCar-Term2/P5-MPC/Quizzes/mpc_to_line/solution",
+		"/C/Users/uids6815/Linux/Udacity/Udacity-SelfDrivingCar-Term2/P5-MPC/Quizzes/mpc_to_line/src",
 		"/C/Users/uids6815/Linux/Udacity/Udacity-SelfDrivingCar-Term2/P5-MPC/src"
 	],
 	"file_history":
 	[
+		"/C/Users/uids6815/Linux/Udacity/Udacity-SelfDrivingCar-Term2/P5-MPC/Quizzes/mpc_to_line/solution/MPC.cpp",
+		"/C/Users/uids6815/Linux/Udacity/Udacity-SelfDrivingCar-Term2/P5-MPC/src/main.cpp",
+		"/C/Users/uids6815/Linux/Udacity/Udacity-SelfDrivingCar-Term2/P5-MPC/src/MPC.h",
+		"/C/Users/uids6815/Linux/Udacity/Udacity-SelfDrivingCar-Term2/P5-MPC/Quizzes/CarND-MPC-Quizzes/mpc_to_line/src/matplotlibcpp.h",
+		"/C/Users/uids6815/Linux/Udacity/Udacity-SelfDrivingCar-Term2/P5-MPC/Quizzes/CarND-MPC-Quizzes/mpc_to_line/src/MPC.cpp",
+		"/C/Users/uids6815/Linux/Udacity/Udacity-SelfDrivingCar-Term2/P5-MPC/Quizzes/CarND-MPC-Quizzes/mpc_to_line/src/MPC.h",
 		"/C/Users/uids6815/Linux/Udacity/Udacity-SelfDrivingCar-Term2/P4-PID-Control/.gitignore",
 		"/C/Users/uids6815/Linux/Udacity/Udacity-SelfDrivingCar-Term2/P4-PID-Control/lesson/16.7_PD_Controller/PD_controller.py",
 		"/C/Users/uids6815/Linux/Udacity/Udacity-SelfDrivingCar-Term2/P4-PID-Control/lesson/16.11_PID_Controller/PID.py",
@@ -257,6 +249,19 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"cost",
+			"x_vals",
+			"Solve",
+			"polyeval",
+			"solve",
+			"householderQr",
+			"polyfit",
+			"for (int i = 0; i < N - 2; i++)",
+			"coeffs",
+			"msg",
+			"vars",
+			"TODO",
+			"stddef",
 			"TODO",
 			"cppad",
 			"CppAD",
@@ -371,20 +376,7 @@
 			"summaries_dir",
 			"SummaryWriter",
 			"GraphDef",
-			"logdir",
-			"tf.summary.scalar",
-			"NUM_EXAMPLES_PER_EPOCH_FOR_TRAIN",
-			"FLAGS",
-			"TODO",
-			"z_pred",
-			"dt",
-			"TODO",
-			"raw_measurements_",
-			"VectorXd",
-			"measurement_timestamp",
-			"noise_ax_",
-			"recording",
-			"extract_features_plot"
+			"logdir"
 		],
 		"highlight": true,
 		"in_selection": false,
@@ -405,235 +397,41 @@
 	"groups":
 	[
 		{
-			"selected": 2,
+			"selected": 0,
 			"sheets":
 			[
 				{
 					"buffer": 0,
+					"file": "Quizzes/mpc_to_line/src/MPC.cpp",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 8010,
+						"buffer_size": 13404,
 						"regions":
 						{
-							"match":
+							"bookmarks":
 							{
-								"flags": 112,
+								"flags": 144,
+								"icon": "bookmark",
 								"regions":
 								[
 									[
-										186,
-										191
+										4200,
+										4200
 									],
 									[
-										442,
-										447
-									],
-									[
-										448,
-										453
-									],
-									[
-										476,
-										481
-									],
-									[
-										640,
-										645
-									],
-									[
-										805,
-										810
-									],
-									[
-										1127,
-										1132
-									],
-									[
-										1185,
-										1190
-									],
-									[
-										1244,
-										1249
-									],
-									[
-										1419,
-										1424
-									],
-									[
-										1479,
-										1484
-									],
-									[
-										1669,
-										1674
-									],
-									[
-										1757,
-										1762
-									],
-									[
-										1941,
-										1946
-									],
-									[
-										2221,
-										2226
-									],
-									[
-										2296,
-										2301
-									],
-									[
-										2532,
-										2537
-									],
-									[
-										2786,
-										2791
-									],
-									[
-										2915,
-										2920
-									],
-									[
-										3008,
-										3013
-									],
-									[
-										3267,
-										3272
-									],
-									[
-										3548,
-										3553
-									],
-									[
-										3554,
-										3559
-									],
-									[
-										3582,
-										3587
-									],
-									[
-										3746,
-										3751
-									],
-									[
-										3893,
-										3898
-									],
-									[
-										4228,
-										4233
-									],
-									[
-										4265,
-										4270
-									],
-									[
-										4462,
-										4467
-									],
-									[
-										4631,
-										4636
-									],
-									[
-										4760,
-										4765
-									],
-									[
-										4853,
-										4858
-									],
-									[
-										5112,
-										5117
-									],
-									[
-										5483,
-										5488
-									],
-									[
-										5801,
-										5806
-									],
-									[
-										5832,
-										5837
-									],
-									[
-										5870,
-										5875
-									],
-									[
-										5916,
-										5921
-									],
-									[
-										6367,
-										6372
-									],
-									[
-										6398,
-										6403
-									],
-									[
-										6436,
-										6441
-									],
-									[
-										6482,
-										6487
-									],
-									[
-										6869,
-										6874
-									],
-									[
-										6875,
-										6880
-									],
-									[
-										6903,
-										6908
-									],
-									[
-										6986,
-										6991
-									],
-									[
-										7157,
-										7162
-									],
-									[
-										7360,
-										7365
-									],
-									[
-										7549,
-										7554
-									],
-									[
-										7642,
-										7647
-									],
-									[
-										7912,
-										7917
+										11463,
+										11463
 									]
 								],
-								"scope": ""
+								"scope": "bookmarks"
 							}
 						},
 						"selection":
 						[
 							[
-								0,
-								0
+								8527,
+								8527
 							]
 						],
 						"settings":
@@ -654,201 +452,179 @@
 								{
 									"1":
 									[
-										4508,
-										4509
+										8929,
+										8930
 									]
 								}
 							},
 							"bracket_highlighter.regions":
 							[
-								"bh_curly",
-								"bh_curly_center",
-								"bh_curly_open",
-								"bh_curly_close",
-								"bh_curly_content",
-								"bh_square",
-								"bh_square_center",
-								"bh_square_open",
-								"bh_square_close",
-								"bh_square_content",
 								"bh_c_define",
 								"bh_c_define_center",
 								"bh_c_define_open",
 								"bh_c_define_close",
 								"bh_c_define_content",
-								"bh_angle",
-								"bh_angle_center",
-								"bh_angle_open",
-								"bh_angle_close",
-								"bh_angle_content",
-								"bh_default",
-								"bh_default_center",
-								"bh_default_open",
-								"bh_default_close",
-								"bh_default_content",
-								"bh_double_quote",
-								"bh_double_quote_center",
-								"bh_double_quote_open",
-								"bh_double_quote_close",
-								"bh_double_quote_content",
-								"bh_unmatched",
-								"bh_unmatched_center",
-								"bh_unmatched_open",
-								"bh_unmatched_close",
-								"bh_unmatched_content",
-								"bh_single_quote",
-								"bh_single_quote_center",
-								"bh_single_quote_open",
-								"bh_single_quote_close",
-								"bh_single_quote_content",
-								"bh_round",
-								"bh_round_center",
-								"bh_round_open",
-								"bh_round_close",
-								"bh_round_content",
-								"bh_regex",
-								"bh_regex_center",
-								"bh_regex_open",
-								"bh_regex_close",
-								"bh_regex_content",
-								"bh_tag",
-								"bh_tag_center",
-								"bh_tag_open",
-								"bh_tag_close",
-								"bh_tag_content"
-							],
-							"default_dir": "C:\\Users\\uids6815\\Linux\\Udacity\\Udacity-SelfDrivingCar-Term2\\P5-MPC",
-							"detect_indentation": false,
-							"line_numbers": false,
-							"output_tag": 1,
-							"result_base_dir": "",
-							"result_file_regex": "^([^ \t].*):$",
-							"result_line_regex": "^ +([0-9]+):",
-							"scroll_past_end": true,
-							"syntax": "Packages/Default/Find Results.hidden-tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 3600.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 3,
-					"type": "text"
-				},
-				{
-					"buffer": 1,
-					"file": "Quizzes/CarND-MPC-Quizzes/mpc_to_line/src/MPC.cpp",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 11920,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								9897,
-								9897
-							]
-						],
-						"settings":
-						{
-							"bracket_highlighter.busy": false,
-							"bracket_highlighter.locations":
-							{
-								"close":
-								{
-									"1":
-									[
-										11919,
-										11920
-									]
-								},
-								"icon":
-								{
-									"1":
-									[
-										"Packages/BracketHighlighter/icons/curly_bracket.png",
-										"brackethighlighter.default"
-									]
-								},
-								"open":
-								{
-									"1":
-									[
-										9772,
-										9773
-									]
-								},
-								"unmatched":
-								{
-								}
-							},
-							"bracket_highlighter.regions":
-							[
-								"bh_curly",
-								"bh_curly_center",
-								"bh_curly_open",
-								"bh_curly_close",
-								"bh_curly_content",
 								"bh_square",
 								"bh_square_center",
 								"bh_square_open",
 								"bh_square_close",
 								"bh_square_content",
-								"bh_c_define",
-								"bh_c_define_center",
-								"bh_c_define_open",
-								"bh_c_define_close",
-								"bh_c_define_content",
-								"bh_angle",
-								"bh_angle_center",
-								"bh_angle_open",
-								"bh_angle_close",
-								"bh_angle_content",
-								"bh_default",
-								"bh_default_center",
-								"bh_default_open",
-								"bh_default_close",
-								"bh_default_content",
-								"bh_double_quote",
-								"bh_double_quote_center",
-								"bh_double_quote_open",
-								"bh_double_quote_close",
-								"bh_double_quote_content",
-								"bh_unmatched",
-								"bh_unmatched_center",
-								"bh_unmatched_open",
-								"bh_unmatched_close",
-								"bh_unmatched_content",
-								"bh_single_quote",
-								"bh_single_quote_center",
-								"bh_single_quote_open",
-								"bh_single_quote_close",
-								"bh_single_quote_content",
-								"bh_round",
-								"bh_round_center",
-								"bh_round_open",
-								"bh_round_close",
-								"bh_round_content",
 								"bh_regex",
 								"bh_regex_center",
 								"bh_regex_open",
 								"bh_regex_close",
 								"bh_regex_content",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_unmatched_content",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_round_content",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_default_content",
 								"bh_tag",
 								"bh_tag_center",
 								"bh_tag_open",
 								"bh_tag_close",
-								"bh_tag_content"
+								"bh_tag_content",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close",
+								"bh_single_quote_content",
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_angle_content",
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_curly_content",
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_double_quote_content"
 							],
 							"syntax": "Packages/C++/C++.sublime-syntax",
 							"tab_size": 2,
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 6072.0,
+						"translation.y": 3948.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "Quizzes/mpc_to_line/src/Eigen-3.3/Eigen/src/Core/MatrixBase.h",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 22339,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								15248,
+								15248
+							]
+						],
+						"settings":
+						{
+							"bracket_highlighter.busy": false,
+							"bracket_highlighter.locations":
+							{
+								"close":
+								{
+								},
+								"icon":
+								{
+								},
+								"open":
+								{
+								},
+								"unmatched":
+								{
+								}
+							},
+							"bracket_highlighter.regions":
+							[
+								"bh_c_define",
+								"bh_c_define_center",
+								"bh_c_define_open",
+								"bh_c_define_close",
+								"bh_c_define_content",
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_square_content",
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_regex_content",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_unmatched_content",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_round_content",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_default_content",
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close",
+								"bh_tag_content",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close",
+								"bh_single_quote_content",
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_angle_content",
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_curly_content",
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_double_quote_content"
+							],
+							"syntax": "Packages/C++/C++.sublime-syntax",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 7517.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 1,
@@ -856,19 +632,19 @@
 				},
 				{
 					"buffer": 2,
-					"file": "Quizzes/CarND-MPC-Quizzes/mpc_to_line/src/MPC.h",
+					"file": "src/Eigen-3.3/Eigen/src/QR/HouseholderQR.h",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 370,
+						"buffer_size": 14022,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								50,
-								50
+								1593,
+								1593
 							]
 						],
 						"settings":
@@ -878,212 +654,86 @@
 							{
 								"close":
 								{
-									"1":
-									[
-										351,
-										357
-									]
 								},
 								"icon":
 								{
-									"1":
-									[
-										"Packages/BracketHighlighter/icons/hash.png",
-										"brackethighlighter.default"
-									]
 								},
 								"open":
 								{
-									"1":
-									[
-										0,
-										7
-									]
 								},
 								"unmatched":
 								{
+									"1":
+									[
+										522,
+										523
+									]
 								}
 							},
 							"bracket_highlighter.regions":
 							[
-								"bh_curly",
-								"bh_curly_center",
-								"bh_curly_open",
-								"bh_curly_close",
-								"bh_curly_content",
-								"bh_square",
-								"bh_square_center",
-								"bh_square_open",
-								"bh_square_close",
-								"bh_square_content",
 								"bh_c_define",
 								"bh_c_define_center",
 								"bh_c_define_open",
 								"bh_c_define_close",
 								"bh_c_define_content",
-								"bh_angle",
-								"bh_angle_center",
-								"bh_angle_open",
-								"bh_angle_close",
-								"bh_angle_content",
-								"bh_default",
-								"bh_default_center",
-								"bh_default_open",
-								"bh_default_close",
-								"bh_default_content",
-								"bh_double_quote",
-								"bh_double_quote_center",
-								"bh_double_quote_open",
-								"bh_double_quote_close",
-								"bh_double_quote_content",
-								"bh_unmatched",
-								"bh_unmatched_center",
-								"bh_unmatched_open",
-								"bh_unmatched_close",
-								"bh_unmatched_content",
-								"bh_single_quote",
-								"bh_single_quote_center",
-								"bh_single_quote_open",
-								"bh_single_quote_close",
-								"bh_single_quote_content",
-								"bh_round",
-								"bh_round_center",
-								"bh_round_open",
-								"bh_round_close",
-								"bh_round_content",
-								"bh_regex",
-								"bh_regex_center",
-								"bh_regex_open",
-								"bh_regex_close",
-								"bh_regex_content",
-								"bh_tag",
-								"bh_tag_center",
-								"bh_tag_open",
-								"bh_tag_close",
-								"bh_tag_content"
-							],
-							"syntax": "Packages/C++/C++.sublime-syntax"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 0,
-					"type": "text"
-				},
-				{
-					"buffer": 3,
-					"file": "Quizzes/CarND-MPC-Quizzes/mpc_to_line/src/matplotlibcpp.h",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 22805,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								142,
-								142
-							]
-						],
-						"settings":
-						{
-							"bracket_highlighter.busy": false,
-							"bracket_highlighter.locations":
-							{
-								"close":
-								{
-									"1":
-									[
-										175,
-										181
-									]
-								},
-								"icon":
-								{
-									"1":
-									[
-										"Packages/BracketHighlighter/icons/hash.png",
-										"brackethighlighter.default"
-									]
-								},
-								"open":
-								{
-									"1":
-									[
-										108,
-										111
-									]
-								},
-								"unmatched":
-								{
-								}
-							},
-							"bracket_highlighter.regions":
-							[
-								"bh_curly",
-								"bh_curly_center",
-								"bh_curly_open",
-								"bh_curly_close",
-								"bh_curly_content",
 								"bh_square",
 								"bh_square_center",
 								"bh_square_open",
 								"bh_square_close",
 								"bh_square_content",
-								"bh_c_define",
-								"bh_c_define_center",
-								"bh_c_define_open",
-								"bh_c_define_close",
-								"bh_c_define_content",
-								"bh_angle",
-								"bh_angle_center",
-								"bh_angle_open",
-								"bh_angle_close",
-								"bh_angle_content",
-								"bh_default",
-								"bh_default_center",
-								"bh_default_open",
-								"bh_default_close",
-								"bh_default_content",
-								"bh_double_quote",
-								"bh_double_quote_center",
-								"bh_double_quote_open",
-								"bh_double_quote_close",
-								"bh_double_quote_content",
-								"bh_unmatched",
-								"bh_unmatched_center",
-								"bh_unmatched_open",
-								"bh_unmatched_close",
-								"bh_unmatched_content",
-								"bh_single_quote",
-								"bh_single_quote_center",
-								"bh_single_quote_open",
-								"bh_single_quote_close",
-								"bh_single_quote_content",
-								"bh_round",
-								"bh_round_center",
-								"bh_round_open",
-								"bh_round_close",
-								"bh_round_content",
 								"bh_regex",
 								"bh_regex_center",
 								"bh_regex_open",
 								"bh_regex_close",
 								"bh_regex_content",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_unmatched_content",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_round_content",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_default_content",
 								"bh_tag",
 								"bh_tag_center",
 								"bh_tag_open",
 								"bh_tag_close",
-								"bh_tag_content"
+								"bh_tag_content",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close",
+								"bh_single_quote_content",
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_angle_content",
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_curly_content",
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_double_quote_content"
 							],
 							"syntax": "Packages/C++/C++.sublime-syntax",
-							"translate_tabs_to_spaces": false
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 0.0,
+						"translation.y": 169.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 2,
@@ -1094,7 +744,7 @@
 	],
 	"incremental_find":
 	{
-		"height": 28.0
+		"height": 30.0
 	},
 	"input":
 	{
@@ -1143,7 +793,7 @@
 	"project": "P5.sublime-project",
 	"replace":
 	{
-		"height": 52.0
+		"height": 56.0
 	},
 	"save_all_on_build": true,
 	"select_file":
@@ -1181,7 +831,7 @@
 	"show_open_files": false,
 	"show_tabs": true,
 	"side_bar_visible": true,
-	"side_bar_width": 337.0,
+	"side_bar_width": 375.0,
 	"status_bar_visible": true,
 	"template_settings":
 	{

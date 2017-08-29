@@ -20,6 +20,7 @@ class PID {
 
   int n;
   double total_square_error;
+  double average_error ;
 
   /*
   * Constructor

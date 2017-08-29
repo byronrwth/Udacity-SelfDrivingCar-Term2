@@ -1,5 +1,81 @@
-# CarND-Controls-PID
+## CarND-Controls-PID
 Self-Driving Car Engineer Nanodegree Program
+
+---
+
+**Reflection of PID**
+
+The goal of this project is to build a PID controller and tune the PID hyperparameters by applying the general processing flow as described in the previous lessons.
+
+* Implement PID updateError and TotalError functions with Kp, Kd, Ki
+* manually tune Kp, Kd, Ki parameters to let vehicle in simulator to automatically run on track
+* (option) use twiddle algorithm to automatically calculate and adjust Kp, Kd, Ki
+
+[//]: # (Image References)
+
+[image1]: ./images/PID.PNG "PID Control"
+[image2]: ./images/no-bias-controllers.PNG "no bias"
+[image3]: ./images/biased-controllers.PNG "with biars"
+
+![][image1]
+![][image2]
+![][image3]
+
+P controller only has Kp, which ajust steer of vehicle in propotion to the Cross Track Error, too large Kp leads to overshooting and oscilations; 
+
+PD controller has Kp and Kd,  in addition to Kp, Kd is the derivative of current CTE and the value of last timestep, Kd is used to reduce oscilations;
+
+PID controller has Kp, Kd and Ki, the Ki is the intergral of all CTEs accumulated, with Ki the average of the whole duration total square error will be reduced to 0 finally 
+
+
+**adding parameters into compilation**
+
+to avoid re-compile with modified Kp, Kd, Ki, I added parameters as argv options into compilation:
+
+
+const double init_Kp = atof(argv[1]) ;
+  
+
+const double init_Ki = atof(argv[2]) ;
+
+
+const double init_Kd = atof(argv[3]) ;
+
+
+
+**Steps to manually tune P4 vehicle in simulator**
+
+1, first try to find a Kp which keeps you car on the track atleast for 2-3 seconds. The car might oscillate but that is fine.
+
+I found Kp = -0.1, Kd = 0, Ki = 0:
+
+run with:  ./pid -0.1 0 0  :
+
+[test1](https://youtu.be/WNbz_QOxAZ4)
+
+
+
+2, to tune down the oscillation gradually try with increased Kd values, increasing Kd reduces oscillations, whereas increasing Kp increases the magnitude of turning. You need to find a sweet spot where the car turns sufficiently but does not oscillate
+
+I found Kp = -0.1, Kd = -10, Ki = 0:
+
+run with:  ./pid -0.1 0 -10 :
+
+[test2](https://youtu.be/Lmprfa0rurI)
+
+
+
+3, Once you find Kp and Kd values which work well, try very small values of Ki. Don’t be surprised if Ki is many orders of magnitude lower than Kp or Kd.
+
+I found Kp = -0.1, Kd = -10, Ki = -0.001:
+
+run with:  ./pid -0.1 -0.001 -10 :
+
+[test3](https://youtu.be/38PP9rMj53Y)
+
+with added Ki,  the average of total square error in test2 has been reduced from 0.8  to 0.3 in 2 loops of track.
+
+
 
 ---
 
