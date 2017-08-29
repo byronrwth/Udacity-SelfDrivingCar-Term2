@@ -199,7 +199,7 @@ vector<double> MPC::Solve(Eigen::VectorXd state, Eigen::VectorXd coeffs) {
     vars[i] = 0;
   }
 
-#if 0
+//#if 0
   // Set the initial variable values
   vars[x_start] = x;
   vars[y_start] = y;
@@ -207,7 +207,7 @@ vector<double> MPC::Solve(Eigen::VectorXd state, Eigen::VectorXd coeffs) {
   vars[v_start] = v;
   vars[cte_start] = cte;
   vars[epsi_start] = epsi;
-#endif 
+//#endif 
 
   Dvector vars_lowerbound(n_vars);
   Dvector vars_upperbound(n_vars);
@@ -224,15 +224,15 @@ vector<double> MPC::Solve(Eigen::VectorXd state, Eigen::VectorXd coeffs) {
   // degrees (values in radians).
   // NOTE: Feel free to change this to something else.
   for (int i = delta_start; i < a_start; i++) {
-    vars_lowerbound[i] = -1.0 ; //-0.436332; // 25'
-    vars_upperbound[i] = 1.0; //0.436332;  // -25'
+    vars_lowerbound[i] = -0.436332; //-1.0 ; //-0.436332; // 25'
+    vars_upperbound[i] = 0.436332; //1.0; //0.436332;  // -25'
   }
 
   // Acceleration/decceleration upper and lower limits.
   // NOTE: Feel free to change this to something else.
   for (int i = a_start; i < n_vars; i++) {
-    vars_lowerbound[i] = -0.436332 * Lf ; //-1.0;
-    vars_upperbound[i] =  0.436332 * Lf ; //1.0;
+    vars_lowerbound[i] = -1.0; //-0.436332 * Lf ; //-1.0;
+    vars_upperbound[i] =  1.0; //0.436332 * Lf ; //1.0;
   }
   
   // Lower and upper limits for the constraints

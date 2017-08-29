@@ -38,6 +38,10 @@ double polyeval(Eigen::VectorXd coeffs, double x) {
   for (int i = 0; i < coeffs.size(); i++) {
     result += coeffs[i] * pow(x, i);
   }
+
+  std::cout << "main: polyeval: result: " << result << std::endl;
+
+
   return result;
 }
 
@@ -62,6 +66,9 @@ Eigen::VectorXd polyfit(Eigen::VectorXd xvals, Eigen::VectorXd yvals,
 
   auto Q = A.householderQr();
   auto result = Q.solve(yvals);
+  std::cout << "main: polyfit: result: " << result << std::endl;
+
+
   return result;
 }
 
@@ -86,13 +93,30 @@ int main() {
         if (event == "telemetry") {
           // j[1] is the data JSON object
           vector<double> ptsx = j[1]["ptsx"];
+
+          std::cout << "main: parsing waypoints: ptsx: " << std::endl;
+          for (auto i = ptsx.begin(); i != ptsx.end(); ++i)
+              std::cout << *i << ' ';
+          std::cout << " \n " << std::endl;
+
           vector<double> ptsy = j[1]["ptsy"];
+
+          std::cout << "main: parsing waypoints: ptsy: " << std::endl;
+          for (auto i = ptsy.begin(); i != ptsy.end(); ++i)
+              std::cout << *i << ' ';
+          std::cout << " \n " << std::endl;
+
           double px = j[1]["x"];
           double py = j[1]["y"];
+          std::cout << "main: parsing car at: px= " << px << " py= " << py << "\n" << std::endl;
+
+
           double psi = j[1]["psi"];
           double v = j[1]["speed"];
+          std::cout << "main: parsing car with psi and velocity: psi= " << psi << " v= " << v << "\n" << std::endl;
 
           /* ============  QA ================*/
+          
           for ( int i = 0; i < ptsx.size(); i++) 
           {
               //shift car reference angle to 90 degrees
@@ -101,23 +125,58 @@ int main() {
 
               ptsx[i] = ( shift_x * cos( 0 - psi) - shift_y * sin( 0 - psi)) ;
               ptsy[i] = ( shift_x * sin( 0 - psi) + shift_y * cos( 0 - psi)) ;
-          }
+          } 
+          std::cout << "main: ======= re-coordinate ======================= \n " << std::endl;
+
+          std::cout << "main: car-coordinated waypoints: ptsx: " << std::endl;
+          for (auto i = ptsx.begin(); i != ptsx.end(); ++i)
+              std::cout << *i << ' ';
+          std::cout << " \n " << std::endl;
+
+          std::cout << "main: coordinated waypoints: ptsy: " << std::endl;
+          for (auto i = ptsy.begin(); i != ptsy.end(); ++i)
+              std::cout << *i << ' ';
+          std::cout << " \n " << std::endl;
+
 
           double* ptrx = &ptsx[0];
           Eigen::Map<Eigen::VectorXd> ptsx_transform(ptrx, 6);
+          std::cout << "main: ptsx_transform: " << ptsx_transform << std::endl;
 
           double* ptry = &ptsy[0];
           Eigen::Map<Eigen::VectorXd> ptsy_transform(ptry, 6);
+          std::cout << "main: ptsy_transform: " << ptsy_transform << std::endl;
+
 
           auto coeffs = polyfit(ptsx_transform, ptsy_transform, 3);
+          std::cout << "main: coeffs: " << coeffs << std::endl;
 
           //calculate cte and epsi
-          double cte = polyeval(coeffs, 0);
+          double cte = polyeval(coeffs, 0); // in car's coordiante, x = y= 0
+          std::cout << "main: cte: " << cte << std::endl;
+          //double cte = polyeval(coeffs, x) - y;
+          //std::cout << "main: cte: " << cte << " , x: " << x << " ,coeffs: " << coeffs << " ,y: " << y << std::endl;
+
+
           //double epsi = psi - atan(coeffs[1] + 2 * px * coeffs[2] + 3 * coeffs[3] * pow(px, 2))
-          double epsi = -atan(coeffs[1]);
+          double epsi_1 = -atan(coeffs[1]);
+          std::cout << "main: epsi_1 = -atan(" << coeffs[1]<< "): " << epsi_1 << std::endl;
+
+
+
+          // TODO: calculate the orientation error
+          double epsi_2 = psi - atan(coeffs[1]);
+          std::cout << "main: epsi_2 : " << epsi_2 << " , psi: " << psi << " ,coeffs[1]: " << coeffs[1] << " ,atan(coeffs[1]): " << atan(coeffs[1]) << std::endl;
+
+
+          double epsi = epsi_2;  // epsi_1
+
 
           double steer_value = j[1]["steering_angle"]; 
+          std::cout << "main: steer_value: " << steer_value << std::endl;
+
           double throttle_value = j[1]["throttle"];
+          std::cout << "main: throttle_value: " << throttle_value << std::endl;
 
           Eigen::VectorXd state(6);
           state << 0, 0, 0, v, cte, epsi;
@@ -212,7 +271,8 @@ int main() {
 
 
           auto msg = "42[\"steer\"," + msgJson.dump() + "]";
-          std::cout << msg << std::endl;
+          //std::cout << msg << std::endl;
+
           // Latency
           // The purpose is to mimic real driving conditions where
           // the car does actuate the commands instantly.
