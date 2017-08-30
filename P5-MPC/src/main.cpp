@@ -159,17 +159,9 @@ int main() {
 
           // init at psi == 0, px, py==0 ?
           //double epsi = psi - atan(coeffs[1] + 2 * px * coeffs[2] + 3 * coeffs[3] * pow(px, 2))
-          double epsi_1 = -atan(coeffs[1]);
-          std::cout << "main: epsi_1 = -atan(" << coeffs[1]<< "): " << epsi_1 << std::endl;
+          double epsi = -atan(coeffs[1]);
+          std::cout << "main: epsi = -atan(" << coeffs[1]<< "): " << epsi << std::endl;
 
-
-
-          // TODO: calculate the orientation error
-          double epsi_2 = psi - atan(coeffs[1]);
-          std::cout << "main: epsi_2 : " << epsi_2 << " , psi: " << psi << " ,coeffs[1]: " << coeffs[1] << " ,atan(coeffs[1]): " << atan(coeffs[1]) << std::endl;
-
-
-          double epsi = epsi_1; //epsi_2;  // epsi_1
 
 
           double steer_value = j[1]["steering_angle"]; 
