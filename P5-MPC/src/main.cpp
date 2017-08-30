@@ -157,7 +157,7 @@ int main() {
           //double cte = polyeval(coeffs, x) - y;
           //std::cout << "main: cte: " << cte << " , x: " << x << " ,coeffs: " << coeffs << " ,y: " << y << std::endl;
 
-
+          // init at psi == 0, px, py==0 ?
           //double epsi = psi - atan(coeffs[1] + 2 * px * coeffs[2] + 3 * coeffs[3] * pow(px, 2))
           double epsi_1 = -atan(coeffs[1]);
           std::cout << "main: epsi_1 = -atan(" << coeffs[1]<< "): " << epsi_1 << std::endl;
@@ -169,7 +169,7 @@ int main() {
           std::cout << "main: epsi_2 : " << epsi_2 << " , psi: " << psi << " ,coeffs[1]: " << coeffs[1] << " ,atan(coeffs[1]): " << atan(coeffs[1]) << std::endl;
 
 
-          double epsi = epsi_2;  // epsi_1
+          double epsi = epsi_1; //epsi_2;  // epsi_1
 
 
           double steer_value = j[1]["steering_angle"]; 
@@ -179,6 +179,8 @@ int main() {
           std::cout << "main: throttle_value: " << throttle_value << std::endl;
 
           Eigen::VectorXd state(6);
+
+          // in current car's coordinate, x=y=psi=0
           state << 0, 0, 0, v, cte, epsi;
 
 
@@ -244,14 +246,17 @@ int main() {
 
           double Lf = 2.67 ;
 
+          double solved_steer = -vars[0]/(deg2rad(25) * Lf) ;
+          double solved_throttle = vars[1] ;
+          std::cout << "main: Solve: solved_steer = " << solved_steer << " ,solved_throttle = " << throttle_value << std::endl;
 
 
 
           json msgJson;
           // NOTE: Remember to divide by deg2rad(25) before you send the steering value back.
           // Otherwise the values will be in between [-deg2rad(25), deg2rad(25] instead of [-1, 1].
-          msgJson["steering_angle"] = vars[0]/(deg2rad(25) * Lf) ; //steer_value;
-          msgJson["throttle"] =  vars[1] ;  //throttle_value;
+          msgJson["steering_angle"] = solved_steer ; //steer_value;
+          msgJson["throttle"] =  solved_throttle ;  //throttle_value;
 
 
 
