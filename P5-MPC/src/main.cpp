@@ -172,7 +172,16 @@ int main() {
 
           Eigen::VectorXd state(6);
 
-          // in current car's coordinate, x=y=psi=0
+          // Recall the equations for the model:
+          // x_[t] = x[t-1] + v[t-1] * cos(psi[t-1]) * dt
+          // y_[t] = y[t-1] + v[t-1] * sin(psi[t-1]) * dt
+          // psi_[t] = psi[t-1] + v[t-1] / Lf * delta[t-1] * dt
+          // v_[t] = v[t-1] + a[t-1] * dt
+          // cte[t] = f(x[t-1]) - y[t-1] + v[t-1] * sin(epsi[t-1]) * dt
+          // epsi[t] = psi[t] - psides[t-1] + v[t-1] * delta[t-1] / Lf * dt
+
+
+          // no latency, in current car's coordinate, x=y=psi=0
           state << 0, 0, 0, v, cte, epsi;
 
 
