@@ -22,30 +22,75 @@ The goal of this project is to implement Model Predictive Control to drive the c
 [image4]: ./images/IPOPT_Solver.PNG
 [image5]: ./images/Solver_output_actuators.PNG
 [image6]: ./images/cte_epsi.PNG
+[image7]: ./images/acturator_constraints.PNG
+[image8]: ./images/forces.PNG
+[image9]: ./images/racing_angle.PNG
+[image10]: ./images/tire_model.PNG
+[image11]: ./images/smooth_delta.PNG
+[image12]: ./images/smooth_delta_difference.PNG
+[image13]: ./images/route_timestep.PNG
+[image14]: ./images/Ipopt_vars.PNG
 
 **MPC model implementation**
 
 1. state discussion
 
 ![][image1]
+
 From Kinematic models which are simplifications of dynamic models that ignore tire forces, gravity, and mass, we can define the motion part of vehicles can be decided by px, py, psi and v.
 
 ![][image2]
 ![][image6]
 
+
 However to keep my car always fit into trajactory of predicted path, I also need to consider cte and orientation error epsi.
 
+
 2. actuators
+
+![][image8]
+![][image9]
+
+
+The motion of vechicle can be simplied as tire model, which may receive various forces, but can be summurized as controls on speed to accelerate or brake, the a, and controls on angles of tire to slip for turning curve, the delta.
+
+![][image10]
+![][image7]
+
+However above tire model has limitations, if vehicle/tire is acting outside this linear range then our assumption/prediction tire model will lack of accuracy. Thus we need to define our control inputs [delta, a] to within [-25rad, 25rad] and [-1, 1].
+
+The goal of Model Predictive Control is to optimize the control inputs: [δ,a], which stand for steer_value and throttle_value, meaning the actuators on angle and speed. 
+
+3. update equations
 
 ![][image3]
 ![][image4]
 ![][image5]
 
-The goal of Model Predictive Control is to optimize the control inputs: [δ,a], which stand for steer_value and throttle_value, meaning the actuators on angle and speed. An optimizer will tune these inputs until a low cost vector of control inputs is found. The length of this vector is determined by N as Number of Timesteps:
+with input predited state at t+1, an optimizer will tune these inputs, until a low cost vector of control inputs is found. 
+
+The cost can be composed of 3 parts:
+
+1)previously the two errors in our state vector: cte and eψ. Ideally, both of these errors would be 0 - there would be no difference from the actual vehicle position and heading to the desired position and heading.
+
+2)how far away our car runs but cannot maintain at reference speed, accelerations and brakes are accumulated into cost.
+
+![][image11]
+![][image12]
+
+3)how smoothly car runs to change angle, delta and delta change frequencies are accumulated
+
+
+Ipopt is the tool we'll be using to optimize the control inputs 
+[δ1,a​1,δ2,a2,...,δN−1,aN−1]. It's able to find locally optimal values (non-linear problem!) while keeping the constraints set directly to the actuators and the constraints defined by the vehicle model. Ipopt requires we give it the jacobians and hessians directly - it does not compute them for us. Hence, we need to either manually compute them or have a library do this for us. Luckily, there is a library called CppAD which does exactly this.
+
+![][image14]
+
+**tuning N and dt**
+
+The length of this output vector is determined by N as Number of Timesteps:
 
 [δ1,a​1,δ2,a2,...,δN−1,aN−1]
-
-
 
 Thus N determines the number of variables optimized by the MPC. This is also the major driver of computational cost.
 
@@ -55,9 +100,14 @@ A good approach to setting N, dt, and T is to first determine a reasonable range
 
 
 
-3. update equations
+
+**polynomial fit to waypoints**
+
+1.Use polyfit to fit a 3rd order polynomial to the given x and y coordinates representing waypoints.
+2.Use polyeval to evaluate y values of given x coordinates.
 
 
+**implement 100ms latency**
 
 
 

@@ -115,7 +115,7 @@ int main() {
           double v = j[1]["speed"];
           std::cout << "main: parsing car with psi and velocity: psi= " << psi << " v= " << v << "\n" << std::endl;
 
-          /* ============  QA ================*/
+
           
           for ( int i = 0; i < ptsx.size(); i++) 
           {
@@ -200,29 +200,6 @@ int main() {
 
           state << latency_x, latency_y, latency_psi, latency_v, latency_cte, latency_epsi;
 
-          /* ============ end  QA ================*/
-
-          /*
-          * TODO: Calculate steering angle and throttle using MPC.
-          *
-          * Both are in between [-1, 1].
-          *
-          */
-#if 0
-          double steer_value;
-          double throttle_value;
-          
-          auto coeffs = polyfit(ptsx, ptsy, 1);
-          double cte = polyeval(coeffs, px) - py;
-          double epsi = psi - atan(coeffs[1]);
-
-          Eigen::VectorXd state(6);
-          state << x, y, psi, v, cte, epsi;
-
-          steer_value = ;
-          
-          throttle_value =  ;
-#endif
 
           auto vars = mpc.Solve(state, coeffs);  
 
@@ -257,7 +234,12 @@ int main() {
           }
 
 
-          
+          /*
+          * TODO: Calculate steering angle and throttle using MPC.
+          *
+          * Both are in between [-1, 1].
+          *
+          */
 
           double solved_steer = -vars[0]/(deg2rad(25) * Lf) ;
           double solved_throttle = vars[1] ;
