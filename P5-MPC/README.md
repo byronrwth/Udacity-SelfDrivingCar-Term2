@@ -3,6 +3,94 @@ Self-Driving Car Engineer Nanodegree Program
 
 ---
 
+**Reflection of Model-Predictive-Control (MPC)**
+
+The goal of this project is to implement Model Predictive Control to drive the car around the track. Need to calculate errors of cte and Orientation Error epsi. Additionally, consider a 100 millisecond latency between actuations commands on top of the connection latency into your implementation.
+
+
+* Implement MPC and visualize both your reference path and the MPC trajectory path during simulations 
+* choose state, inputs, dynamics, constraints for IPOPT to optimize control errors
+* manually tune parameters to let your car run safely and as fast as possible
+
+
+
+[//]: # (Image References)
+
+[image1]: ./images/vehicle_model.PNG
+[image2]: ./images/errors.PNG
+[image3]: ./images/MPC_state.PNG
+[image4]: ./images/IPOPT_Solver.PNG
+[image5]: ./images/Solver_output_actuators.PNG
+[image6]: ./images/cte_epsi.PNG
+
+**MPC model implementation**
+
+1. state discussion
+
+![][image1]
+From Kinematic models which are simplifications of dynamic models that ignore tire forces, gravity, and mass, we can define the motion part of vehicles can be decided by px, py, psi and v.
+
+![][image2]
+![][image6]
+
+However to keep my car always fit into trajactory of predicted path, I also need to consider cte and orientation error epsi.
+
+2. actuators
+
+![][image3]
+![][image4]
+![][image5]
+
+The goal of Model Predictive Control is to optimize the control inputs: [δ,a], which stand for steer_value and throttle_value, meaning the actuators on angle and speed. An optimizer will tune these inputs until a low cost vector of control inputs is found. The length of this vector is determined by N as Number of Timesteps:
+
+[δ1,a​1,δ2,a2,...,δN−1,aN−1]
+
+
+
+Thus N determines the number of variables optimized by the MPC. This is also the major driver of computational cost.
+
+MPC attempts to approximate a continuous reference trajectory by means of discrete paths between actuations. Larger values of dt result in less frequent actuations, which makes it harder to accurately approximate a continuous reference trajectory. This is sometimes called "discretization error".
+
+A good approach to setting N, dt, and T is to first determine a reasonable range for T and then tune dt and N appropriately.
+
+
+
+3. update equations
+
+
+
+
+
+**Steps to manually tune P5 vehicle in simulator**
+
+1, 
+
+run with:    :
+
+[test1]()
+
+
+
+2, :
+
+run with:   :
+
+[test2]()
+
+
+
+3, 
+
+
+
+run with:   :
+
+[test3]()
+
+
+
+---
+
 ## Dependencies
 
 * cmake >= 3.5

@@ -182,11 +182,23 @@ int main() {
 
 
           // no latency, in current car's coordinate, x=y=psi=0
-          state << 0, 0, 0, v, cte, epsi;
+          //state << 0, 0, 0, v, cte, epsi;
+
+          // need to use lantency in case speed = 100
+          double t_latency = 0.1 ;
+          double delta = steer_value ;
+          double a = throttle_value;
+          double Lf = 2.67 ;
 
 
+          double latency_x = v * t_latency ;
+          double latency_y = 0 ;
+          double latency_psi = v /Lf * delta * t_latency ;
+          double latency_v = v + a * t_latency ;
+          double latency_cte = cte + v * sin(epsi) * t_latency ;
+          double latency_epsi = epsi + v * delta * t_latency / Lf ;
 
-
+          state << latency_x, latency_y, latency_psi, latency_v, latency_cte, latency_epsi;
 
           /* ============ end  QA ================*/
 
@@ -245,7 +257,7 @@ int main() {
           }
 
 
-          double Lf = 2.67 ;
+          
 
           double solved_steer = -vars[0]/(deg2rad(25) * Lf) ;
           double solved_throttle = vars[1] ;
