@@ -4,6 +4,66 @@
 		"selected_items":
 		[
 			[
+				"pu",
+				"push_back"
+			],
+			[
+				"ref",
+				"ref_epsi"
+			],
+			[
+				"x_",
+				"x_start"
+			],
+			[
+				"mpc",
+				"mpc_x_vals"
+			],
+			[
+				"next",
+				"next_y_vals"
+			],
+			[
+				"n",
+				"num_points"
+			],
+			[
+				"pl",
+				"poly_inc"
+			],
+			[
+				"ne",
+				"next_y_vals"
+			],
+			[
+				"next_",
+				"next_x_vals"
+			],
+			[
+				"vector",
+				"VectorXd"
+			],
+			[
+				"veco",
+				"vector\tstd::vector"
+			],
+			[
+				"ply",
+				"polyeval"
+			],
+			[
+				"pts",
+				"ptsy_transform"
+			],
+			[
+				"shi",
+				"shift_y"
+			],
+			[
+				"shift_",
+				"shift_x"
+			],
+			[
 				"n_",
 				"n_x_"
 			],
@@ -28,28 +88,31 @@
 	"buffers":
 	[
 		{
-			"file": "Quizzes/mpc_to_line/src/MPC.cpp",
+			"file": "src/main.cpp",
 			"settings":
 			{
-				"buffer_size": 13404,
+				"buffer_size": 11453,
 				"encoding": "UTF-8",
 				"line_ending": "Unix"
 			}
 		},
 		{
-			"file": "Quizzes/mpc_to_line/src/Eigen-3.3/Eigen/src/Core/MatrixBase.h",
+			"file": "src/MPC.cpp",
 			"settings":
 			{
-				"buffer_size": 22339,
-				"line_ending": "Windows"
+				"buffer_size": 11731,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
 			}
 		},
 		{
-			"file": "src/Eigen-3.3/Eigen/src/QR/HouseholderQR.h",
+			"contents": "Searching 1611 files for \"ref_v\" (case sensitive, whole word)\n\nC:\\Users\\uids6815\\Linux\\Udacity\\Udacity-SelfDrivingCar-Term2\\P5-MPC\\src\\MPC.cpp:\n   24  double ref_cte = 0;\n   25  double ref_epsi = 0;\n   26: double ref_v = 100;\n   27  \n   28  size_t x_start = 0;\n   ..\n   63        fg[0] += 2000 * CppAD::pow(vars[epsi_start + t] - ref_epsi, 2);\n   64  \n   65:       fg[0] += CppAD::pow(vars[v_start + t] - ref_v, 2);\n   66  \n   67      }\n\n2 matches in 1 file\n\n\nSearching 1611 files for \"delta\" (case sensitive, whole word)\n\nC:\\Users\\uids6815\\Linux\\Udacity\\Udacity-SelfDrivingCar-Term2\\P5-MPC\\src\\Eigen-3.3\\demos\\mandelbrot\\mandelbrot.cpp:\n  188  void MandelbrotWidget::mouseMoveEvent(QMouseEvent *event)\n  189  {\n  190:   QPoint delta = event->pos() - lastpos;\n  191    lastpos = event->pos();\n  192    if( event->buttons() & Qt::LeftButton )\n  193    {\n  194:     double t = 1 + 5 * double(delta.y()) / height();\n  195      if(t < 0.5) t = 0.5;\n  196      if(t > 2) t = 2;\n\nC:\\Users\\uids6815\\Linux\\Udacity\\Udacity-SelfDrivingCar-Term2\\P5-MPC\\src\\Eigen-3.3\\unsupported\\Eigen\\CXX11\\src\\Tensor\\TensorIntDiv.h:\n  217     unsigned q2 = two31/ad;          // Init. q2 = 2**p/|d|.\n  218     unsigned r2 = two31 - q2*ad;     // Init. r2 = rem(2**p, |d|).\n  219:    unsigned delta = 0;\n  220     do {\n  221        p = p + 1;\n  ...\n  230           q2 = q2 + 1;      // comparison here).\n  231           r2 = r2 - ad;}\n  232:       delta = ad - r2;\n  233:    } while (q1 < delta || (q1 == delta && r1 == 0));\n  234  \n  235     magic = (unsigned)(q2 + 1);\n\nC:\\Users\\uids6815\\Linux\\Udacity\\Udacity-SelfDrivingCar-Term2\\P5-MPC\\src\\Eigen-3.3\\unsupported\\Eigen\\src\\MatrixFunctions\\MatrixFunction.h:\n   83      const RealScalar Fincr_norm = Fincr.cwiseAbs().rowwise().sum().maxCoeff();\n   84      if (Fincr_norm < NumTraits<Scalar>::epsilon() * F_norm) {\n   85:       RealScalar delta = 0;\n   86        RealScalar rfactorial = 1;\n   87        for (Index r = 0; r < rows; r++) {\n   ..\n   91          if (r != 0)\n   92            rfactorial *= RealScalar(r);\n   93:         delta = (std::max)(delta, mx / rfactorial);\n   94        }\n   95        const RealScalar P_norm = P.cwiseAbs().rowwise().sum().maxCoeff();\n   96:       if (mu * delta * P_norm < NumTraits<Scalar>::epsilon() * F_norm) // series converged\n   97          break;\n   98      }\n\nC:\\Users\\uids6815\\Linux\\Udacity\\Udacity-SelfDrivingCar-Term2\\P5-MPC\\src\\Eigen-3.3\\unsupported\\Eigen\\src\\NonLinearOptimization\\dogleg.h:\n    8          const Matrix< Scalar, Dynamic, 1 >  &diag,\n    9          const Matrix< Scalar, Dynamic, 1 >  &qtb,\n   10:         Scalar delta,\n   11          Matrix< Scalar, Dynamic, 1 >  &x)\n   12  {\n   ..\n   46      /* test whether the gauss-newton direction is acceptable. */\n   47      qnorm = diag.cwiseProduct(x).stableNorm();\n   48:     if (qnorm <= delta)\n   49          return;\n   50  \n   ..\n   64      gnorm = wa1.stableNorm();\n   65      sgnorm = 0.;\n   66:     alpha = delta / qnorm;\n   67      if (gnorm == 0.)\n   68          goto algo_end;\n   ..\n   85      /* test whether the scaled gradient direction is acceptable. */\n   86      alpha = 0.;\n   87:     if (sgnorm >= delta)\n   88          goto algo_end;\n   89  \n   ..\n   92      /* at which the quadratic is minimized. */\n   93      bnorm = qtb.stableNorm();\n   94:     temp = bnorm / gnorm * (bnorm / qnorm) * (sgnorm / delta);\n   95:     temp = temp - delta / qnorm * numext::abs2(sgnorm / delta) + sqrt(numext::abs2(temp - delta / qnorm) + (1.-numext::abs2(delta / qnorm)) * (1.-numext::abs2(sgnorm / delta)));\n   96:     alpha = delta / qnorm * (1. - numext::abs2(sgnorm / delta)) / temp;\n   97  algo_end:\n   98  \n   99      /* form appropriate convex combination of the gauss-newton */\n  100      /* direction and the scaled gradient direction. */\n  101:     temp = (1.-alpha) * (std::min)(sgnorm,delta);\n  102      x = temp * wa1 + alpha * x;\n  103  }\n\nC:\\Users\\uids6815\\Linux\\Udacity\\Udacity-SelfDrivingCar-Term2\\P5-MPC\\src\\Eigen-3.3\\unsupported\\Eigen\\src\\NonLinearOptimization\\HybridNonLinearSolver.h:\n  103      bool sing;\n  104      Scalar temp;\n  105:     Scalar delta;\n  106      bool jeval;\n  107      Index ncsuc;\n  ...\n  210  \n  211          /* on the first iteration, calculate the norm of the scaled x */\n  212:         /* and initialize the step bound delta. */\n  213          xnorm = diag.cwiseProduct(x).stableNorm();\n  214:         delta = parameters.factor * xnorm;\n  215:         if (delta == 0.)\n  216:             delta = parameters.factor;\n  217      }\n  218  \n  ...\n  235      while (true) {\n  236          /* determine the direction p. */\n  237:         internal::dogleg<Scalar>(R, diag, qtf, delta, wa1);\n  238  \n  239          /* store the direction p and x + p. calculate the norm of p. */\n  ...\n  244          /* on the first iteration, adjust the initial step bound. */\n  245          if (iter == 1)\n  246:             delta = (std::min)(delta,pnorm);\n  247  \n  248          /* evaluate the function at x + p and calculate its norm. */\n  ...\n  273              ncsuc = 0;\n  274              ++ncfail;\n  275:             delta = Scalar(.5) * delta;\n  276          } else {\n  277              ncfail = 0;\n  278              ++ncsuc;\n  279              if (ratio >= Scalar(.5) || ncsuc > 1)\n  280:                 delta = (std::max)(delta, pnorm / Scalar(.5));\n  281              if (abs(ratio - 1.) <= Scalar(.1)) {\n  282:                 delta = pnorm / Scalar(.5);\n  283              }\n  284          }\n  ...\n  305  \n  306          /* test for convergence. */\n  307:         if (delta <= parameters.xtol * xnorm || fnorm == 0.)\n  308              return HybridNonLinearSolverSpace::RelativeErrorTooSmall;\n  309  \n  ...\n  311          if (nfev >= parameters.maxfev)\n  312              return HybridNonLinearSolverSpace::TooManyFunctionEvaluation;\n  313:         if (Scalar(.1) * (std::max)(Scalar(.1) * delta, pnorm) <= NumTraits<Scalar>::epsilon() * xnorm)\n  314              return HybridNonLinearSolverSpace::TolTooSmall;\n  315          if (nslow2 == 5)\n  ...\n  453  \n  454          /* on the first iteration, calculate the norm of the scaled x */\n  455:         /* and initialize the step bound delta. */\n  456          xnorm = diag.cwiseProduct(x).stableNorm();\n  457:         delta = parameters.factor * xnorm;\n  458:         if (delta == 0.)\n  459:             delta = parameters.factor;\n  460      }\n  461  \n  ...\n  478      while (true) {\n  479          /* determine the direction p. */\n  480:         internal::dogleg<Scalar>(R, diag, qtf, delta, wa1);\n  481  \n  482          /* store the direction p and x + p. calculate the norm of p. */\n  ...\n  487          /* on the first iteration, adjust the initial step bound. */\n  488          if (iter == 1)\n  489:             delta = (std::min)(delta,pnorm);\n  490  \n  491          /* evaluate the function at x + p and calculate its norm. */\n  ...\n  516              ncsuc = 0;\n  517              ++ncfail;\n  518:             delta = Scalar(.5) * delta;\n  519          } else {\n  520              ncfail = 0;\n  521              ++ncsuc;\n  522              if (ratio >= Scalar(.5) || ncsuc > 1)\n  523:                 delta = (std::max)(delta, pnorm / Scalar(.5));\n  524              if (abs(ratio - 1.) <= Scalar(.1)) {\n  525:                 delta = pnorm / Scalar(.5);\n  526              }\n  527          }\n  ...\n  548  \n  549          /* test for convergence. */\n  550:         if (delta <= parameters.xtol * xnorm || fnorm == 0.)\n  551              return HybridNonLinearSolverSpace::RelativeErrorTooSmall;\n  552  \n  ...\n  554          if (nfev >= parameters.maxfev)\n  555              return HybridNonLinearSolverSpace::TooManyFunctionEvaluation;\n  556:         if (Scalar(.1) * (std::max)(Scalar(.1) * delta, pnorm) <= NumTraits<Scalar>::epsilon() * xnorm)\n  557              return HybridNonLinearSolverSpace::TolTooSmall;\n  558          if (nslow2 == 5)\n\nC:\\Users\\uids6815\\Linux\\Udacity\\Udacity-SelfDrivingCar-Term2\\P5-MPC\\src\\Eigen-3.3\\unsupported\\Eigen\\src\\NonLinearOptimization\\LevenbergMarquardt.h:\n  124      Scalar par, sum;\n  125      Scalar temp, temp1, temp2;\n  126:     Scalar delta;\n  127      Scalar ratio;\n  128      Scalar pnorm, xnorm, fnorm1, actred, dirder, prered;\n  ...\n  242  \n  243          /* on the first iteration, calculate the norm of the scaled x */\n  244:         /* and initialize the step bound delta. */\n  245          xnorm = diag.cwiseProduct(x).stableNorm();\n  246:         delta = parameters.factor * xnorm;\n  247:         if (delta == 0.)\n  248:             delta = parameters.factor;\n  249      }\n  250  \n  ...\n  273  \n  274          /* determine the levenberg-marquardt parameter. */\n  275:         internal::lmpar2<Scalar>(qrfac, diag, qtf, delta, par, wa1);\n  276  \n  277          /* store the direction p and x + p. calculate the norm of p. */\n  ...\n  282          /* on the first iteration, adjust the initial step bound. */\n  283          if (iter == 1)\n  284:             delta = (std::min)(delta,pnorm);\n  285  \n  286          /* evaluate the function at x + p and calculate its norm. */\n  ...\n  318                  temp = Scalar(.1);\n  319              /* Computing MIN */\n  320:             delta = temp * (std::min)(delta, pnorm / Scalar(.1));\n  321              par /= temp;\n  322          } else if (!(par != 0. && ratio < Scalar(.75))) {\n  323:             delta = pnorm / Scalar(.5);\n  324              par = Scalar(.5) * par;\n  325          }\n  ...\n  337  \n  338          /* tests for convergence. */\n  339:         if (abs(actred) <= parameters.ftol && prered <= parameters.ftol && Scalar(.5) * ratio <= 1. && delta <= parameters.xtol * xnorm)\n  340              return LevenbergMarquardtSpace::RelativeErrorAndReductionTooSmall;\n  341          if (abs(actred) <= parameters.ftol && prered <= parameters.ftol && Scalar(.5) * ratio <= 1.)\n  342              return LevenbergMarquardtSpace::RelativeReductionTooSmall;\n  343:         if (delta <= parameters.xtol * xnorm)\n  344              return LevenbergMarquardtSpace::RelativeErrorTooSmall;\n  345  \n  ...\n  349          if (abs(actred) <= NumTraits<Scalar>::epsilon() && prered <= NumTraits<Scalar>::epsilon() && Scalar(.5) * ratio <= 1.)\n  350              return LevenbergMarquardtSpace::FtolTooSmall;\n  351:         if (delta <= NumTraits<Scalar>::epsilon() * xnorm)\n  352              return LevenbergMarquardtSpace::XtolTooSmall;\n  353          if (gnorm <= NumTraits<Scalar>::epsilon())\n  ...\n  498  \n  499          /* on the first iteration, calculate the norm of the scaled x */\n  500:         /* and initialize the step bound delta. */\n  501          xnorm = diag.cwiseProduct(x).stableNorm();\n  502:         delta = parameters.factor * xnorm;\n  503:         if (delta == 0.)\n  504:             delta = parameters.factor;\n  505      }\n  506  \n  ...\n  523  \n  524          /* determine the levenberg-marquardt parameter. */\n  525:         internal::lmpar<Scalar>(fjac, permutation.indices(), diag, qtf, delta, par, wa1);\n  526  \n  527          /* store the direction p and x + p. calculate the norm of p. */\n  ...\n  532          /* on the first iteration, adjust the initial step bound. */\n  533          if (iter == 1)\n  534:             delta = (std::min)(delta,pnorm);\n  535  \n  536          /* evaluate the function at x + p and calculate its norm. */\n  ...\n  568                  temp = Scalar(.1);\n  569              /* Computing MIN */\n  570:             delta = temp * (std::min)(delta, pnorm / Scalar(.1));\n  571              par /= temp;\n  572          } else if (!(par != 0. && ratio < Scalar(.75))) {\n  573:             delta = pnorm / Scalar(.5);\n  574              par = Scalar(.5) * par;\n  575          }\n  ...\n  587  \n  588          /* tests for convergence. */\n  589:         if (abs(actred) <= parameters.ftol && prered <= parameters.ftol && Scalar(.5) * ratio <= 1. && delta <= parameters.xtol * xnorm)\n  590              return LevenbergMarquardtSpace::RelativeErrorAndReductionTooSmall;\n  591          if (abs(actred) <= parameters.ftol && prered <= parameters.ftol && Scalar(.5) * ratio <= 1.)\n  592              return LevenbergMarquardtSpace::RelativeReductionTooSmall;\n  593:         if (delta <= parameters.xtol * xnorm)\n  594              return LevenbergMarquardtSpace::RelativeErrorTooSmall;\n  595  \n  ...\n  599          if (abs(actred) <= NumTraits<Scalar>::epsilon() && prered <= NumTraits<Scalar>::epsilon() && Scalar(.5) * ratio <= 1.)\n  600              return LevenbergMarquardtSpace::FtolTooSmall;\n  601:         if (delta <= NumTraits<Scalar>::epsilon() * xnorm)\n  602              return LevenbergMarquardtSpace::XtolTooSmall;\n  603          if (gnorm <= NumTraits<Scalar>::epsilon())\n\nC:\\Users\\uids6815\\Linux\\Udacity\\Udacity-SelfDrivingCar-Term2\\P5-MPC\\src\\Eigen-3.3\\unsupported\\Eigen\\src\\NonLinearOptimization\\lmpar.h:\n    9          const Matrix< Scalar, Dynamic, 1 >  &diag,\n   10          const Matrix< Scalar, Dynamic, 1 >  &qtb,\n   11:         Scalar delta,\n   12          Scalar &par,\n   13          Matrix< Scalar, Dynamic, 1 >  &x)\n   ..\n   62      wa2 = diag.cwiseProduct(x);\n   63      dxnorm = wa2.blueNorm();\n   64:     fp = dxnorm - delta;\n   65:     if (fp <= Scalar(0.1) * delta) {\n   66          par = 0;\n   67          return;\n   ..\n   86          }\n   87          temp = wa1.blueNorm();\n   88:         parl = fp / delta / temp / temp;\n   89      }\n   90  \n   ..\n   94  \n   95      gnorm = wa1.stableNorm();\n   96:     paru = gnorm / delta;\n   97      if (paru == 0.)\n   98:         paru = dwarf / (std::min)(delta,Scalar(0.1));\n   99  \n  100      /* if the input par lies outside of the interval (parl,paru), */\n  ...\n  120          dxnorm = wa2.blueNorm();\n  121          temp = fp;\n  122:         fp = dxnorm - delta;\n  123  \n  124          /* if the function is small enough, accept the current value */\n  125          /* of par. also test for the exceptional cases where parl */\n  126          /* is zero or the number of iterations has reached 10. */\n  127:         if (abs(fp) <= Scalar(0.1) * delta || (parl == 0. && fp <= temp && temp < 0.) || iter == 10)\n  128              break;\n  129  \n  ...\n  140          }\n  141          temp = wa1.blueNorm();\n  142:         parc = fp / delta / temp / temp;\n  143  \n  144          /* depending on the sign of the function, update parl or paru. */\n  ...\n  166          const Matrix< Scalar, Dynamic, 1 >  &diag,\n  167          const Matrix< Scalar, Dynamic, 1 >  &qtb,\n  168:         Scalar delta,\n  169          Scalar &par,\n  170          Matrix< Scalar, Dynamic, 1 >  &x)\n  ...\n  210      wa2 = diag.cwiseProduct(x);\n  211      dxnorm = wa2.blueNorm();\n  212:     fp = dxnorm - delta;\n  213:     if (fp <= Scalar(0.1) * delta) {\n  214          par = 0;\n  215          return;\n  ...\n  224          qr.matrixQR().topLeftCorner(n, n).transpose().template triangularView<Lower>().solveInPlace(wa1);\n  225          temp = wa1.blueNorm();\n  226:         parl = fp / delta / temp / temp;\n  227      }\n  228  \n  ...\n  232  \n  233      gnorm = wa1.stableNorm();\n  234:     paru = gnorm / delta;\n  235      if (paru == 0.)\n  236:         paru = dwarf / (std::min)(delta,Scalar(0.1));\n  237  \n  238      /* if the input par lies outside of the interval (parl,paru), */\n  ...\n  259          dxnorm = wa2.blueNorm();\n  260          temp = fp;\n  261:         fp = dxnorm - delta;\n  262  \n  263          /* if the function is small enough, accept the current value */\n  264          /* of par. also test for the exceptional cases where parl */\n  265          /* is zero or the number of iterations has reached 10. */\n  266:         if (abs(fp) <= Scalar(0.1) * delta || (parl == 0. && fp <= temp && temp < 0.) || iter == 10)\n  267              break;\n  268  \n  ...\n  278          }\n  279          temp = wa1.blueNorm();\n  280:         parc = fp / delta / temp / temp;\n  281  \n  282          /* depending on the sign of the function, update parl or paru. */\n\nC:\\Users\\uids6815\\Linux\\Udacity\\Udacity-SelfDrivingCar-Term2\\P5-MPC\\src\\Eigen-3.3\\unsupported\\test\\cxx11_tensor_sugar.cpp:\n   63    const float beta = 0.21f;\n   64    const float gamma = 0.14f;\n   65:   const float delta = 0.32f;\n   66  \n   67    Tensor<float, 3> R = A.constant(gamma) - A / A.constant(alpha)\n   68:       - B.constant(beta) / B - A.constant(delta);\n   69:   Tensor<float, 3> S = gamma - A / alpha - beta / B - delta;\n   70  \n   71    for (int i = 0; i < 6*7*5; ++i) {\n\nC:\\Users\\uids6815\\Linux\\Udacity\\Udacity-SelfDrivingCar-Term2\\P5-MPC\\src\\main.cpp:\n  176            // x_[t] = x[t-1] + v[t-1] * cos(psi[t-1]) * dt\n  177            // y_[t] = y[t-1] + v[t-1] * sin(psi[t-1]) * dt\n  178:           // psi_[t] = psi[t-1] + v[t-1] / Lf * delta[t-1] * dt\n  179            // v_[t] = v[t-1] + a[t-1] * dt\n  180            // cte[t] = f(x[t-1]) - y[t-1] + v[t-1] * sin(epsi[t-1]) * dt\n  181:           // epsi[t] = psi[t] - psides[t-1] + v[t-1] * delta[t-1] / Lf * dt\n  182  \n  183  \n\nC:\\Users\\uids6815\\Linux\\Udacity\\Udacity-SelfDrivingCar-Term2\\P5-MPC\\src\\MPC.cpp:\n  151        // x_[t] = x[t-1] + v[t-1] * cos(psi[t-1]) * dt\n  152        // y_[t] = y[t-1] + v[t-1] * sin(psi[t-1]) * dt\n  153:       // psi_[t] = psi[t-1] + v[t-1] / Lf * delta[t-1] * dt\n  154        // v_[t] = v[t-1] + a[t-1] * dt\n  155        // cte[t] = f(x[t-1]) - y[t-1] + v[t-1] * sin(epsi[t-1]) * dt\n  156:       // epsi[t] = psi[t] - psides[t-1] + v[t-1] * delta[t-1] / Lf * dt\n  157  \n  158  \n  ...\n  231    }\n  232  \n  233:   // The upper and lower limits of delta are set to -25 and 25\n  234    // degrees (values in radians).\n  235    // NOTE: Feel free to change this to something else.\n\n105 matches across 10 files\n\n\nSearching 1611 files for \"delta\"\n\nC:\\Users\\uids6815\\Linux\\Udacity\\Udacity-SelfDrivingCar-Term2\\P5-MPC\\src\\Eigen-3.3\\bench\\btl\\generic_bench\\utils\\size_log.hh:\n   36    float ls=0.0;\n   37  \n   38:   float delta_ls=(ls_max-ls_min)/(float(nb_point-1));\n   39  \n   40    int size=0;\n   ..\n   42    for (int i=0;i<nb_point;i++){\n   43  \n   44:     ls = ls_min + float(i)*delta_ls ;\n   45      \n   46      size=int(exp(ls)); \n\nC:\\Users\\uids6815\\Linux\\Udacity\\Udacity-SelfDrivingCar-Term2\\P5-MPC\\src\\Eigen-3.3\\demos\\mandelbrot\\mandelbrot.cpp:\n  188  void MandelbrotWidget::mouseMoveEvent(QMouseEvent *event)\n  189  {\n  190:   QPoint delta = event->pos() - lastpos;\n  191    lastpos = event->pos();\n  192    if( event->buttons() & Qt::LeftButton )\n  193    {\n  194:     double t = 1 + 5 * double(delta.y()) / height();\n  195      if(t < 0.5) t = 0.5;\n  196      if(t > 2) t = 2;\n\nC:\\Users\\uids6815\\Linux\\Udacity\\Udacity-SelfDrivingCar-Term2\\P5-MPC\\src\\Eigen-3.3\\doc\\TutorialSparse.dox:\n   84  \\section TutorialSparseExample First example\n   85  \n   86: Before describing each individual class, let's start with the following typical example: solving the Laplace equation \\f$ \\Delta u = 0 \\f$ on a regular 2D grid using a finite difference scheme and Dirichlet boundary conditions.\n   87  Such problem can be mathematically expressed as a linear problem of the form \\f$ Ax=b \\f$ where \\f$ x \\f$ is the vector of \\c m unknowns (in our case, the values of the pixels), \\f$ b \\f$ is the right hand side vector resulting from the boundary conditions, and \\f$ A \\f$ is an \\f$ m \\times m \\f$ matrix containing only a few non-zero elements resulting from the discretization of the Laplacian operator.\n   88  \n\nC:\\Users\\uids6815\\Linux\\Udacity\\Udacity-SelfDrivingCar-Term2\\P5-MPC\\src\\Eigen-3.3\\unsupported\\Eigen\\CXX11\\src\\Tensor\\TensorIntDiv.h:\n  217     unsigned q2 = two31/ad;          // Init. q2 = 2**p/|d|.\n  218     unsigned r2 = two31 - q2*ad;     // Init. r2 = rem(2**p, |d|).\n  219:    unsigned delta = 0;\n  220     do {\n  221        p = p + 1;\n  ...\n  230           q2 = q2 + 1;      // comparison here).\n  231           r2 = r2 - ad;}\n  232:       delta = ad - r2;\n  233:    } while (q1 < delta || (q1 == delta && r1 == 0));\n  234  \n  235     magic = (unsigned)(q2 + 1);\n\nC:\\Users\\uids6815\\Linux\\Udacity\\Udacity-SelfDrivingCar-Term2\\P5-MPC\\src\\Eigen-3.3\\unsupported\\Eigen\\src\\LevenbergMarquardt\\LevenbergMarquardt.h:\n   96  template <typename QRSolver, typename VectorType>\n   97  void lmpar2(const QRSolver &qr, const VectorType  &diag, const VectorType  &qtb,\n   98: \t    typename VectorType::Scalar m_delta, typename VectorType::Scalar &par,\n   99  \t    VectorType  &x);\n  100      }\n  ...\n  264      RealScalar m_epsfcn; //\n  265      Index m_iter; // Number of iterations performed\n  266:     RealScalar m_delta;\n  267      bool m_useExternalScaling;\n  268      PermutationType m_permutation;\n\nC:\\Users\\uids6815\\Linux\\Udacity\\Udacity-SelfDrivingCar-Term2\\P5-MPC\\src\\Eigen-3.3\\unsupported\\Eigen\\src\\LevenbergMarquardt\\LMonestep.h:\n   58  \n   59        /* on the first iteration, calculate the norm of the scaled x */\n   60:       /* and initialize the step bound m_delta. */\n   61        xnorm = m_diag.cwiseProduct(x).stableNorm();\n   62:       m_delta = m_factor * xnorm;\n   63:       if (m_delta == 0.)\n   64:           m_delta = m_factor;\n   65    }\n   66  \n   ..\n   90    do {\n   91      /* determine the levenberg-marquardt parameter. */\n   92:     internal::lmpar2(qrfac, m_diag, m_qtf, m_delta, m_par, m_wa1);\n   93  \n   94      /* store the direction p and x + p. calculate the norm of p. */\n   ..\n   99      /* on the first iteration, adjust the initial step bound. */\n  100      if (m_iter == 1)\n  101:         m_delta = (std::min)(m_delta,pnorm);\n  102  \n  103      /* evaluate the function at x + p and calculate its norm. */\n  ...\n  135              temp = Scalar(.1);\n  136          /* Computing MIN */\n  137:         m_delta = temp * (std::min)(m_delta, pnorm / RealScalar(.1));\n  138          m_par /= temp;\n  139      } else if (!(m_par != 0. && ratio < RealScalar(.75))) {\n  140:         m_delta = pnorm / RealScalar(.5);\n  141          m_par = RealScalar(.5) * m_par;\n  142      }\n  ...\n  154  \n  155      /* tests for convergence. */\n  156:     if (abs(actred) <= m_ftol && prered <= m_ftol && Scalar(.5) * ratio <= 1. && m_delta <= m_xtol * xnorm)\n  157      {\n  158         m_info = Success;\n  ...\n  164        return LevenbergMarquardtSpace::RelativeReductionTooSmall;\n  165      }\n  166:     if (m_delta <= m_xtol * xnorm)\n  167      {\n  168        m_info = Success;\n  ...\n  181        return LevenbergMarquardtSpace::FtolTooSmall;\n  182      }\n  183:     if (m_delta <= NumTraits<Scalar>::epsilon() * xnorm) \n  184      {\n  185        m_info = Success;\n\nC:\\Users\\uids6815\\Linux\\Udacity\\Udacity-SelfDrivingCar-Term2\\P5-MPC\\src\\Eigen-3.3\\unsupported\\Eigen\\src\\LevenbergMarquardt\\LMpar.h:\n   22      const VectorType  &diag,\n   23      const VectorType  &qtb,\n   24:     typename VectorType::Scalar m_delta,\n   25      typename VectorType::Scalar &par,\n   26      VectorType  &x)\n   ..\n   73      wa2 = diag.cwiseProduct(x);\n   74      dxnorm = wa2.blueNorm();\n   75:     fp = dxnorm - m_delta;\n   76:     if (fp <= Scalar(0.1) * m_delta) {\n   77        par = 0;\n   78        return;\n   ..\n   87        s.topLeftCorner(n,n).transpose().template triangularView<Lower>().solveInPlace(wa1);\n   88        temp = wa1.blueNorm();\n   89:       parl = fp / m_delta / temp / temp;\n   90      }\n   91  \n   ..\n   95  \n   96      gnorm = wa1.stableNorm();\n   97:     paru = gnorm / m_delta;\n   98      if (paru == 0.)\n   99:       paru = dwarf / (std::min)(m_delta,Scalar(0.1));\n  100  \n  101      /* if the input par lies outside of the interval (parl,paru), */\n  ...\n  121        dxnorm = wa2.blueNorm();\n  122        temp = fp;\n  123:       fp = dxnorm - m_delta;\n  124  \n  125        /* if the function is small enough, accept the current value */\n  126        /* of par. also test for the exceptional cases where parl */\n  127        /* is zero or the number of iterations has reached 10. */\n  128:       if (abs(fp) <= Scalar(0.1) * m_delta || (parl == 0. && fp <= temp && temp < 0.) || iter == 10)\n  129          break;\n  130  \n  ...\n  139        }\n  140        temp = wa1.blueNorm();\n  141:       parc = fp / m_delta / temp / temp;\n  142  \n  143        /* depending on the sign of the function, update parl or paru. */\n\nC:\\Users\\uids6815\\Linux\\Udacity\\Udacity-SelfDrivingCar-Term2\\P5-MPC\\src\\Eigen-3.3\\unsupported\\Eigen\\src\\MatrixFunctions\\MatrixFunction.h:\n   83      const RealScalar Fincr_norm = Fincr.cwiseAbs().rowwise().sum().maxCoeff();\n   84      if (Fincr_norm < NumTraits<Scalar>::epsilon() * F_norm) {\n   85:       RealScalar delta = 0;\n   86        RealScalar rfactorial = 1;\n   87        for (Index r = 0; r < rows; r++) {\n   ..\n   91          if (r != 0)\n   92            rfactorial *= RealScalar(r);\n   93:         delta = (std::max)(delta, mx / rfactorial);\n   94        }\n   95        const RealScalar P_norm = P.cwiseAbs().rowwise().sum().maxCoeff();\n   96:       if (mu * delta * P_norm < NumTraits<Scalar>::epsilon() * F_norm) // series converged\n   97          break;\n   98      }\n\nC:\\Users\\uids6815\\Linux\\Udacity\\Udacity-SelfDrivingCar-Term2\\P5-MPC\\src\\Eigen-3.3\\unsupported\\Eigen\\src\\NonLinearOptimization\\dogleg.h:\n    8          const Matrix< Scalar, Dynamic, 1 >  &diag,\n    9          const Matrix< Scalar, Dynamic, 1 >  &qtb,\n   10:         Scalar delta,\n   11          Matrix< Scalar, Dynamic, 1 >  &x)\n   12  {\n   ..\n   46      /* test whether the gauss-newton direction is acceptable. */\n   47      qnorm = diag.cwiseProduct(x).stableNorm();\n   48:     if (qnorm <= delta)\n   49          return;\n   50  \n   ..\n   64      gnorm = wa1.stableNorm();\n   65      sgnorm = 0.;\n   66:     alpha = delta / qnorm;\n   67      if (gnorm == 0.)\n   68          goto algo_end;\n   ..\n   85      /* test whether the scaled gradient direction is acceptable. */\n   86      alpha = 0.;\n   87:     if (sgnorm >= delta)\n   88          goto algo_end;\n   89  \n   ..\n   92      /* at which the quadratic is minimized. */\n   93      bnorm = qtb.stableNorm();\n   94:     temp = bnorm / gnorm * (bnorm / qnorm) * (sgnorm / delta);\n   95:     temp = temp - delta / qnorm * numext::abs2(sgnorm / delta) + sqrt(numext::abs2(temp - delta / qnorm) + (1.-numext::abs2(delta / qnorm)) * (1.-numext::abs2(sgnorm / delta)));\n   96:     alpha = delta / qnorm * (1. - numext::abs2(sgnorm / delta)) / temp;\n   97  algo_end:\n   98  \n   99      /* form appropriate convex combination of the gauss-newton */\n  100      /* direction and the scaled gradient direction. */\n  101:     temp = (1.-alpha) * (std::min)(sgnorm,delta);\n  102      x = temp * wa1 + alpha * x;\n  103  }\n\nC:\\Users\\uids6815\\Linux\\Udacity\\Udacity-SelfDrivingCar-Term2\\P5-MPC\\src\\Eigen-3.3\\unsupported\\Eigen\\src\\NonLinearOptimization\\HybridNonLinearSolver.h:\n  103      bool sing;\n  104      Scalar temp;\n  105:     Scalar delta;\n  106      bool jeval;\n  107      Index ncsuc;\n  ...\n  210  \n  211          /* on the first iteration, calculate the norm of the scaled x */\n  212:         /* and initialize the step bound delta. */\n  213          xnorm = diag.cwiseProduct(x).stableNorm();\n  214:         delta = parameters.factor * xnorm;\n  215:         if (delta == 0.)\n  216:             delta = parameters.factor;\n  217      }\n  218  \n  ...\n  235      while (true) {\n  236          /* determine the direction p. */\n  237:         internal::dogleg<Scalar>(R, diag, qtf, delta, wa1);\n  238  \n  239          /* store the direction p and x + p. calculate the norm of p. */\n  ...\n  244          /* on the first iteration, adjust the initial step bound. */\n  245          if (iter == 1)\n  246:             delta = (std::min)(delta,pnorm);\n  247  \n  248          /* evaluate the function at x + p and calculate its norm. */\n  ...\n  273              ncsuc = 0;\n  274              ++ncfail;\n  275:             delta = Scalar(.5) * delta;\n  276          } else {\n  277              ncfail = 0;\n  278              ++ncsuc;\n  279              if (ratio >= Scalar(.5) || ncsuc > 1)\n  280:                 delta = (std::max)(delta, pnorm / Scalar(.5));\n  281              if (abs(ratio - 1.) <= Scalar(.1)) {\n  282:                 delta = pnorm / Scalar(.5);\n  283              }\n  284          }\n  ...\n  305  \n  306          /* test for convergence. */\n  307:         if (delta <= parameters.xtol * xnorm || fnorm == 0.)\n  308              return HybridNonLinearSolverSpace::RelativeErrorTooSmall;\n  309  \n  ...\n  311          if (nfev >= parameters.maxfev)\n  312              return HybridNonLinearSolverSpace::TooManyFunctionEvaluation;\n  313:         if (Scalar(.1) * (std::max)(Scalar(.1) * delta, pnorm) <= NumTraits<Scalar>::epsilon() * xnorm)\n  314              return HybridNonLinearSolverSpace::TolTooSmall;\n  315          if (nslow2 == 5)\n  ...\n  453  \n  454          /* on the first iteration, calculate the norm of the scaled x */\n  455:         /* and initialize the step bound delta. */\n  456          xnorm = diag.cwiseProduct(x).stableNorm();\n  457:         delta = parameters.factor * xnorm;\n  458:         if (delta == 0.)\n  459:             delta = parameters.factor;\n  460      }\n  461  \n  ...\n  478      while (true) {\n  479          /* determine the direction p. */\n  480:         internal::dogleg<Scalar>(R, diag, qtf, delta, wa1);\n  481  \n  482          /* store the direction p and x + p. calculate the norm of p. */\n  ...\n  487          /* on the first iteration, adjust the initial step bound. */\n  488          if (iter == 1)\n  489:             delta = (std::min)(delta,pnorm);\n  490  \n  491          /* evaluate the function at x + p and calculate its norm. */\n  ...\n  516              ncsuc = 0;\n  517              ++ncfail;\n  518:             delta = Scalar(.5) * delta;\n  519          } else {\n  520              ncfail = 0;\n  521              ++ncsuc;\n  522              if (ratio >= Scalar(.5) || ncsuc > 1)\n  523:                 delta = (std::max)(delta, pnorm / Scalar(.5));\n  524              if (abs(ratio - 1.) <= Scalar(.1)) {\n  525:                 delta = pnorm / Scalar(.5);\n  526              }\n  527          }\n  ...\n  548  \n  549          /* test for convergence. */\n  550:         if (delta <= parameters.xtol * xnorm || fnorm == 0.)\n  551              return HybridNonLinearSolverSpace::RelativeErrorTooSmall;\n  552  \n  ...\n  554          if (nfev >= parameters.maxfev)\n  555              return HybridNonLinearSolverSpace::TooManyFunctionEvaluation;\n  556:         if (Scalar(.1) * (std::max)(Scalar(.1) * delta, pnorm) <= NumTraits<Scalar>::epsilon() * xnorm)\n  557              return HybridNonLinearSolverSpace::TolTooSmall;\n  558          if (nslow2 == 5)\n\nC:\\Users\\uids6815\\Linux\\Udacity\\Udacity-SelfDrivingCar-Term2\\P5-MPC\\src\\Eigen-3.3\\unsupported\\Eigen\\src\\NonLinearOptimization\\LevenbergMarquardt.h:\n  124      Scalar par, sum;\n  125      Scalar temp, temp1, temp2;\n  126:     Scalar delta;\n  127      Scalar ratio;\n  128      Scalar pnorm, xnorm, fnorm1, actred, dirder, prered;\n  ...\n  242  \n  243          /* on the first iteration, calculate the norm of the scaled x */\n  244:         /* and initialize the step bound delta. */\n  245          xnorm = diag.cwiseProduct(x).stableNorm();\n  246:         delta = parameters.factor * xnorm;\n  247:         if (delta == 0.)\n  248:             delta = parameters.factor;\n  249      }\n  250  \n  ...\n  273  \n  274          /* determine the levenberg-marquardt parameter. */\n  275:         internal::lmpar2<Scalar>(qrfac, diag, qtf, delta, par, wa1);\n  276  \n  277          /* store the direction p and x + p. calculate the norm of p. */\n  ...\n  282          /* on the first iteration, adjust the initial step bound. */\n  283          if (iter == 1)\n  284:             delta = (std::min)(delta,pnorm);\n  285  \n  286          /* evaluate the function at x + p and calculate its norm. */\n  ...\n  318                  temp = Scalar(.1);\n  319              /* Computing MIN */\n  320:             delta = temp * (std::min)(delta, pnorm / Scalar(.1));\n  321              par /= temp;\n  322          } else if (!(par != 0. && ratio < Scalar(.75))) {\n  323:             delta = pnorm / Scalar(.5);\n  324              par = Scalar(.5) * par;\n  325          }\n  ...\n  337  \n  338          /* tests for convergence. */\n  339:         if (abs(actred) <= parameters.ftol && prered <= parameters.ftol && Scalar(.5) * ratio <= 1. && delta <= parameters.xtol * xnorm)\n  340              return LevenbergMarquardtSpace::RelativeErrorAndReductionTooSmall;\n  341          if (abs(actred) <= parameters.ftol && prered <= parameters.ftol && Scalar(.5) * ratio <= 1.)\n  342              return LevenbergMarquardtSpace::RelativeReductionTooSmall;\n  343:         if (delta <= parameters.xtol * xnorm)\n  344              return LevenbergMarquardtSpace::RelativeErrorTooSmall;\n  345  \n  ...\n  349          if (abs(actred) <= NumTraits<Scalar>::epsilon() && prered <= NumTraits<Scalar>::epsilon() && Scalar(.5) * ratio <= 1.)\n  350              return LevenbergMarquardtSpace::FtolTooSmall;\n  351:         if (delta <= NumTraits<Scalar>::epsilon() * xnorm)\n  352              return LevenbergMarquardtSpace::XtolTooSmall;\n  353          if (gnorm <= NumTraits<Scalar>::epsilon())\n  ...\n  498  \n  499          /* on the first iteration, calculate the norm of the scaled x */\n  500:         /* and initialize the step bound delta. */\n  501          xnorm = diag.cwiseProduct(x).stableNorm();\n  502:         delta = parameters.factor * xnorm;\n  503:         if (delta == 0.)\n  504:             delta = parameters.factor;\n  505      }\n  506  \n  ...\n  523  \n  524          /* determine the levenberg-marquardt parameter. */\n  525:         internal::lmpar<Scalar>(fjac, permutation.indices(), diag, qtf, delta, par, wa1);\n  526  \n  527          /* store the direction p and x + p. calculate the norm of p. */\n  ...\n  532          /* on the first iteration, adjust the initial step bound. */\n  533          if (iter == 1)\n  534:             delta = (std::min)(delta,pnorm);\n  535  \n  536          /* evaluate the function at x + p and calculate its norm. */\n  ...\n  568                  temp = Scalar(.1);\n  569              /* Computing MIN */\n  570:             delta = temp * (std::min)(delta, pnorm / Scalar(.1));\n  571              par /= temp;\n  572          } else if (!(par != 0. && ratio < Scalar(.75))) {\n  573:             delta = pnorm / Scalar(.5);\n  574              par = Scalar(.5) * par;\n  575          }\n  ...\n  587  \n  588          /* tests for convergence. */\n  589:         if (abs(actred) <= parameters.ftol && prered <= parameters.ftol && Scalar(.5) * ratio <= 1. && delta <= parameters.xtol * xnorm)\n  590              return LevenbergMarquardtSpace::RelativeErrorAndReductionTooSmall;\n  591          if (abs(actred) <= parameters.ftol && prered <= parameters.ftol && Scalar(.5) * ratio <= 1.)\n  592              return LevenbergMarquardtSpace::RelativeReductionTooSmall;\n  593:         if (delta <= parameters.xtol * xnorm)\n  594              return LevenbergMarquardtSpace::RelativeErrorTooSmall;\n  595  \n  ...\n  599          if (abs(actred) <= NumTraits<Scalar>::epsilon() && prered <= NumTraits<Scalar>::epsilon() && Scalar(.5) * ratio <= 1.)\n  600              return LevenbergMarquardtSpace::FtolTooSmall;\n  601:         if (delta <= NumTraits<Scalar>::epsilon() * xnorm)\n  602              return LevenbergMarquardtSpace::XtolTooSmall;\n  603          if (gnorm <= NumTraits<Scalar>::epsilon())\n\nC:\\Users\\uids6815\\Linux\\Udacity\\Udacity-SelfDrivingCar-Term2\\P5-MPC\\src\\Eigen-3.3\\unsupported\\Eigen\\src\\NonLinearOptimization\\lmpar.h:\n    9          const Matrix< Scalar, Dynamic, 1 >  &diag,\n   10          const Matrix< Scalar, Dynamic, 1 >  &qtb,\n   11:         Scalar delta,\n   12          Scalar &par,\n   13          Matrix< Scalar, Dynamic, 1 >  &x)\n   ..\n   62      wa2 = diag.cwiseProduct(x);\n   63      dxnorm = wa2.blueNorm();\n   64:     fp = dxnorm - delta;\n   65:     if (fp <= Scalar(0.1) * delta) {\n   66          par = 0;\n   67          return;\n   ..\n   86          }\n   87          temp = wa1.blueNorm();\n   88:         parl = fp / delta / temp / temp;\n   89      }\n   90  \n   ..\n   94  \n   95      gnorm = wa1.stableNorm();\n   96:     paru = gnorm / delta;\n   97      if (paru == 0.)\n   98:         paru = dwarf / (std::min)(delta,Scalar(0.1));\n   99  \n  100      /* if the input par lies outside of the interval (parl,paru), */\n  ...\n  120          dxnorm = wa2.blueNorm();\n  121          temp = fp;\n  122:         fp = dxnorm - delta;\n  123  \n  124          /* if the function is small enough, accept the current value */\n  125          /* of par. also test for the exceptional cases where parl */\n  126          /* is zero or the number of iterations has reached 10. */\n  127:         if (abs(fp) <= Scalar(0.1) * delta || (parl == 0. && fp <= temp && temp < 0.) || iter == 10)\n  128              break;\n  129  \n  ...\n  140          }\n  141          temp = wa1.blueNorm();\n  142:         parc = fp / delta / temp / temp;\n  143  \n  144          /* depending on the sign of the function, update parl or paru. */\n  ...\n  166          const Matrix< Scalar, Dynamic, 1 >  &diag,\n  167          const Matrix< Scalar, Dynamic, 1 >  &qtb,\n  168:         Scalar delta,\n  169          Scalar &par,\n  170          Matrix< Scalar, Dynamic, 1 >  &x)\n  ...\n  210      wa2 = diag.cwiseProduct(x);\n  211      dxnorm = wa2.blueNorm();\n  212:     fp = dxnorm - delta;\n  213:     if (fp <= Scalar(0.1) * delta) {\n  214          par = 0;\n  215          return;\n  ...\n  224          qr.matrixQR().topLeftCorner(n, n).transpose().template triangularView<Lower>().solveInPlace(wa1);\n  225          temp = wa1.blueNorm();\n  226:         parl = fp / delta / temp / temp;\n  227      }\n  228  \n  ...\n  232  \n  233      gnorm = wa1.stableNorm();\n  234:     paru = gnorm / delta;\n  235      if (paru == 0.)\n  236:         paru = dwarf / (std::min)(delta,Scalar(0.1));\n  237  \n  238      /* if the input par lies outside of the interval (parl,paru), */\n  ...\n  259          dxnorm = wa2.blueNorm();\n  260          temp = fp;\n  261:         fp = dxnorm - delta;\n  262  \n  263          /* if the function is small enough, accept the current value */\n  264          /* of par. also test for the exceptional cases where parl */\n  265          /* is zero or the number of iterations has reached 10. */\n  266:         if (abs(fp) <= Scalar(0.1) * delta || (parl == 0. && fp <= temp && temp < 0.) || iter == 10)\n  267              break;\n  268  \n  ...\n  278          }\n  279          temp = wa1.blueNorm();\n  280:         parc = fp / delta / temp / temp;\n  281  \n  282          /* depending on the sign of the function, update parl or paru. */\n\nC:\\Users\\uids6815\\Linux\\Udacity\\Udacity-SelfDrivingCar-Term2\\P5-MPC\\src\\Eigen-3.3\\unsupported\\test\\cxx11_tensor_sugar.cpp:\n   63    const float beta = 0.21f;\n   64    const float gamma = 0.14f;\n   65:   const float delta = 0.32f;\n   66  \n   67    Tensor<float, 3> R = A.constant(gamma) - A / A.constant(alpha)\n   68:       - B.constant(beta) / B - A.constant(delta);\n   69:   Tensor<float, 3> S = gamma - A / alpha - beta / B - delta;\n   70  \n   71    for (int i = 0; i < 6*7*5; ++i) {\n\nC:\\Users\\uids6815\\Linux\\Udacity\\Udacity-SelfDrivingCar-Term2\\P5-MPC\\src\\main.cpp:\n  176            // x_[t] = x[t-1] + v[t-1] * cos(psi[t-1]) * dt\n  177            // y_[t] = y[t-1] + v[t-1] * sin(psi[t-1]) * dt\n  178:           // psi_[t] = psi[t-1] + v[t-1] / Lf * delta[t-1] * dt\n  179            // v_[t] = v[t-1] + a[t-1] * dt\n  180            // cte[t] = f(x[t-1]) - y[t-1] + v[t-1] * sin(epsi[t-1]) * dt\n  181:           // epsi[t] = psi[t] - psides[t-1] + v[t-1] * delta[t-1] / Lf * dt\n  182  \n  183  \n\nC:\\Users\\uids6815\\Linux\\Udacity\\Udacity-SelfDrivingCar-Term2\\P5-MPC\\src\\MPC.cpp:\n   32  size_t cte_start = v_start + N;\n   33  size_t epsi_start = cte_start + N;\n   34: size_t delta_start = epsi_start + N;\n   35: size_t a_start = delta_start + N - 1 ;\n   36  \n   37  class FG_eval {\n   ..\n   73      // Minimize the use of actuators.\n   74      for (int t = 0; t < N - 1; t++) {\n   75:       //fg[0] += CppAD::pow(vars[delta_start + t], 2);\n   76:       fg[0] += 5 * CppAD::pow(vars[delta_start + t], 2);\n   77:       //fg[0] += 50 * CppAD::pow(vars[delta_start + t], 2);\n   78  \n   79        //fg[0] += CppAD::pow(vars[a_start + t], 2);\n   ..\n   84      // Minimize the value gap between sequential actuations.\n   85      for (int t = 0; t < N - 2; t++) {\n   86:       //fg[0] += CppAD::pow(vars[delta_start + t + 1] - vars[delta_start + t], 2);\n   87:       //fg[0] += 200 * CppAD::pow(vars[delta_start + t + 1] - vars[delta_start + t], 2);\n   88:       fg[0] += 20 * CppAD::pow(vars[delta_start + t + 1] - vars[delta_start + t], 2);\n   89  \n   90        fg[0] += CppAD::pow(vars[a_start + t + 1] - vars[a_start + t], 2);\n   ..\n  131  \n  132        // Only consider the actuation at time t.\n  133:       AD<double> delta0 = vars[delta_start + t - 1];\n  134        AD<double> a0 = vars[a_start + t - 1];\n  135  \n  ...\n  151        // x_[t] = x[t-1] + v[t-1] * cos(psi[t-1]) * dt\n  152        // y_[t] = y[t-1] + v[t-1] * sin(psi[t-1]) * dt\n  153:       // psi_[t] = psi[t-1] + v[t-1] / Lf * delta[t-1] * dt\n  154        // v_[t] = v[t-1] + a[t-1] * dt\n  155        // cte[t] = f(x[t-1]) - y[t-1] + v[t-1] * sin(epsi[t-1]) * dt\n  156:       // epsi[t] = psi[t] - psides[t-1] + v[t-1] * delta[t-1] / Lf * dt\n  157  \n  158  \n  ...\n  161        fg[1 + x_start + t] = x1 - (x0 + v0 * CppAD::cos(psi0) * dt);\n  162        fg[1 + y_start + t] = y1 - (y0 + v0 * CppAD::sin(psi0) * dt);\n  163:       fg[1 + psi_start + t] = psi1 - (psi0 + v0 * delta0 / Lf * dt);\n  164        fg[1 + v_start + t] = v1 - (v0 + a0 * dt);\n  165        fg[1 + cte_start + t] = cte1 - ((f0 - y0) + (v0 * CppAD::sin(epsi0) * dt));\n  166:       fg[1 + epsi_start + t] = epsi1 - ((psi0 - psides0) + v0 * delta0 / Lf * dt);\n  167      }\n  168  \n  ...\n  226    // to the max negative and positive values.\n  227    // We DO NOT care too much here !\n  228:   for (int i = 0; i < delta_start; i++) {\n  229      vars_lowerbound[i] = -1.0e19;\n  230      vars_upperbound[i] = 1.0e19;\n  231    }\n  232  \n  233:   // The upper and lower limits of delta are set to -25 and 25\n  234    // degrees (values in radians).\n  235    // NOTE: Feel free to change this to something else.\n  236:   for (int i = delta_start; i < a_start; i++) {\n  237      vars_lowerbound[i] =  -0.436332 * Lf ;  //-1.0 ; //-0.436332; // 25'\n  238      vars_upperbound[i] =  0.436332 * Lf ; //1.0; //0.436332;  // -25'\n  ...\n  316            solution.x[psi_start + 1], solution.x[v_start + 1],\n  317            solution.x[cte_start + 1], solution.x[epsi_start + 1],\n  318:           solution.x[delta_start],   solution.x[a_start]};\n  319  #endif\n  320  \n  321    vector<double> result;\n  322  \n  323:   result.push_back(solution.x[delta_start]);\n  324    result.push_back(solution.x[a_start]);\n  325  \n\n151 matches across 15 files\n",
 			"settings":
 			{
-				"buffer_size": 14022,
-				"line_ending": "Windows"
+				"buffer_size": 42649,
+				"line_ending": "Unix",
+				"name": "Find Results",
+				"scratch": true
 			}
 		}
 	],
@@ -118,16 +181,26 @@
 	"expanded_folders":
 	[
 		"/C/Users/uids6815/Linux/Udacity/Udacity-SelfDrivingCar-Term2/P5-MPC",
-		"/C/Users/uids6815/Linux/Udacity/Udacity-SelfDrivingCar-Term2/P5-MPC/Quizzes",
-		"/C/Users/uids6815/Linux/Udacity/Udacity-SelfDrivingCar-Term2/P5-MPC/Quizzes/mpc_to_line",
-		"/C/Users/uids6815/Linux/Udacity/Udacity-SelfDrivingCar-Term2/P5-MPC/Quizzes/mpc_to_line/solution",
-		"/C/Users/uids6815/Linux/Udacity/Udacity-SelfDrivingCar-Term2/P5-MPC/Quizzes/mpc_to_line/src",
+		"/C/Users/uids6815/Linux/Udacity/Udacity-SelfDrivingCar-Term2/P5-MPC/lesson",
+		"/C/Users/uids6815/Linux/Udacity/Udacity-SelfDrivingCar-Term2/P5-MPC/lesson/18.5_global_kinematic_model",
+		"/C/Users/uids6815/Linux/Udacity/Udacity-SelfDrivingCar-Term2/P5-MPC/lesson/18.7_polynomials",
 		"/C/Users/uids6815/Linux/Udacity/Udacity-SelfDrivingCar-Term2/P5-MPC/src"
 	],
 	"file_history":
 	[
-		"/C/Users/uids6815/Linux/Udacity/Udacity-SelfDrivingCar-Term2/P5-MPC/Quizzes/mpc_to_line/solution/MPC.cpp",
+		"/C/Users/uids6815/Linux/Udacity/Udacity-SelfDrivingCar-Term2/P5-MPC/DATA.md",
 		"/C/Users/uids6815/Linux/Udacity/Udacity-SelfDrivingCar-Term2/P5-MPC/src/main.cpp",
+		"/C/Users/uids6815/Linux/Udacity/Udacity-SelfDrivingCar-Term2/P5-MPC/Quizzes/global_kinematic_model/src/Eigen-3.3/Eigen/src/IterativeLinearSolvers/BasicPreconditioners.h",
+		"/C/Users/uids6815/Linux/Udacity/Udacity-SelfDrivingCar-Term2/P5-MPC/Quizzes/global_kinematic_model/src/Eigen-3.3/Eigen/src/Cholesky/LDLT.h",
+		"/C/Users/uids6815/Linux/Udacity/Udacity-SelfDrivingCar-Term2/P5-MPC/src/MPC.cpp",
+		"/C/Users/uids6815/Linux/Udacity/Udacity-SelfDrivingCar-Term2/P5-MPC/Quizzes/mpc_to_line/src/MPC.cpp",
+		"/C/Users/uids6815/Linux/Udacity/Udacity-SelfDrivingCar-Term2/P5-MPC/Quizzes/global_kinematic_model/src/main.cpp",
+		"/C/Users/uids6815/Linux/Udacity/Udacity-SelfDrivingCar-Term2/P5-MPC/Quizzes/mpc_to_line/src/Eigen-3.3/Eigen/src/Core/MatrixBase.h",
+		"/C/Users/uids6815/Linux/Udacity/Udacity-SelfDrivingCar-Term2/P5-MPC/src/Eigen-3.3/Eigen/src/QR/HouseholderQR.h",
+		"/C/Users/uids6815/Linux/Udacity/Udacity-SelfDrivingCar-Term2/P5-MPC/Quizzes/global_kinematic_model/solution/main.cpp",
+		"/C/Users/uids6815/Linux/Udacity/Udacity-SelfDrivingCar-Term2/P5-MPC/lesson/18.5_global_kinematic_model/globalKinematic.cpp",
+		"/C/Users/uids6815/Linux/Udacity/Udacity-SelfDrivingCar-Term2/P5-MPC/lesson/18.7_polynomials/Polyfit.cpp",
+		"/C/Users/uids6815/Linux/Udacity/Udacity-SelfDrivingCar-Term2/P5-MPC/Quizzes/mpc_to_line/solution/MPC.cpp",
 		"/C/Users/uids6815/Linux/Udacity/Udacity-SelfDrivingCar-Term2/P5-MPC/src/MPC.h",
 		"/C/Users/uids6815/Linux/Udacity/Udacity-SelfDrivingCar-Term2/P5-MPC/Quizzes/CarND-MPC-Quizzes/mpc_to_line/src/matplotlibcpp.h",
 		"/C/Users/uids6815/Linux/Udacity/Udacity-SelfDrivingCar-Term2/P5-MPC/Quizzes/CarND-MPC-Quizzes/mpc_to_line/src/MPC.cpp",
@@ -221,6 +294,10 @@
 		"height": 133.0,
 		"where_history":
 		[
+			"C:\\Users\\uids6815\\Linux\\Udacity\\Udacity-SelfDrivingCar-Term2\\P5-MPC\\src,",
+			"C:\\Users\\uids6815\\Linux\\Udacity\\Udacity-SelfDrivingCar-Term2\\P5-MPC\\src,-C:\\Users\\uids6815\\Linux\\Udacity\\Udacity-SelfDrivingCar-Term2\\P5-MPC\\src\\Eigen-3.3",
+			"C:\\Users\\uids6815\\Linux\\Udacity\\Udacity-SelfDrivingCar-Term2\\P5-MPC\\src,-C:\\Users\\uids6815\\Linux\\Udacity\\Udacity-SelfDrivingCar-Term2\\P5-MPC\\src\\Eigen-3.3\\",
+			"C:\\Users\\uids6815\\Linux\\Udacity\\Udacity-SelfDrivingCar-Term2\\P5-MPC\\src",
 			"C:\\Users\\uids6815\\Linux\\Udacity\\Udacity-SelfDrivingCar-Term2\\P5-MPC",
 			"C:\\Users\\uids6815\\Linux\\Udacity\\P4-PID-Control\\src",
 			"C:\\Users\\uids6815\\Crackcode\\Conti\\Redvine",
@@ -249,6 +326,15 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"steer_value",
+			"delta",
+			"ref_v",
+			"rev_v",
+			"v",
+			"dt",
+			"Solve",
+			"ptsx_transform",
+			"steer",
 			"cost",
 			"x_vals",
 			"Solve",
@@ -367,16 +453,7 @@
 			"gpu",
 			"FLAGS",
 			"sess",
-			"main",
-			"tf.summary",
-			"with tf.Session",
-			"tf.summary",
-			"tf.get_variable",
-			"summary_dir",
-			"summaries_dir",
-			"SummaryWriter",
-			"GraphDef",
-			"logdir"
+			"main"
 		],
 		"highlight": true,
 		"in_selection": false,
@@ -397,16 +474,16 @@
 	"groups":
 	[
 		{
-			"selected": 0,
+			"selected": 1,
 			"sheets":
 			[
 				{
 					"buffer": 0,
-					"file": "Quizzes/mpc_to_line/src/MPC.cpp",
+					"file": "src/main.cpp",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 13404,
+						"buffer_size": 11453,
 						"regions":
 						{
 							"bookmarks":
@@ -416,12 +493,12 @@
 								"regions":
 								[
 									[
-										4200,
-										4200
+										6943,
+										6943
 									],
 									[
-										11463,
-										11463
+										8562,
+										8562
 									]
 								],
 								"scope": "bookmarks"
@@ -430,117 +507,8 @@
 						"selection":
 						[
 							[
-								8527,
-								8527
-							]
-						],
-						"settings":
-						{
-							"bracket_highlighter.busy": false,
-							"bracket_highlighter.locations":
-							{
-								"close":
-								{
-								},
-								"icon":
-								{
-								},
-								"open":
-								{
-								},
-								"unmatched":
-								{
-									"1":
-									[
-										8929,
-										8930
-									]
-								}
-							},
-							"bracket_highlighter.regions":
-							[
-								"bh_c_define",
-								"bh_c_define_center",
-								"bh_c_define_open",
-								"bh_c_define_close",
-								"bh_c_define_content",
-								"bh_square",
-								"bh_square_center",
-								"bh_square_open",
-								"bh_square_close",
-								"bh_square_content",
-								"bh_regex",
-								"bh_regex_center",
-								"bh_regex_open",
-								"bh_regex_close",
-								"bh_regex_content",
-								"bh_unmatched",
-								"bh_unmatched_center",
-								"bh_unmatched_open",
-								"bh_unmatched_close",
-								"bh_unmatched_content",
-								"bh_round",
-								"bh_round_center",
-								"bh_round_open",
-								"bh_round_close",
-								"bh_round_content",
-								"bh_default",
-								"bh_default_center",
-								"bh_default_open",
-								"bh_default_close",
-								"bh_default_content",
-								"bh_tag",
-								"bh_tag_center",
-								"bh_tag_open",
-								"bh_tag_close",
-								"bh_tag_content",
-								"bh_single_quote",
-								"bh_single_quote_center",
-								"bh_single_quote_open",
-								"bh_single_quote_close",
-								"bh_single_quote_content",
-								"bh_angle",
-								"bh_angle_center",
-								"bh_angle_open",
-								"bh_angle_close",
-								"bh_angle_content",
-								"bh_curly",
-								"bh_curly_center",
-								"bh_curly_open",
-								"bh_curly_close",
-								"bh_curly_content",
-								"bh_double_quote",
-								"bh_double_quote_center",
-								"bh_double_quote_open",
-								"bh_double_quote_close",
-								"bh_double_quote_content"
-							],
-							"syntax": "Packages/C++/C++.sublime-syntax",
-							"tab_size": 2,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 3948.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 0,
-					"type": "text"
-				},
-				{
-					"buffer": 1,
-					"file": "Quizzes/mpc_to_line/src/Eigen-3.3/Eigen/src/Core/MatrixBase.h",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 22339,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								15248,
-								15248
+								6932,
+								6932
 							]
 						],
 						"settings":
@@ -568,36 +536,11 @@
 								"bh_c_define_open",
 								"bh_c_define_close",
 								"bh_c_define_content",
-								"bh_square",
-								"bh_square_center",
-								"bh_square_open",
-								"bh_square_close",
-								"bh_square_content",
-								"bh_regex",
-								"bh_regex_center",
-								"bh_regex_open",
-								"bh_regex_close",
-								"bh_regex_content",
 								"bh_unmatched",
 								"bh_unmatched_center",
 								"bh_unmatched_open",
 								"bh_unmatched_close",
 								"bh_unmatched_content",
-								"bh_round",
-								"bh_round_center",
-								"bh_round_open",
-								"bh_round_close",
-								"bh_round_content",
-								"bh_default",
-								"bh_default_center",
-								"bh_default_open",
-								"bh_default_close",
-								"bh_default_content",
-								"bh_tag",
-								"bh_tag_center",
-								"bh_tag_open",
-								"bh_tag_close",
-								"bh_tag_content",
 								"bh_single_quote",
 								"bh_single_quote_center",
 								"bh_single_quote_open",
@@ -608,43 +551,68 @@
 								"bh_angle_open",
 								"bh_angle_close",
 								"bh_angle_content",
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_square_content",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_round_content",
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_double_quote_content",
 								"bh_curly",
 								"bh_curly_center",
 								"bh_curly_open",
 								"bh_curly_close",
 								"bh_curly_content",
-								"bh_double_quote",
-								"bh_double_quote_center",
-								"bh_double_quote_open",
-								"bh_double_quote_close",
-								"bh_double_quote_content"
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_default_content",
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_regex_content",
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close",
+								"bh_tag_content"
 							],
 							"syntax": "Packages/C++/C++.sublime-syntax",
 							"tab_size": 2,
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 7517.0,
+						"translation.y": 2572.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 1,
 					"type": "text"
 				},
 				{
-					"buffer": 2,
-					"file": "src/Eigen-3.3/Eigen/src/QR/HouseholderQR.h",
+					"buffer": 1,
+					"file": "src/MPC.cpp",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 14022,
+						"buffer_size": 11731,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								1593,
-								1593
+								2796,
+								2796
 							]
 						],
 						"settings":
@@ -654,20 +622,30 @@
 							{
 								"close":
 								{
+									"1":
+									[
+										3196,
+										3197
+									]
 								},
 								"icon":
 								{
+									"1":
+									[
+										"Packages/BracketHighlighter/icons/curly_bracket.png",
+										"brackethighlighter.default"
+									]
 								},
 								"open":
 								{
+									"1":
+									[
+										2795,
+										2796
+									]
 								},
 								"unmatched":
 								{
-									"1":
-									[
-										522,
-										523
-									]
 								}
 							},
 							"bracket_highlighter.regions":
@@ -677,36 +655,11 @@
 								"bh_c_define_open",
 								"bh_c_define_close",
 								"bh_c_define_content",
-								"bh_square",
-								"bh_square_center",
-								"bh_square_open",
-								"bh_square_close",
-								"bh_square_content",
-								"bh_regex",
-								"bh_regex_center",
-								"bh_regex_open",
-								"bh_regex_close",
-								"bh_regex_content",
 								"bh_unmatched",
 								"bh_unmatched_center",
 								"bh_unmatched_open",
 								"bh_unmatched_close",
 								"bh_unmatched_content",
-								"bh_round",
-								"bh_round_center",
-								"bh_round_open",
-								"bh_round_close",
-								"bh_round_content",
-								"bh_default",
-								"bh_default_center",
-								"bh_default_open",
-								"bh_default_close",
-								"bh_default_content",
-								"bh_tag",
-								"bh_tag_center",
-								"bh_tag_open",
-								"bh_tag_close",
-								"bh_tag_content",
 								"bh_single_quote",
 								"bh_single_quote_center",
 								"bh_single_quote_open",
@@ -717,23 +670,1213 @@
 								"bh_angle_open",
 								"bh_angle_close",
 								"bh_angle_content",
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_square_content",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_round_content",
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_double_quote_content",
 								"bh_curly",
 								"bh_curly_center",
 								"bh_curly_open",
 								"bh_curly_close",
 								"bh_curly_content",
-								"bh_double_quote",
-								"bh_double_quote_center",
-								"bh_double_quote_open",
-								"bh_double_quote_close",
-								"bh_double_quote_content"
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_default_content",
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_regex_content",
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close",
+								"bh_tag_content"
 							],
 							"syntax": "Packages/C++/C++.sublime-syntax",
 							"tab_size": 2,
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 169.0,
+						"translation.y": 1183.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 42649,
+						"regions":
+						{
+							"match":
+							{
+								"flags": 112,
+								"regions":
+								[
+									[
+										213,
+										218
+									],
+									[
+										405,
+										410
+									],
+									[
+										728,
+										733
+									],
+									[
+										890,
+										895
+									],
+									[
+										1266,
+										1271
+									],
+									[
+										1421,
+										1426
+									],
+									[
+										1462,
+										1467
+									],
+									[
+										1478,
+										1483
+									],
+									[
+										1862,
+										1867
+									],
+									[
+										2055,
+										2060
+									],
+									[
+										2074,
+										2079
+									],
+									[
+										2216,
+										2221
+									],
+									[
+										2601,
+										2606
+									],
+									[
+										2822,
+										2827
+									],
+									[
+										2946,
+										2951
+									],
+									[
+										3148,
+										3153
+									],
+									[
+										3352,
+										3357
+									],
+									[
+										3385,
+										3390
+									],
+									[
+										3423,
+										3428
+									],
+									[
+										3457,
+										3462
+									],
+									[
+										3491,
+										3496
+									],
+									[
+										3535,
+										3540
+									],
+									[
+										3564,
+										3569
+									],
+									[
+										3608,
+										3613
+									],
+									[
+										3833,
+										3838
+									],
+									[
+										4105,
+										4110
+									],
+									[
+										4301,
+										4306
+									],
+									[
+										4384,
+										4389
+									],
+									[
+										4438,
+										4443
+									],
+									[
+										4470,
+										4475
+									],
+									[
+										4652,
+										4657
+									],
+									[
+										4883,
+										4888
+									],
+									[
+										4902,
+										4907
+									],
+									[
+										5084,
+										5089
+									],
+									[
+										5105,
+										5110
+									],
+									[
+										5275,
+										5280
+									],
+									[
+										5294,
+										5299
+									],
+									[
+										5401,
+										5406
+									],
+									[
+										5543,
+										5548
+									],
+									[
+										5866,
+										5871
+									],
+									[
+										6162,
+										6167
+									],
+									[
+										6245,
+										6250
+									],
+									[
+										6299,
+										6304
+									],
+									[
+										6331,
+										6336
+									],
+									[
+										6513,
+										6518
+									],
+									[
+										6744,
+										6749
+									],
+									[
+										6763,
+										6768
+									],
+									[
+										6945,
+										6950
+									],
+									[
+										6966,
+										6971
+									],
+									[
+										7136,
+										7141
+									],
+									[
+										7155,
+										7160
+									],
+									[
+										7262,
+										7267
+									],
+									[
+										7404,
+										7409
+									],
+									[
+										7727,
+										7732
+									],
+									[
+										8114,
+										8119
+									],
+									[
+										8352,
+										8357
+									],
+									[
+										8435,
+										8440
+									],
+									[
+										8489,
+										8494
+									],
+									[
+										8521,
+										8526
+									],
+									[
+										8707,
+										8712
+									],
+									[
+										8943,
+										8948
+									],
+									[
+										8962,
+										8967
+									],
+									[
+										9166,
+										9171
+									],
+									[
+										9192,
+										9197
+									],
+									[
+										9336,
+										9341
+									],
+									[
+										9592,
+										9597
+									],
+									[
+										9917,
+										9922
+									],
+									[
+										10257,
+										10262
+									],
+									[
+										10569,
+										10574
+									],
+									[
+										10652,
+										10657
+									],
+									[
+										10706,
+										10711
+									],
+									[
+										10738,
+										10743
+									],
+									[
+										10945,
+										10950
+									],
+									[
+										11181,
+										11186
+									],
+									[
+										11200,
+										11205
+									],
+									[
+										11404,
+										11409
+									],
+									[
+										11430,
+										11435
+									],
+									[
+										11574,
+										11579
+									],
+									[
+										11830,
+										11835
+									],
+									[
+										12155,
+										12160
+									],
+									[
+										12495,
+										12500
+									],
+									[
+										12938,
+										12943
+									],
+									[
+										13128,
+										13133
+									],
+									[
+										13170,
+										13175
+									],
+									[
+										13314,
+										13319
+									],
+									[
+										13433,
+										13438
+									],
+									[
+										13508,
+										13513
+									],
+									[
+										13713,
+										13718
+									],
+									[
+										14000,
+										14005
+									],
+									[
+										14186,
+										14191
+									],
+									[
+										14439,
+										14444
+									],
+									[
+										14629,
+										14634
+									],
+									[
+										14671,
+										14676
+									],
+									[
+										14911,
+										14916
+									],
+									[
+										15030,
+										15035
+									],
+									[
+										15105,
+										15110
+									],
+									[
+										15310,
+										15315
+									],
+									[
+										15597,
+										15602
+									],
+									[
+										15783,
+										15788
+									],
+									[
+										16109,
+										16114
+									],
+									[
+										16253,
+										16258
+									],
+									[
+										16322,
+										16327
+									],
+									[
+										16648,
+										16653
+									],
+									[
+										16854,
+										16859
+									],
+									[
+										17146,
+										17151
+									],
+									[
+										17340,
+										17345
+									],
+									[
+										17444,
+										17449
+									],
+									[
+										17811,
+										17816
+									],
+									[
+										17973,
+										17978
+									],
+									[
+										18233,
+										18238
+									],
+									[
+										18395,
+										18400
+									],
+									[
+										18775,
+										18780
+									],
+									[
+										19593,
+										19598
+									],
+									[
+										19748,
+										19753
+									],
+									[
+										19789,
+										19794
+									],
+									[
+										19805,
+										19810
+									],
+									[
+										20204,
+										20209
+									],
+									[
+										20411,
+										20416
+									],
+									[
+										20769,
+										20774
+									],
+									[
+										20852,
+										20857
+									],
+									[
+										20897,
+										20902
+									],
+									[
+										20929,
+										20934
+									],
+									[
+										21100,
+										21105
+									],
+									[
+										21328,
+										21333
+									],
+									[
+										21349,
+										21354
+									],
+									[
+										21539,
+										21544
+									],
+									[
+										21567,
+										21572
+									],
+									[
+										21713,
+										21718
+									],
+									[
+										21949,
+										21954
+									],
+									[
+										22127,
+										22132
+									],
+									[
+										22291,
+										22296
+									],
+									[
+										22628,
+										22633
+									],
+									[
+										22815,
+										22820
+									],
+									[
+										22859,
+										22864
+									],
+									[
+										23078,
+										23083
+									],
+									[
+										23199,
+										23204
+									],
+									[
+										23274,
+										23279
+									],
+									[
+										23475,
+										23480
+									],
+									[
+										23756,
+										23761
+									],
+									[
+										23934,
+										23939
+									],
+									[
+										24360,
+										24365
+									],
+									[
+										24553,
+										24558
+									],
+									[
+										24572,
+										24577
+									],
+									[
+										24714,
+										24719
+									],
+									[
+										25099,
+										25104
+									],
+									[
+										25320,
+										25325
+									],
+									[
+										25444,
+										25449
+									],
+									[
+										25646,
+										25651
+									],
+									[
+										25850,
+										25855
+									],
+									[
+										25883,
+										25888
+									],
+									[
+										25921,
+										25926
+									],
+									[
+										25955,
+										25960
+									],
+									[
+										25989,
+										25994
+									],
+									[
+										26033,
+										26038
+									],
+									[
+										26062,
+										26067
+									],
+									[
+										26106,
+										26111
+									],
+									[
+										26331,
+										26336
+									],
+									[
+										26603,
+										26608
+									],
+									[
+										26799,
+										26804
+									],
+									[
+										26882,
+										26887
+									],
+									[
+										26936,
+										26941
+									],
+									[
+										26968,
+										26973
+									],
+									[
+										27150,
+										27155
+									],
+									[
+										27381,
+										27386
+									],
+									[
+										27400,
+										27405
+									],
+									[
+										27582,
+										27587
+									],
+									[
+										27603,
+										27608
+									],
+									[
+										27773,
+										27778
+									],
+									[
+										27792,
+										27797
+									],
+									[
+										27899,
+										27904
+									],
+									[
+										28041,
+										28046
+									],
+									[
+										28364,
+										28369
+									],
+									[
+										28660,
+										28665
+									],
+									[
+										28743,
+										28748
+									],
+									[
+										28797,
+										28802
+									],
+									[
+										28829,
+										28834
+									],
+									[
+										29011,
+										29016
+									],
+									[
+										29242,
+										29247
+									],
+									[
+										29261,
+										29266
+									],
+									[
+										29443,
+										29448
+									],
+									[
+										29464,
+										29469
+									],
+									[
+										29634,
+										29639
+									],
+									[
+										29653,
+										29658
+									],
+									[
+										29760,
+										29765
+									],
+									[
+										29902,
+										29907
+									],
+									[
+										30225,
+										30230
+									],
+									[
+										30612,
+										30617
+									],
+									[
+										30850,
+										30855
+									],
+									[
+										30933,
+										30938
+									],
+									[
+										30987,
+										30992
+									],
+									[
+										31019,
+										31024
+									],
+									[
+										31205,
+										31210
+									],
+									[
+										31441,
+										31446
+									],
+									[
+										31460,
+										31465
+									],
+									[
+										31664,
+										31669
+									],
+									[
+										31690,
+										31695
+									],
+									[
+										31834,
+										31839
+									],
+									[
+										32090,
+										32095
+									],
+									[
+										32415,
+										32420
+									],
+									[
+										32755,
+										32760
+									],
+									[
+										33067,
+										33072
+									],
+									[
+										33150,
+										33155
+									],
+									[
+										33204,
+										33209
+									],
+									[
+										33236,
+										33241
+									],
+									[
+										33443,
+										33448
+									],
+									[
+										33679,
+										33684
+									],
+									[
+										33698,
+										33703
+									],
+									[
+										33902,
+										33907
+									],
+									[
+										33928,
+										33933
+									],
+									[
+										34072,
+										34077
+									],
+									[
+										34328,
+										34333
+									],
+									[
+										34653,
+										34658
+									],
+									[
+										34993,
+										34998
+									],
+									[
+										35436,
+										35441
+									],
+									[
+										35626,
+										35631
+									],
+									[
+										35668,
+										35673
+									],
+									[
+										35812,
+										35817
+									],
+									[
+										35931,
+										35936
+									],
+									[
+										36006,
+										36011
+									],
+									[
+										36211,
+										36216
+									],
+									[
+										36498,
+										36503
+									],
+									[
+										36684,
+										36689
+									],
+									[
+										36937,
+										36942
+									],
+									[
+										37127,
+										37132
+									],
+									[
+										37169,
+										37174
+									],
+									[
+										37409,
+										37414
+									],
+									[
+										37528,
+										37533
+									],
+									[
+										37603,
+										37608
+									],
+									[
+										37808,
+										37813
+									],
+									[
+										38095,
+										38100
+									],
+									[
+										38281,
+										38286
+									],
+									[
+										38607,
+										38612
+									],
+									[
+										38751,
+										38756
+									],
+									[
+										38820,
+										38825
+									],
+									[
+										39146,
+										39151
+									],
+									[
+										39352,
+										39357
+									],
+									[
+										39566,
+										39571
+									],
+									[
+										39620,
+										39625
+									],
+									[
+										39809,
+										39814
+									],
+									[
+										39873,
+										39878
+									],
+									[
+										39940,
+										39945
+									],
+									[
+										40187,
+										40192
+									],
+									[
+										40215,
+										40220
+									],
+									[
+										40283,
+										40288
+									],
+									[
+										40311,
+										40316
+									],
+									[
+										40376,
+										40381
+									],
+									[
+										40404,
+										40409
+									],
+									[
+										40607,
+										40612
+									],
+									[
+										40621,
+										40626
+									],
+									[
+										40882,
+										40887
+									],
+									[
+										41076,
+										41081
+									],
+									[
+										41326,
+										41331
+									],
+									[
+										41561,
+										41566
+									],
+									[
+										41732,
+										41737
+									],
+									[
+										41894,
+										41899
+									],
+									[
+										42047,
+										42052
+									],
+									[
+										42412,
+										42417
+									],
+									[
+										42549,
+										42554
+									]
+								],
+								"scope": ""
+							}
+						},
+						"selection":
+						[
+							[
+								41328,
+								41328
+							]
+						],
+						"settings":
+						{
+							"bracket_highlighter.busy": false,
+							"bracket_highlighter.locations":
+							{
+								"close":
+								{
+									"1":
+									[
+										41342,
+										41343
+									]
+								},
+								"icon":
+								{
+									"1":
+									[
+										"Packages/BracketHighlighter/icons/round_bracket.png",
+										"brackethighlighter.default"
+									]
+								},
+								"open":
+								{
+									"1":
+									[
+										41313,
+										41314
+									]
+								},
+								"unmatched":
+								{
+								}
+							},
+							"bracket_highlighter.regions":
+							[
+								"bh_c_define",
+								"bh_c_define_center",
+								"bh_c_define_open",
+								"bh_c_define_close",
+								"bh_c_define_content",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_unmatched_content",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close",
+								"bh_single_quote_content",
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_angle_content",
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_square_content",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_round_content",
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_double_quote_content",
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_curly_content",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_default_content",
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_regex_content",
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close",
+								"bh_tag_content"
+							],
+							"default_dir": "C:\\Users\\uids6815\\Linux\\Udacity\\Udacity-SelfDrivingCar-Term2\\P5-MPC",
+							"detect_indentation": false,
+							"line_numbers": false,
+							"output_tag": 3,
+							"result_base_dir": "",
+							"result_file_regex": "^([^ \t].*):$",
+							"result_line_regex": "^ +([0-9]+):",
+							"scroll_past_end": true,
+							"syntax": "Packages/Default/Find Results.hidden-tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 20340.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 2,
@@ -744,7 +1887,7 @@
 	],
 	"incremental_find":
 	{
-		"height": 30.0
+		"height": 28.0
 	},
 	"input":
 	{
@@ -793,7 +1936,7 @@
 	"project": "P5.sublime-project",
 	"replace":
 	{
-		"height": 56.0
+		"height": 52.0
 	},
 	"save_all_on_build": true,
 	"select_file":
@@ -831,7 +1974,7 @@
 	"show_open_files": false,
 	"show_tabs": true,
 	"side_bar_visible": true,
-	"side_bar_width": 375.0,
+	"side_bar_width": 280.0,
 	"status_bar_visible": true,
 	"template_settings":
 	{
