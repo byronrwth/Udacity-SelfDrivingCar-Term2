@@ -39,7 +39,7 @@ double polyeval(Eigen::VectorXd coeffs, double x) {
     result += coeffs[i] * pow(x, i);
   }
 
-  std::cout << "main: polyeval: result: " << result << std::endl;
+  //std::cout << "main: polyeval: result: " << result << std::endl;
 
 
   return result;
@@ -66,7 +66,7 @@ Eigen::VectorXd polyfit(Eigen::VectorXd xvals, Eigen::VectorXd yvals,
 
   auto Q = A.householderQr();
   auto result = Q.solve(yvals);
-  std::cout << "main: polyfit: result: " << result << std::endl;
+  //std::cout << "main: polyfit: result: " << result << std::endl;
 
 
   return result;
@@ -84,7 +84,8 @@ int main() {
     // The 4 signifies a websocket message
     // The 2 signifies a websocket event
     string sdata = string(data).substr(0, length);
-    cout << sdata << endl;
+    //cout << sdata << endl;
+    
     if (sdata.size() > 2 && sdata[0] == '4' && sdata[1] == '2') {
       string s = hasData(sdata);
       if (s != "") {
@@ -94,26 +95,28 @@ int main() {
           // j[1] is the data JSON object
           vector<double> ptsx = j[1]["ptsx"];
 
+          /*
           std::cout << "main: parsing waypoints: ptsx: " << std::endl;
           for (auto i = ptsx.begin(); i != ptsx.end(); ++i)
               std::cout << *i << ' ';
           std::cout << " \n " << std::endl;
-
+          */
           vector<double> ptsy = j[1]["ptsy"];
 
+          /*
           std::cout << "main: parsing waypoints: ptsy: " << std::endl;
           for (auto i = ptsy.begin(); i != ptsy.end(); ++i)
               std::cout << *i << ' ';
           std::cout << " \n " << std::endl;
-
+          */
           double px = j[1]["x"];
           double py = j[1]["y"];
-          std::cout << "main: parsing car at: px= " << px << " py= " << py << "\n" << std::endl;
+          //std::cout << "main: parsing car at: px= " << px << " py= " << py << "\n" << std::endl;
 
 
           double psi = j[1]["psi"];
           double v = j[1]["speed"];
-          std::cout << "main: parsing car with psi and velocity: psi= " << psi << " v= " << v << "\n" << std::endl;
+          //std::cout << "main: parsing car with psi and velocity: psi= " << psi << " v= " << v << "\n" << std::endl;
 
 
           
@@ -125,7 +128,8 @@ int main() {
 
               ptsx[i] = ( shift_x * cos( 0 - psi) - shift_y * sin( 0 - psi)) ;
               ptsy[i] = ( shift_x * sin( 0 - psi) + shift_y * cos( 0 - psi)) ;
-          } 
+          }
+          /* 
           std::cout << "main: ======= re-coordinate ======================= \n " << std::endl;
 
           std::cout << "main: car-coordinated waypoints: ptsx: " << std::endl;
@@ -137,38 +141,38 @@ int main() {
           for (auto i = ptsy.begin(); i != ptsy.end(); ++i)
               std::cout << *i << ' ';
           std::cout << " \n " << std::endl;
-
+          */
 
           double* ptrx = &ptsx[0];
           Eigen::Map<Eigen::VectorXd> ptsx_transform(ptrx, 6);
-          std::cout << "main: ptsx_transform: " << ptsx_transform << std::endl;
+          //std::cout << "main: ptsx_transform: " << ptsx_transform << std::endl;
 
           double* ptry = &ptsy[0];
           Eigen::Map<Eigen::VectorXd> ptsy_transform(ptry, 6);
-          std::cout << "main: ptsy_transform: " << ptsy_transform << std::endl;
+          //std::cout << "main: ptsy_transform: " << ptsy_transform << std::endl;
 
 
           auto coeffs = polyfit(ptsx_transform, ptsy_transform, 3);
-          std::cout << "main: coeffs: " << coeffs << std::endl;
+          //std::cout << "main: coeffs: " << coeffs << std::endl;
 
           //calculate cte and epsi
           double cte = polyeval(coeffs, 0); // in car's coordiante, x = y= 0
-          std::cout << "main: cte: " << cte << std::endl;
+          std::cout << "main: t=0: cte: " << cte << std::endl;
           //double cte = polyeval(coeffs, x) - y;
           //std::cout << "main: cte: " << cte << " , x: " << x << " ,coeffs: " << coeffs << " ,y: " << y << std::endl;
 
           // init at psi == 0, px, py==0 ?
           //double epsi = psi - atan(coeffs[1] + 2 * px * coeffs[2] + 3 * coeffs[3] * pow(px, 2))
           double epsi = -atan(coeffs[1]);
-          std::cout << "main: epsi = -atan(" << coeffs[1]<< "): " << epsi << std::endl;
+          std::cout << "main: t=0: epsi = -atan(" << coeffs[1]<< "): " << epsi << std::endl;
 
 
 
           double steer_value = j[1]["steering_angle"]; 
-          std::cout << "main: steer_value: " << steer_value << std::endl;
+          std::cout << "main: t=0: delta: " << steer_value << std::endl;
 
           double throttle_value = j[1]["throttle"];
-          std::cout << "main: throttle_value: " << throttle_value << std::endl;
+          std::cout << "main: t=0: a: " << throttle_value << std::endl;
 
           Eigen::VectorXd state(6);
 
@@ -200,24 +204,10 @@ int main() {
 
           state << latency_x, latency_y, latency_psi, latency_v, latency_cte, latency_epsi;
 
-
+          // use IPOPT Solve to optimize minimize cost, and generated predicted control inputs [] and car's trajectory []
           auto vars = mpc.Solve(state, coeffs);  
-
           
-          //Display the waypoints/reference line
-          vector<double> next_x_vals;  // ? std::vector<double> v;
-          vector<double> next_y_vals;
-
-          double poly_inc = 2.5;
-          int num_points = 25;
-
-          for ( int i =1; i < num_points; i++)
-          {
-              next_x_vals.push_back(poly_inc * i) ;
-              next_y_vals.push_back(polyeval(coeffs, poly_inc * i)) ;
-          }
-          
-          //Display the MPC predicted trajectory 
+          //Display the MPC predicted trajectory in green
           vector<double> mpc_x_vals;
           vector<double> mpc_y_vals;
 
@@ -232,6 +222,22 @@ int main() {
                   mpc_y_vals.push_back(vars[i]);
               }
           }
+
+          
+          //Display the waypoints/reference line in yellow, this only uses coeffs and nothing to do with Ipopt
+          vector<double> next_x_vals;  // ? std::vector<double> v;
+          vector<double> next_y_vals;
+
+          double poly_inc = 2.5;
+          int num_points = 25;
+
+          for ( int i =1; i < num_points; i++)
+          {
+              next_x_vals.push_back(poly_inc * i) ;
+              next_y_vals.push_back(polyeval(coeffs, poly_inc * i)) ;
+          }
+          
+
 
 
           /*

@@ -6,8 +6,8 @@
 using CppAD::AD;
 
 // TODO: Set the timestep length and duration
-size_t N = 10 ; //25;
-double dt = 0.15; // to larger than latency=0.1 ; //0.05;
+size_t N = 10; //10 ; //25;
+double dt = 0.2; //0.1; // to larger than latency=0.1 ; //0.05;
 
 // This value assumes the model presented in the classroom is used.
 //
@@ -23,22 +23,23 @@ const double Lf = 2.67;
 
 double ref_cte = 0;
 double ref_epsi = 0;
-double ref_v = 40; //100;
+double ref_v = 60; //100;
 
-size_t x_start = 0;
-size_t y_start = x_start + N;
-size_t psi_start = y_start + N;
-size_t v_start = psi_start + N;
-size_t cte_start = v_start + N;
-size_t epsi_start = cte_start + N;
-size_t delta_start = epsi_start + N;
-size_t a_start = delta_start + N - 1 ;
+size_t x_start = 0; // e.g. 0..9
+size_t y_start = x_start + N; // e.g. 10..19
+size_t psi_start = y_start + N;  // 20..29
+size_t v_start = psi_start + N;   //30..39
+size_t cte_start = v_start + N;   //40..49
+size_t epsi_start = cte_start + N;  //50..59
+size_t delta_start = epsi_start + N;  //60..69
+size_t a_start = delta_start + N - 1 ; //   70..78
 
 class FG_eval {
  public:
   // Fitted polynomial coefficients
   Eigen::VectorXd coeffs;
   FG_eval(Eigen::VectorXd coeffs) { this->coeffs = coeffs; }
+
 
   typedef CPPAD_TESTVECTOR(AD<double>) ADvector;
   void operator()(ADvector& fg, const ADvector& vars) {
@@ -59,8 +60,8 @@ class FG_eval {
       //fg[0] += CppAD::pow(vars[cte_start + t], 2);
       //fg[0] += 10 * CppAD::pow(vars[cte_start + t], 2);
       //fg[0] += 2000 * CppAD::pow(vars[cte_start + t] - ref_cte, 2);
-      fg[0] += 500 * CppAD::pow(vars[cte_start + t] - ref_cte, 2);
-      //fg[0] += 50 * CppAD::pow(vars[cte_start + t] - ref_cte, 2);
+      //fg[0] += 500 * CppAD::pow(vars[cte_start + t] - ref_cte, 2);
+      fg[0] += 50 * CppAD::pow(vars[cte_start + t] - ref_cte, 2);
       //fg[0] += 100 * CppAD::pow(vars[cte_start + t] - ref_cte, 2);
 
 
@@ -273,6 +274,7 @@ vector<double> MPC::Solve(Eigen::VectorXd state, Eigen::VectorXd coeffs) {
   constraints_upperbound[cte_start] = cte;
   constraints_upperbound[epsi_start] = epsi;
 
+  //std::cout << "MPC::Solve : before starts solve, vars: " << vars << " \n " << std::endl;
 
   // object that computes objective and constraints
   FG_eval fg_eval(coeffs);
@@ -308,7 +310,11 @@ vector<double> MPC::Solve(Eigen::VectorXd state, Eigen::VectorXd coeffs) {
 
   // Cost
   auto cost = solution.obj_value;
-  std::cout << "Cost " << cost << std::endl;
+  std::cout << "MPC::Solve : Cost " << cost << std::endl;
+
+  //std::cout << "MPC::Solve : solution.x has size " << solution.x.size() << " \n " << std::endl;
+  //std::cout << "MPC::Solve : solution.x= " << solution.x << " \n " << std::endl;
+
 
   // TODO: Return the first actuator values. The variables can be accessed with
   // `solution.x[i]`.
@@ -327,11 +333,15 @@ vector<double> MPC::Solve(Eigen::VectorXd state, Eigen::VectorXd coeffs) {
 
   result.push_back(solution.x[delta_start]);
   result.push_back(solution.x[a_start]);
+  //std::cout << "MPC::Solve : generate delta: " << solution.x[delta_start] << " \n " << std::endl;
+  //std::cout << "MPC::Solve : generate a: " << solution.x[a_start] << " \n " << std::endl;
 
   for ( int i = 0; i < N -1; i++)
   {
       result.push_back(solution.x[x_start + i + 1]) ;
+      //std::cout << "MPC::Solve : generate x position: " << solution.x[x_start + i + 1] << " \n " << std::endl;
       result.push_back(solution.x[y_start + i + 1]) ;
+      //std::cout << "MPC::Solve : generate x position: " << solution.x[y_start + i + 1] << " \n " << std::endl;
   }
 
   return result;

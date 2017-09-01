@@ -30,6 +30,7 @@ The goal of this project is to implement Model Predictive Control to drive the c
 [image12]: ./images/smooth_delta_difference.PNG
 [image13]: ./images/route_timestep.PNG
 [image14]: ./images/Ipopt_vars.PNG
+[image15]: ./images/Cost.PNG
 
 **MPC model implementation**
 
@@ -85,10 +86,63 @@ The cost can be composed of 3 parts:
 ![][image12]
 
 
+**polynomial fit to waypoints**
+
+auto coeffs = polyfit(ptsx, ptsy, 1);
+From simulator messages we can get ptsx, ptsy vectors which are waypoints of the route, so we can:
+
+1.Use polyfit to fit a 3rd order polynomial to the given x and y coordinates representing waypoints.
+2.Use polyeval to evaluate y values of given x coordinates, which is the cte error value.
+
+double cte = polyeval(coeffs, x) - y;
+
+Recall orientation error is calculated as follows eψ=ψ−ψdes, where ψdes is can be calculated as arctan(f′(x)).
+
+if coeffs has only 1 order, hence the solution double epsi = psi - atan(coeffs[1]);
+else if we use 3 order, i.e. f(x) = coeffs[0] + coeffs[1] * x + coeffs[2] * x * x + coeffs[3] * x * x * x,
+then epsi = psi(t==t0) - atan( 3 * coeffs[3] * x0 * x0 + 2 * coeffs[2] * x0 + coeffs[1] ), refer to x0=x(t==t0).
+
+
+
+**implement 100ms latency**
+
+In real world if our model only calculate the error with respect to the present state, but the actuation will be performed when the vehicle is in a future (and likely different) state. This can sometimes lead to instability. For example the time elapsed between when you command a steering angle to when that angle is actually achieved. This could easily be modeled by a simple dynamic system and incorporated into the vehicle model. One approach would be running a simulation using the vehicle model starting from the current state for the duration of the latency. The resulting state from the simulation is the new initial state for MPC.
+Thus, MPC can deal with latency much more effectively.
+
+Let's take t_latency = 0.1, and recall the equations for the model:
+
+x_[t] = x[t-1] + v[t-1] * cos(psi[t-1]) * dt
+y_[t] = y[t-1] + v[t-1] * sin(psi[t-1]) * dt
+psi_[t] = psi[t-1] + v[t-1] / Lf * delta[t-1] * dt
+v_[t] = v[t-1] + a[t-1] * dt
+cte[t] = f(x[t-1]) - y[t-1] + v[t-1] * sin(epsi[t-1]) * dt
+epsi[t] = psi[t] - psides[t-1] + v[t-1] * delta[t-1] / Lf * dt
+
+
+we can get 
+
+double latency_x = v * t_latency ;
+double latency_y = 0 ;
+double latency_psi = v /Lf * delta * t_latency ;
+double latency_v = v + a * t_latency ;
+double latency_cte = cte + v * sin(epsi) * t_latency ;
+double latency_epsi = epsi + v * delta * t_latency / Lf ;
+
+initial state = [ latency_x, latency_y, latency_psi, latency_v, latency_cte, latency_epsi ]
+
+
+**Non-linear optimizer Ipopt**
+
 Ipopt is the tool we'll be using to optimize the control inputs 
 [δ1,a​1,δ2,a2,...,δN−1,aN−1]. It's able to find locally optimal values (non-linear problem!) while keeping the constraints set directly to the actuators and the constraints defined by the vehicle model. Ipopt requires we give it the jacobians and hessians directly - it does not compute them for us. Hence, we need to either manually compute them or have a library do this for us. Luckily, there is a library called CppAD which does exactly this.
 
+input Ipopt Solver with the initial state [x,y,psi,v,cte,epsi] of N timesteps plus actuators[delta,a] of N-1 timesteps long will all be stored into vars vector.
+
 ![][image14]
+
+and Ipopt will use CPPAD library and above predition equations to fill up all complete N timesteps states and N-1 actuators and make derivative calculations to get minimum Cost.
+
+We only use the generated contron signals [delta,a] at t=0 current time and feedback to car, instead of feedback all N timesteps controls from t=0 ~ t=N-1.
 
 
 **tuning N and dt**
@@ -104,21 +158,27 @@ MPC attempts to approximate a continuous reference trajectory by means of discre
 A good approach to setting N, dt, and T is to first determine a reasonable range for T and then tune dt and N appropriately.
 
 
+test with N=3, car runs out of right edge of track immediately; => if N too small, means no enough prediction for car to forsee how to adjust its controls to keep on track;
+
+test with N=25, car starts to oscilate and swing distance longer and longer and finally run out of track; => if N too large,  it brings unnecessary long-term optimization calculations for Ipopt but actually car only needs predictions for current timestep;
+
+so N=10 works well. 
+
+test with dt= 0.05, car starts to oscilate more and more drastically, same as the situation when N is too large => too many unnecessary calculations;
+
+test with dt= 0.2, N=10,  at speed 40, the car runs well with latency = 0.1s:
+
+[test1](https://youtu.be/Ff11WI4nHdc)
 
 
-**polynomial fit to waypoints**
 
-1.Use polyfit to fit a 3rd order polynomial to the given x and y coordinates representing waypoints.
-2.Use polyeval to evaluate y values of given x coordinates.
+**Steps to manually tune P5 MPC vehicle for high speed**
 
+1, Now let's raise our reference speed to higher, and accordingly we may need to tune the ratio of each part in cost function:
 
-**implement 100ms latency**
-
+![][image15]
 
 
-**Steps to manually tune P5 vehicle in simulator**
-
-1, 
 
 run with:    :
 
