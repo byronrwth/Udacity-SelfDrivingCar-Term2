@@ -61,11 +61,13 @@ However above tire model has limitations, if vehicle/tire is acting outside this
 
 The goal of Model Predictive Control is to optimize the control inputs: [δ,a], which stand for steer_value and throttle_value, meaning the actuators on angle and speed. 
 
+
 3. update equations
 
 ![][image3]
 ![][image4]
 ![][image5]
+
 
 with input predited state at t+1, an optimizer will tune these inputs, until a low cost vector of control inputs is found. 
 
@@ -73,18 +75,21 @@ The cost can be composed of 3 parts:
 
 1)previously the two errors in our state vector: cte and eψ. Ideally, both of these errors would be 0 - there would be no difference from the actual vehicle position and heading to the desired position and heading.
 
+
 2)how far away our car runs but cannot maintain at reference speed, accelerations and brakes are accumulated into cost.
+
+
+3)how smoothly car runs to change angle, delta and delta change frequencies are accumulated
 
 ![][image11]
 ![][image12]
-
-3)how smoothly car runs to change angle, delta and delta change frequencies are accumulated
 
 
 Ipopt is the tool we'll be using to optimize the control inputs 
 [δ1,a​1,δ2,a2,...,δN−1,aN−1]. It's able to find locally optimal values (non-linear problem!) while keeping the constraints set directly to the actuators and the constraints defined by the vehicle model. Ipopt requires we give it the jacobians and hessians directly - it does not compute them for us. Hence, we need to either manually compute them or have a library do this for us. Luckily, there is a library called CppAD which does exactly this.
 
 ![][image14]
+
 
 **tuning N and dt**
 
