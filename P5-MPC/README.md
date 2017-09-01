@@ -168,39 +168,37 @@ test with dt= 0.05, car starts to oscilate more and more drastically, same as th
 
 test with dt= 0.2, N=10,  at speed 40, the car runs well with latency = 0.1s:
 
-[test1](https://youtu.be/Ff11WI4nHdc)
+[speed=40](https://youtu.be/Ff11WI4nHdc)
 
 
 
 **Steps to manually tune P5 MPC vehicle for high speed**
 
-1, Now let's raise our reference speed to higher, and accordingly we may need to tune the ratio of each part in cost function:
+Now let's raise our reference speed to higher, and accordingly we may need to tune the ratio of each part in cost function:
 
 ![][image15]
 
 
+1, if my car is away from middle of track or waypoints in yellow line, then I need to increase weight of cost cte to let it run closer to yellow waypoints:
 
-run with:    :
+fg[0] += 2000 * CppAD::pow(vars[cte_start + t] - ref_cte, 2);
 
-[test1]()
-
-
-
-2, :
-
-run with:   :
-
-[test2]()
+[speed=60](https://youtu.be/Z77cqOF7eww)
 
 
 
-3, 
+2, If your car oscillates then you may need to reduce the weight for cost of epsi;
+
+fg[0] += 2000 * CppAD::pow(vars[epsi_start + t] - ref_epsi, 2);
+
+
+3, If your car makes sharp turns then you may need to increase the weight for cost of delta1 - delta0:
+
+fg[0] += 200 * CppAD::pow(vars[delta_start + t + 1] - vars[delta_start + t], 2);
 
 
 
-run with:   :
-
-[test3]()
+[speed=100](https://youtu.be/KtQPOd1XQ3g)
 
 
 

@@ -23,7 +23,7 @@ const double Lf = 2.67;
 
 double ref_cte = 0;
 double ref_epsi = 0;
-double ref_v = 60; //100;
+double ref_v = 100; //60; //40; //60; //100;
 
 size_t x_start = 0; // e.g. 0..9
 size_t y_start = x_start + N; // e.g. 10..19
@@ -59,16 +59,20 @@ class FG_eval {
     for (int t = 0; t < N; t++) {
       //fg[0] += CppAD::pow(vars[cte_start + t], 2);
       //fg[0] += 10 * CppAD::pow(vars[cte_start + t], 2);
-      //fg[0] += 2000 * CppAD::pow(vars[cte_start + t] - ref_cte, 2);
+      fg[0] += 2000 * CppAD::pow(vars[cte_start + t] - ref_cte, 2);
+      //fg[0] += 4000 * CppAD::pow(vars[cte_start + t] - ref_cte, 2);
       //fg[0] += 500 * CppAD::pow(vars[cte_start + t] - ref_cte, 2);
-      fg[0] += 50 * CppAD::pow(vars[cte_start + t] - ref_cte, 2);
+      //fg[0] += 50 * CppAD::pow(vars[cte_start + t] - ref_cte, 2);
       //fg[0] += 100 * CppAD::pow(vars[cte_start + t] - ref_cte, 2);
+      //fg[0] += 1000 * CppAD::pow(vars[cte_start + t] - ref_cte, 2);
 
 
       //fg[0] += CppAD::pow(vars[epsi_start + t], 2);
-      //fg[0] += 2000 * CppAD::pow(vars[epsi_start + t] - ref_epsi, 2);
+      fg[0] += 2000 * CppAD::pow(vars[epsi_start + t] - ref_epsi, 2);
       //fg[0] += 50 * CppAD::pow(vars[epsi_start + t] - ref_epsi, 2);
-      fg[0] += 500 * CppAD::pow(vars[epsi_start + t] - ref_epsi, 2);
+      //fg[0] += 20 * CppAD::pow(vars[epsi_start + t] - ref_epsi, 2);
+      //fg[0] += 500 * CppAD::pow(vars[epsi_start + t] - ref_epsi, 2);
+      //fg[0] += 1000 * CppAD::pow(vars[epsi_start + t] - ref_epsi, 2);
       //fg[0] += 1000 * CppAD::pow(vars[epsi_start + t] - ref_epsi, 2);
 
       fg[0] += CppAD::pow(vars[v_start + t] - ref_v, 2);
@@ -81,6 +85,7 @@ class FG_eval {
       fg[0] += 5 * CppAD::pow(vars[delta_start + t], 2);
       //fg[0] += 50 * CppAD::pow(vars[delta_start + t], 2);
       //fg[0] += 500 * CppAD::pow(vars[delta_start + t], 2);
+      //fg[0] += 1000 * CppAD::pow(vars[delta_start + t], 2);
 
       //fg[0] += CppAD::pow(vars[a_start + t], 2);
       fg[0] += 5 * CppAD::pow(vars[a_start + t], 2);
@@ -89,12 +94,23 @@ class FG_eval {
 
     // Minimize the value gap between sequential actuations.
     for (int t = 0; t < N - 2; t++) {
-      //fg[0] += CppAD::pow(vars[delta_start + t + 1] - vars[delta_start + t], 2);
+      //fg[0] += 1 * CppAD::pow(vars[delta_start + t + 1] - vars[delta_start + t], 2);
+      //fg[0] += 50 * CppAD::pow(vars[delta_start + t + 1] - vars[delta_start + t], 2);
+      //fg[0] += 100 * CppAD::pow(vars[delta_start + t + 1] - vars[delta_start + t], 2);
       fg[0] += 200 * CppAD::pow(vars[delta_start + t + 1] - vars[delta_start + t], 2);
-      //fg[0] += 20 * CppAD::pow(vars[delta_start + t + 1] - vars[delta_start + t], 2);
+      //fg[0] += 500 * CppAD::pow(vars[delta_start + t + 1] - vars[delta_start + t], 2);
+      //fg[0] += 1000 * CppAD::pow(vars[delta_start + t + 1] - vars[delta_start + t], 2);
+      //fg[0] += 2000 * CppAD::pow(vars[delta_start + t + 1] - vars[delta_start + t], 2);
+      //fg[0] += 5000 * CppAD::pow(vars[delta_start + t + 1] - vars[delta_start + t], 2);
+      //fg[0] += 10 * CppAD::pow(vars[delta_start + t + 1] - vars[delta_start + t], 2);
 
-      fg[0] += CppAD::pow(vars[a_start + t + 1] - vars[a_start + t], 2);
-      //fg[0] += 10 * CppAD::pow(vars[a_start + t + 1] - vars[a_start + t], 2);
+      //fg[0] += 1 * CppAD::pow(vars[a_start + t + 1] - vars[a_start + t], 2);
+      //fg[0] += 200 * CppAD::pow(vars[a_start + t + 1] - vars[a_start + t], 2);
+      //fg[0] += 5 * CppAD::pow(vars[a_start + t + 1] - vars[a_start + t], 2);
+      
+      
+      fg[0] += 10 * CppAD::pow(vars[a_start + t + 1] - vars[a_start + t], 2);
+      
       //fg[0] += 1000 * CppAD::pow(vars[a_start + t + 1] - vars[a_start + t], 2);
 
     }
